@@ -79,7 +79,8 @@ def main():
             "mods": u.get("mods") or None,
             "batch": u.get("batch") or None,
             "passive": {k: u["passive"].get(k) for k in ("name", "type", "kind", "value", "desc")},
-            "ultimate": {"name": u["ultimate"].get("name", ""), "effect": u["ultimate"].get("effect", "")},
+            # 注：ultimate 是 wiki 原文的存档字段，仅供 tools/ 里的保真度审计使用，
+            # 运行时（js/）没有任何引用，故不再打包进 game-data.js。
             "icon": "assets/units/%s.webp" % u["id"],
             "card": "assets/cards/%s.webp" % u["id"],
             "quality": QUALITY[int(u["cost"])],

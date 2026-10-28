@@ -2597,3 +2597,27 @@ chain = true，第1/2/3 代血量比 0.300 / 0.0900 / 0.02700 ✓
    连续放会留下永久加成。已加 `if (!b.buffUntil || this.time >= b.buffUntil)` 守卫。
 2. **「全队伤害提升」文案住在遗留字段 `ultimate`**（112 个角色都有 ult + ultimate 两份），
    而 UI 读的是 `ult`，所以这段文案从没显示过。已统一改成「全队体术 +25%，持续 6 秒」。
+
+### P7-58 · 查证 `ultimate` 字段的真实用途
+
+**引用统计（全项目 134 处）**
+- `js/` 运行时：**0 处**
+- `build_data.py`：把 `name` / `effect` 拷进 `game-data.js` → 纯体积浪费
+- 8 个 tools 脚本（`wiki_fidelity_check` / `check_ids` / `gen_compare` /
+  `wiki_power_span` / `apply_wiki_power` / `_patch_fidelity` / `apply_rolefix` / `build_units`）：
+  读 `ultimate.wikiDesc` —— **这是核对 wiki 原文的唯一依据**
+
+**结论：不是纯噪音，不能整体删除。**
+删掉会让「不编造 wiki 内容」这条硬规则失去校验依据。
+
+**处理：只停打包，保留存档**
+- `build_data.py` 不再输出 `ultimate`
+- `units.json` 保留（tools 继续用）
+- `game-data.js` 288 KB → **274 KB（−14 KB）**
+
+**验证**
+```
+保真度审计仍可跑：小技能 84/112、必杀 112/112
+112 个角色都有 ult，ultimate 字段在运行时数据里已为 0
+6 个测试套件全绿 / 冒烟 0 错误
+```

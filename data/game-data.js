@@ -3,7 +3,7 @@ window.JJK_DATA = {
  "meta": {
   "title": "咒术回战：幻影夜行 · 自走棋",
   "version": "1.2.0-web-phase7",
-  "generated": "2026-10-28 21:45",
+  "generated": "2026-10-28 21:47",
   "counts": {
    "unitsPlayable": 112,
    "unitsTotal": 112,
@@ -92,10 +92,6 @@ window.JJK_DATA = {
     "kind": "ult_start",
     "value": 0.12,
     "desc": "开场必杀值 20；施法后额外回复 10 咒力"
-   },
-   "ultimate": {
-    "name": "游雲乱舞（SP潜在解放）（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/606003.webp",
    "card": "assets/cards/606003.webp",
@@ -200,10 +196,6 @@ window.JJK_DATA = {
     "kind": "revive",
     "value": 0.0,
     "desc": "阵亡时以 40% 生命复活一次；优先吸引攻击"
-   },
-   "ultimate": {
-    "name": "激震掌（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/606014.webp",
    "card": "assets/cards/606014.webp",
@@ -312,10 +304,6 @@ window.JJK_DATA = {
     "value": 0.09,
     "desc": "全队体术 / 术式 +10%"
    },
-   "ultimate": {
-    "name": "亲友哟（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/606019.webp",
    "card": "assets/cards/606019.webp",
    "quality": {
@@ -409,10 +397,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "每 3 秒消耗 12 咒力治疗残血友军 8% 生命"
    },
-   "ultimate": {
-    "name": "反転術式（大）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/607834.webp",
    "card": "assets/cards/607834.webp",
    "quality": {
@@ -505,10 +489,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "减伤 5%；每秒再生 2% 生命"
    },
-   "ultimate": {
-    "name": "连续旋转斩",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607839.webp",
    "card": "assets/cards/607839.webp",
    "quality": {
@@ -600,10 +580,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "必杀时自损 5% 生命"
    },
-   "ultimate": {
-    "name": "「坠落吧」",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607840.webp",
    "card": "assets/cards/607840.webp",
    "quality": {
@@ -694,10 +670,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "无被动（纯数值卡）"
    },
-   "ultimate": {
-    "name": "追踪射击",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607841.webp",
    "card": "assets/cards/607841.webp",
    "quality": {
@@ -787,10 +759,6 @@ window.JJK_DATA = {
     "kind": "extra",
     "value": 0.35,
     "desc": "行动后追加一次普攻"
-   },
-   "ultimate": {
-    "name": "构筑术式",
-    "effect": "单体 → 对当前目标高倍率一击"
    },
    "icon": "assets/units/607844.webp",
    "card": "assets/cards/607844.webp",
@@ -884,10 +852,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "受近战攻击时反击 1.0 倍体术；优先吸引攻击"
    },
-   "ultimate": {
-    "name": "新.阴流.简易领域「拔刀」",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607845.webp",
    "card": "assets/cards/607845.webp",
    "quality": {
@@ -977,10 +941,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.045,
     "desc": "无被动（纯数值卡）"
-   },
-   "ultimate": {
-    "name": "别捣乱！",
-    "effect": "持续伤害 → 单体伤害 + 5 秒侵蚀"
    },
    "icon": "assets/units/607847.webp",
    "card": "assets/cards/607847.webp",
@@ -1072,10 +1032,6 @@ window.JJK_DATA = {
     "kind": "guard",
     "value": 0.06,
     "desc": "减伤 10%"
-   },
-   "ultimate": {
-    "name": "「灾难扭转魔法/连续攻击」",
-    "effect": "单体 → 对当前目标高倍率一击"
    },
    "icon": "assets/units/607848.webp",
    "card": "assets/cards/607848.webp",
@@ -1170,10 +1126,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "免疫控制；术式减伤 10%"
    },
-   "ultimate": {
-    "name": "「三重大祓砲」",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/607851.webp",
    "card": "assets/cards/607851.webp",
    "quality": {
@@ -1263,10 +1215,6 @@ window.JJK_DATA = {
     "kind": "bf",
     "value": 0.06,
     "desc": "黑闪率 5%"
-   },
-   "ultimate": {
-    "name": "金勾臂",
-    "effect": "单体 → 对当前目标高倍率一击"
    },
    "icon": "assets/units/607853.webp",
    "card": "assets/cards/607853.webp",
@@ -1360,10 +1308,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "持续伤害减免 30%"
    },
-   "ultimate": {
-    "name": "「逕庭拳」",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607988.webp",
    "card": "assets/cards/607988.webp",
    "quality": {
@@ -1453,10 +1397,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.12,
     "desc": "无被动（纯数值卡）"
-   },
-   "ultimate": {
-    "name": "十種影法術",
-    "effect": "单体 → 对当前目标高倍率一击"
    },
    "icon": "assets/units/607989.webp",
    "card": "assets/cards/607989.webp",
@@ -1552,10 +1492,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "无被动（纯数值卡）"
    },
-   "ultimate": {
-    "name": "芻霊呪法「共鳴り」",
-    "effect": "治疗 → 治疗生命最低的友军"
-   },
    "icon": "assets/units/607990.webp",
    "card": "assets/cards/607990.webp",
    "quality": {
@@ -1643,10 +1579,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.12,
     "desc": "无被动（纯数值卡）"
-   },
-   "ultimate": {
-    "name": "怒涛的斩击",
-    "effect": "单体 → 对当前目标高倍率一击"
    },
    "icon": "assets/units/607991.webp",
    "card": "assets/cards/607991.webp",
@@ -1740,10 +1672,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "减伤 10%"
    },
-   "ultimate": {
-    "name": "熊猫热潮",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607993.webp",
    "card": "assets/cards/607993.webp",
    "quality": {
@@ -1833,10 +1761,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.12,
     "desc": "全队体术 / 术式 +6%"
-   },
-   "ultimate": {
-    "name": "我不会再错了",
-    "effect": "单体 → 对当前目标高倍率一击"
    },
    "icon": "assets/units/607994.webp",
    "card": "assets/cards/607994.webp",
@@ -1931,10 +1855,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "必杀时自损 3% 生命"
    },
-   "ultimate": {
-    "name": "「災渦転呪・連撃」",
-    "effect": "削弱 → 伤害 + 抽走目标咒力"
-   },
    "icon": "assets/units/607995.webp",
    "card": "assets/cards/607995.webp",
    "quality": {
@@ -2027,10 +1947,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "阵亡时以 35% 生命复活一次；优先吸引攻击"
    },
-   "ultimate": {
-    "name": "猩猩的秘密（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/620332.webp",
    "card": "assets/cards/620332.webp",
    "quality": {
@@ -2118,10 +2034,6 @@ window.JJK_DATA = {
     "kind": "guard",
     "value": 0.12,
     "desc": "减伤 10%"
-   },
-   "ultimate": {
-    "name": "玉犬「浑」（SP潜在解放）（连携解放）",
-    "effect": "召唤系 → 造成伤害并召唤式神分身"
    },
    "icon": "assets/units/605992.webp",
    "card": "assets/cards/605992.webp",
@@ -2212,10 +2124,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.15,
     "desc": "必杀时自损 12% 生命"
-   },
-   "ultimate": {
-    "name": "吹飞吧（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/606010.webp",
    "card": "assets/cards/606010.webp",
@@ -2308,10 +2216,6 @@ window.JJK_DATA = {
     "kind": "dodge",
     "value": 0.04,
     "desc": "闪避 20%"
-   },
-   "ultimate": {
-    "name": "咒力风暴",
-    "effect": "控制 → 单体伤害 + 眩晕"
    },
    "icon": "assets/units/607835.webp",
    "card": "assets/cards/607835.webp",
@@ -2406,10 +2310,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "黑闪率 25%；全队体术 / 术式 +10%；暴击/黑闪回复 10 咒力"
    },
-   "ultimate": {
-    "name": "十劃呪法",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607846.webp",
    "card": "assets/cards/607846.webp",
    "quality": {
@@ -2498,10 +2398,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.12,
     "desc": "无被动（纯数值卡）"
-   },
-   "ultimate": {
-    "name": "结界牢",
-    "effect": "控制 → 单体伤害 + 眩晕"
    },
    "icon": "assets/units/607849.webp",
    "card": "assets/cards/607849.webp",
@@ -2595,10 +2491,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "阵亡时以 35% 生命复活一次"
    },
-   "ultimate": {
-    "name": "熊猫猛撞",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/607854.webp",
    "card": "assets/cards/607854.webp",
    "quality": {
@@ -2690,10 +2582,6 @@ window.JJK_DATA = {
     "value": 0.2,
     "desc": "击杀回复 25 咒力"
    },
-   "ultimate": {
-    "name": "咒灵操术 极之番「旋涡」（连携解放）（SP潜在解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/607979.webp",
    "card": "assets/cards/607979.webp",
    "quality": {
@@ -2783,10 +2671,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.12,
     "desc": "全队体术 / 术式 +8%"
-   },
-   "ultimate": {
-    "name": "咒錬礎术",
-    "effect": "削弱 → 伤害 + 抽走目标咒力"
    },
    "icon": "assets/units/607996.webp",
    "card": "assets/cards/607996.webp",
@@ -2880,10 +2764,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.35,
     "desc": "闪避 20%；全队体术 / 术式 +8%"
-   },
-   "ultimate": {
-    "name": "可爱地修理一顿（连携解放）",
-    "effect": "控制 → 单体伤害 + 眩晕"
    },
    "icon": "assets/units/614518.webp",
    "card": "assets/cards/614518.webp",
@@ -2979,10 +2859,6 @@ window.JJK_DATA = {
     "value": 0.26,
     "desc": "闪避 20%；受近战攻击时反击 0.8 倍体术；阵亡时以 35% 生命复活一次"
    },
-   "ultimate": {
-    "name": "小高高☆回忆（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/618983.webp",
    "card": "assets/cards/618983.webp",
    "quality": {
@@ -3077,10 +2953,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "黑闪率 12%；阵亡时以 30% 生命复活一次；优先吸引攻击"
    },
-   "ultimate": {
-    "name": "贯穿的咒力之拳（连携解放）",
-    "effect": "控制 → 单体伤害 + 眩晕"
-   },
    "icon": "assets/units/619762.webp",
    "card": "assets/cards/619762.webp",
    "quality": {
@@ -3174,10 +3046,6 @@ window.JJK_DATA = {
     "kind": "dodge",
     "value": 0.35,
     "desc": "减伤 15%；闪避 20%；每秒再生 2% 生命；体术/术式必中"
-   },
-   "ultimate": {
-    "name": "全都不是问题（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/623845.webp",
    "card": "assets/cards/623845.webp",
@@ -3283,10 +3151,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "阵亡时以 30% 生命复活一次"
    },
-   "ultimate": {
-    "name": "觉悟之拳（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/628287.webp",
    "card": "assets/cards/628287.webp",
    "quality": {
@@ -3376,10 +3240,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.18,
     "desc": "施法后额外回复 12 咒力"
-   },
-   "ultimate": {
-    "name": "怒涛乱舞（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/633431.webp",
    "card": "assets/cards/633431.webp",
@@ -3474,10 +3334,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "行动后追加一次普攻"
    },
-   "ultimate": {
-    "name": "让我来教教你该怎么说话（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/635863.webp",
    "card": "assets/cards/635863.webp",
    "quality": {
@@ -3568,10 +3424,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 12,
     "desc": "全队体术 / 术式 +8%"
-   },
-   "ultimate": {
-    "name": "结祈转掌（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/640904.webp",
    "card": "assets/cards/640904.webp",
@@ -3677,10 +3529,6 @@ window.JJK_DATA = {
     "value": 0.06,
     "desc": "开场必杀值 20"
    },
-   "ultimate": {
-    "name": "刹那连击（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/652057.webp",
    "card": "assets/cards/652057.webp",
    "quality": {
@@ -3770,10 +3618,6 @@ window.JJK_DATA = {
     "kind": "ult_start",
     "value": 0.35,
     "desc": "开场必杀值 15"
-   },
-   "ultimate": {
-    "name": "「神风」（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/652636.webp",
    "card": "assets/cards/652636.webp",
@@ -3878,10 +3722,6 @@ window.JJK_DATA = {
     "kind": "dodge",
     "value": 12,
     "desc": "闪避 20%；减伤 10%"
-   },
-   "ultimate": {
-    "name": "来访瑞兽（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/658698.webp",
    "card": "assets/cards/658698.webp",
@@ -3990,10 +3830,6 @@ window.JJK_DATA = {
     "value": 20,
     "desc": "开场 3 秒攻击无效化；生命首次 ≤50% 时再获 2 秒无敌；受近战攻击时反击 0.8 倍体术"
    },
-   "ultimate": {
-    "name": "虚式「茈」（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/661932.webp",
    "card": "assets/cards/661932.webp",
    "quality": {
@@ -4090,10 +3926,6 @@ window.JJK_DATA = {
     "kind": "dodge",
     "value": 0.35,
     "desc": "闪避 20%；每秒再生 2% 生命；减伤 15%；体术/术式必中"
-   },
-   "ultimate": {
-    "name": "噬向强者的獠牙（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/674677.webp",
    "card": "assets/cards/674677.webp",
@@ -4199,10 +4031,6 @@ window.JJK_DATA = {
     "value": 0.15,
     "desc": "受近战攻击时反击 1.5 倍体术"
    },
-   "ultimate": {
-    "name": "最快的术师（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/675539.webp",
    "card": "assets/cards/675539.webp",
    "quality": {
@@ -4292,10 +4120,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.35,
     "desc": "全队体术 / 术式 +12%"
-   },
-   "ultimate": {
-    "name": "连携调查（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/712114.webp",
    "card": "assets/cards/712114.webp",
@@ -4392,10 +4216,6 @@ window.JJK_DATA = {
     "value": 0.06,
     "desc": "受到减益增伤"
    },
-   "ultimate": {
-    "name": "刍灵咒法「簪」（SP潜在解放）（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/605996.webp",
    "card": "assets/cards/605996.webp",
    "quality": {
@@ -4487,10 +4307,6 @@ window.JJK_DATA = {
     "kind": "retire",
     "value": 0.12,
     "desc": "7 秒后强制退场；退场时全队体术/术式 +15%"
-   },
-   "ultimate": {
-    "name": "術式反転 「赫」（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/606026.webp",
    "card": "assets/cards/606026.webp",
@@ -4584,10 +4400,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.18,
     "desc": "黑闪率 15%；暴击/黑闪回复 12 咒力"
-   },
-   "ultimate": {
-    "name": "十划呪法「瓦落瓦落」（SP潜在解放）（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/606028.webp",
    "card": "assets/cards/606028.webp",
@@ -4683,10 +4495,6 @@ window.JJK_DATA = {
     "value": 0.03,
     "desc": "受到减益增伤；优先吸引攻击"
    },
-   "ultimate": {
-    "name": "不要搞错生命的价值啊!!（连携解放）",
-    "effect": "持续伤害 → 单体伤害 + 5 秒侵蚀"
-   },
    "icon": "assets/units/606636.webp",
    "card": "assets/cards/606636.webp",
    "quality": {
@@ -4778,10 +4586,6 @@ window.JJK_DATA = {
     "value": 0.03,
     "desc": "无被动（纯数值卡）"
    },
-   "ultimate": {
-    "name": "咒骸大进击",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/607837.webp",
    "card": "assets/cards/607837.webp",
    "quality": {
@@ -4872,10 +4676,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.12,
     "desc": "必杀时自损 15% 生命"
-   },
-   "ultimate": {
-    "name": "「爆破吧」",
-    "effect": "治疗 → 治疗生命最低的友军"
    },
    "icon": "assets/units/607992.webp",
    "card": "assets/cards/607992.webp",
@@ -4981,10 +4781,6 @@ window.JJK_DATA = {
     "value": 0.15,
     "desc": "开场必杀值 20"
    },
-   "ultimate": {
-    "name": "穿血（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/614519.webp",
    "card": "assets/cards/614519.webp",
    "quality": {
@@ -5084,10 +4880,6 @@ window.JJK_DATA = {
     "value": 0.27,
     "desc": "反击时累积计数；计数每层 +2% 体术 / 术式"
    },
-   "ultimate": {
-    "name": "锐利的一击（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/615301.webp",
    "card": "assets/cards/615301.webp",
    "quality": {
@@ -5176,10 +4968,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 18,
     "desc": "无被动（纯数值卡）"
-   },
-   "ultimate": {
-    "name": "「绝技抉剔」&「大祓砲」（SP潜在解放）（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/617492.webp",
    "card": "assets/cards/617492.webp",
@@ -5277,10 +5065,6 @@ window.JJK_DATA = {
     "value": 15,
     "desc": "开场必杀值 15；黑闪率 12%；属性克制时额外 +15%"
    },
-   "ultimate": {
-    "name": "一定要在这里祓除掉（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/621266.webp",
    "card": "assets/cards/621266.webp",
    "quality": {
@@ -5373,10 +5157,6 @@ window.JJK_DATA = {
     "value": 0.03,
     "desc": "全队体术 / 术式 +8%"
    },
-   "ultimate": {
-    "name": "咒力的旋律",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/629917.webp",
    "card": "assets/cards/629917.webp",
    "quality": {
@@ -5467,10 +5247,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.15,
     "desc": "无被动（纯数值卡）"
-   },
-   "ultimate": {
-    "name": "芻霊呪法「共鸣」（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/639110.webp",
    "card": "assets/cards/639110.webp",
@@ -5565,10 +5341,6 @@ window.JJK_DATA = {
     "value": 0.02,
     "desc": "施法后额外回复 10 咒力"
    },
-   "ultimate": {
-    "name": "「玉犬」双击（连携解放）",
-    "effect": "召唤系 → 造成伤害并召唤式神分身"
-   },
    "icon": "assets/units/639616.webp",
    "card": "assets/cards/639616.webp",
    "quality": {
@@ -5659,10 +5431,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.35,
     "desc": "受到减益增伤"
-   },
-   "ultimate": {
-    "name": "「大祓炮」（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
    },
    "icon": "assets/units/645834.webp",
    "card": "assets/cards/645834.webp",
@@ -5755,10 +5523,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 10,
     "desc": "每秒再生 2% 生命"
-   },
-   "ultimate": {
-    "name": "「破裂吧」（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/648046.webp",
    "card": "assets/cards/648046.webp",
@@ -5854,10 +5618,6 @@ window.JJK_DATA = {
     "value": 0.02,
     "desc": "每 4 秒消耗 15 咒力治疗残血友军 12% 生命；闪避 15%"
    },
-   "ultimate": {
-    "name": "咻的一下搞定（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/661933.webp",
    "card": "assets/cards/661933.webp",
    "quality": {
@@ -5950,10 +5710,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.04,
     "desc": "施法后额外回复 10 咒力"
-   },
-   "ultimate": {
-    "name": "极之番「陨」（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/677690.webp",
    "card": "assets/cards/677690.webp",
@@ -6060,10 +5816,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "受近战攻击时反击 1.6 倍体术；术式减伤 20%"
    },
-   "ultimate": {
-    "name": "新·阴流「拔刀」（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/678629.webp",
    "card": "assets/cards/678629.webp",
    "quality": {
@@ -6154,10 +5906,6 @@ window.JJK_DATA = {
     "kind": "dodge",
     "value": 0.1,
     "desc": "闪避 15%"
-   },
-   "ultimate": {
-    "name": "付丧操术「镰异断」",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/694133.webp",
    "card": "assets/cards/694133.webp",
@@ -6270,10 +6018,6 @@ window.JJK_DATA = {
     "value": 0.25,
     "desc": "反击时累积计数；计数每层 +2% 体术 / 术式；施法后额外回复 15 咒力；闪避 15%"
    },
-   "ultimate": {
-    "name": "连锁纹「全开速」（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/701554.webp",
    "card": "assets/cards/701554.webp",
    "quality": {
@@ -6364,10 +6108,6 @@ window.JJK_DATA = {
     "kind": "extra",
     "value": 0.35,
     "desc": "行动后追加一次普攻"
-   },
-   "ultimate": {
-    "name": "狙击（连携解放）",
-    "effect": "单体 → 对当前目标高倍率一击"
    },
    "icon": "assets/units/714626.webp",
    "card": "assets/cards/714626.webp",
@@ -6473,10 +6213,6 @@ window.JJK_DATA = {
     "value": 0.207,
     "desc": "黑闪率 30%；暴击/黑闪回复 10 咒力"
    },
-   "ultimate": {
-    "name": "蒸汽咒法「临界冲」（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/719571.webp",
    "card": "assets/cards/719571.webp",
    "quality": {
@@ -6571,10 +6307,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "行动后追加一次普攻；反击时累积计数；计数每层 +2% 体术 / 术式"
    },
-   "ultimate": {
-    "name": "用益潜力就是生命♡（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/722687.webp",
    "card": "assets/cards/722687.webp",
    "quality": {
@@ -6667,10 +6399,6 @@ window.JJK_DATA = {
     "kind": "bf",
     "value": 0.2,
     "desc": "黑闪率 15%"
-   },
-   "ultimate": {
-    "name": "「黒閃」（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/605988.webp",
    "card": "assets/cards/605988.webp",
@@ -6778,10 +6506,6 @@ window.JJK_DATA = {
     "value": 0.04,
     "desc": "开场必杀值 20；每秒再生 2% 生命；体术/术式必中"
    },
-   "ultimate": {
-    "name": "領域展開「蓋棺鉄囲山」（SP潜在解放）（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/607872.webp",
    "card": "assets/cards/607872.webp",
    "quality": {
@@ -6887,10 +6611,6 @@ window.JJK_DATA = {
     "value": 0.03,
     "desc": "每秒再生 2% 生命；体术/术式必中"
    },
-   "ultimate": {
-    "name": "領域展開「朶頤光海」（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/607873.webp",
    "card": "assets/cards/607873.webp",
    "quality": {
@@ -6982,10 +6702,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.09,
     "desc": "暴击/黑闪回复 10 咒力；黑闪率 10%"
-   },
-   "ultimate": {
-    "name": "纯爱哒哟（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/607978.webp",
    "card": "assets/cards/607978.webp",
@@ -7097,10 +6813,6 @@ window.JJK_DATA = {
     "value": 0.03,
     "desc": "减伤 15%；术式减伤 15%；咒力低于 15 时每秒回 40 必杀值"
    },
-   "ultimate": {
-    "name": "领域展开【嵌合暗翳庭】（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/609120.webp",
    "card": "assets/cards/609120.webp",
    "quality": {
@@ -7193,10 +6905,6 @@ window.JJK_DATA = {
     "value": 0.18,
     "desc": "黑闪率 20%"
    },
-   "ultimate": {
-    "name": "咒力乱打（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
-   },
    "icon": "assets/units/610359.webp",
    "card": "assets/cards/610359.webp",
    "quality": {
@@ -7288,10 +6996,6 @@ window.JJK_DATA = {
     "kind": "retire_ult",
     "value": 0.12,
     "desc": "开场必杀值 40；释放必杀后自毁"
-   },
-   "ultimate": {
-    "name": "虚式「茈」（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/612295.webp",
    "card": "assets/cards/612295.webp",
@@ -7400,10 +7104,6 @@ window.JJK_DATA = {
     "value": 0.05,
     "desc": "每秒再生 2% 生命；属性克制时额外 +15%；体术/术式必中"
    },
-   "ultimate": {
-    "name": "领域展开「自闭圆顿裏」（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/619763.webp",
    "card": "assets/cards/619763.webp",
    "quality": {
@@ -7496,10 +7196,6 @@ window.JJK_DATA = {
     "value": 0.18,
     "desc": "开场 2 秒攻击无效化"
    },
-   "ultimate": {
-    "name": "术式顺转 功率最大「苍」（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/622642.webp",
    "card": "assets/cards/622642.webp",
    "quality": {
@@ -7590,10 +7286,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.12,
     "desc": "击杀回复 25 咒力"
-   },
-   "ultimate": {
-    "name": "「虹龙」（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/622643.webp",
    "card": "assets/cards/622643.webp",
@@ -7700,10 +7392,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "反击时累积计数；计数每层 +2% 体术 / 术式；全队体术 / 术式 +10%"
    },
-   "ultimate": {
-    "name": "一闪（SP潜在解放）（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/625876.webp",
    "card": "assets/cards/625876.webp",
    "quality": {
@@ -7800,10 +7488,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "黑闪率 15%；暴击/黑闪回复 12 咒力；全队体术 / 术式 +8%"
    },
-   "ultimate": {
-    "name": "十划咒法（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/632100.webp",
    "card": "assets/cards/632100.webp",
    "quality": {
@@ -7896,10 +7580,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "必杀时自损 12% 生命"
    },
-   "ultimate": {
-    "name": "「破碎吧」（连携解放）",
-    "effect": "单体 → 对当前目标高倍率一击"
-   },
    "icon": "assets/units/637822.webp",
    "card": "assets/cards/637822.webp",
    "quality": {
@@ -7991,10 +7671,6 @@ window.JJK_DATA = {
     "kind": "dodge",
     "value": 0.15,
     "desc": "减伤 15%；闪避 20%"
-   },
-   "ultimate": {
-    "name": "你的对手是我（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/642790.webp",
    "card": "assets/cards/642790.webp",
@@ -8109,10 +7785,6 @@ window.JJK_DATA = {
     "value": 0.25,
     "desc": "每受 3 次击回复 8% 生命；体术/术式必中"
    },
-   "ultimate": {
-    "name": "领域展开「伏魔御厨子」（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/644233.webp",
    "card": "assets/cards/644233.webp",
    "quality": {
@@ -8210,10 +7882,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "受近战攻击时反击 1.2 倍体术；反击时累积计数；计数每层 +3% 体术 / 术式"
    },
-   "ultimate": {
-    "name": "全力三段斩（SP潜在解放）（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/646160.webp",
    "card": "assets/cards/646160.webp",
    "quality": {
@@ -8310,10 +7978,6 @@ window.JJK_DATA = {
     "kind": "heal_ally",
     "value": 0.24,
     "desc": "每 4 秒消耗 15 咒力治疗残血友军 10% 生命"
-   },
-   "ultimate": {
-    "name": "可以随意解剖吧（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/649666.webp",
    "card": "assets/cards/649666.webp",
@@ -8422,10 +8086,6 @@ window.JJK_DATA = {
     "value": 0.05,
     "desc": "减伤 15%；术式减伤 15%；开场必杀值 20；体术/术式必中"
    },
-   "ultimate": {
-    "name": "领域展开「荡蕴平线」（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/671525.webp",
    "card": "assets/cards/671525.webp",
    "quality": {
@@ -8528,10 +8188,6 @@ window.JJK_DATA = {
     "kind": "dodge",
     "value": 0.03,
     "desc": "闪避 15%"
-   },
-   "ultimate": {
-    "name": "式神连续召唤（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/676882.webp",
    "card": "assets/cards/676882.webp",
@@ -8639,10 +8295,6 @@ window.JJK_DATA = {
     "value": 0.03,
     "desc": "受近战攻击时反击 1.2 倍体术"
    },
-   "ultimate": {
-    "name": "特级过咒怨灵 祈本里香（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/680362.webp",
    "card": "assets/cards/680362.webp",
    "quality": {
@@ -8748,10 +8400,6 @@ window.JJK_DATA = {
     "value": 0.04,
     "desc": "每秒再生 2% 生命；术式减伤 10%"
    },
-   "ultimate": {
-    "name": "冰凝咒法「直瀑」",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/691924.webp",
    "card": "assets/cards/691924.webp",
    "quality": {
@@ -8849,10 +8497,6 @@ window.JJK_DATA = {
     "kind": "heal_ally",
     "value": 20,
     "desc": "每 4 秒消耗 15 咒力治疗残血友军 10% 生命"
-   },
-   "ultimate": {
-    "name": "来吧「里香」（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/699088.webp",
    "card": "assets/cards/699088.webp",
@@ -8964,10 +8608,6 @@ window.JJK_DATA = {
     "value": 0.18,
     "desc": "每累计 5 次攻击必定黑闪；体术/术式必中"
    },
-   "ultimate": {
-    "name": "夏日狂热（连携解放）（SP觉醒）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/706232.webp",
    "card": "assets/cards/706232.webp",
    "quality": {
@@ -9059,10 +8699,6 @@ window.JJK_DATA = {
     "kind": "ult_start",
     "value": 0.12,
     "desc": "开场必杀值 20"
-   },
-   "ultimate": {
-    "name": "杀了老夫试试看（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/713476.webp",
    "card": "assets/cards/713476.webp",
@@ -9157,10 +8793,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.276,
     "desc": "全队体术 / 术式 +12%"
-   },
-   "ultimate": {
-    "name": "彻底指导！凯西！（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/900001.webp",
    "card": "assets/cards/900001.webp",
@@ -9263,10 +8895,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.276,
     "desc": "全队体术 / 术式 +12%"
-   },
-   "ultimate": {
-    "name": "彻底指导！凯西！（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/629916.webp",
    "card": "assets/cards/629916.webp",
@@ -9374,10 +9002,6 @@ window.JJK_DATA = {
     "kind": "extra",
     "value": 0.28,
     "desc": "黑闪率 25%；行动后追加一次普攻"
-   },
-   "ultimate": {
-    "name": "「黑闪」（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/640934.webp",
    "card": "assets/cards/640934.webp",
@@ -9489,10 +9113,6 @@ window.JJK_DATA = {
     "value": 0.25,
     "desc": "11 秒后强制退场；必杀后咒力归零并禁咒 2 秒；开场必杀值 30；体术/术式必中"
    },
-   "ultimate": {
-    "name": "领域展开「无量空处」（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/640936.webp",
    "card": "assets/cards/640936.webp",
    "quality": {
@@ -9586,10 +9206,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.14,
     "desc": "施法后额外回复 12 咒力；全队体术 / 术式 +10%"
-   },
-   "ultimate": {
-    "name": "十划咒法（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/668491.webp",
    "card": "assets/cards/668491.webp",
@@ -9703,10 +9319,6 @@ window.JJK_DATA = {
     "value": 0.22,
     "desc": "开场必杀值 20"
    },
-   "ultimate": {
-    "name": "「穿血」（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/672458.webp",
    "card": "assets/cards/672458.webp",
    "quality": {
@@ -9800,10 +9412,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.22,
     "desc": "黑闪率 18%；暴击/黑闪回复 10 咒力；体术/术式必中"
-   },
-   "ultimate": {
-    "name": "黑闪（连携解放）",
-    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/683413.webp",
    "card": "assets/cards/683413.webp",
@@ -9915,10 +9523,6 @@ window.JJK_DATA = {
     "value": 0.35,
     "desc": "行动后追加一次普攻；黑闪率 15%；体术/术式必中"
    },
-   "ultimate": {
-    "name": "最高潮☆JUMPING！（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/683430.webp",
    "card": "assets/cards/683430.webp",
    "quality": {
@@ -10013,10 +9617,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.3,
     "desc": "免疫控制；暴击/黑闪回复 15 咒力"
-   },
-   "ultimate": {
-    "name": "「开」",
-    "effect": "持续伤害 → 单体伤害 + 5 秒侵蚀"
    },
    "icon": "assets/units/684163.webp",
    "card": "assets/cards/684163.webp",
@@ -10127,10 +9727,6 @@ window.JJK_DATA = {
     "value": 0.05,
     "desc": "受到减益增伤；属性克制时额外 +10%"
    },
-   "ultimate": {
-    "name": "「遍杀即灵体」（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/684667.webp",
    "card": "assets/cards/684667.webp",
    "quality": {
@@ -10239,10 +9835,6 @@ window.JJK_DATA = {
     "value": 0.3,
     "desc": "开场必杀值 45；释放必杀后自毁；退场时全队体术/术式 +20%；体术/术式必中"
    },
-   "ultimate": {
-    "name": "领域展开「无量空处」（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
-   },
    "icon": "assets/units/687394.webp",
    "card": "assets/cards/687394.webp",
    "quality": {
@@ -10335,10 +9927,6 @@ window.JJK_DATA = {
     "kind": "aura",
     "value": 0.18,
     "desc": "全队体术 / 术式 +10%"
-   },
-   "ultimate": {
-    "name": "不挠的反击",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/689190.webp",
    "card": "assets/cards/689190.webp",
@@ -10436,10 +10024,6 @@ window.JJK_DATA = {
     "value": 15,
     "desc": "阵亡时以 35% 生命复活一次；减伤 10%；优先吸引攻击"
    },
-   "ultimate": {
-    "name": "做好觉悟了吧（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/695641.webp",
    "card": "assets/cards/695641.webp",
    "quality": {
@@ -10533,10 +10117,6 @@ window.JJK_DATA = {
     "kind": "extra",
     "value": 0.12,
     "desc": "行动后追加一次普攻；全队体术 / 术式 +8%"
-   },
-   "ultimate": {
-    "name": "咒骸大作战（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
    },
    "icon": "assets/units/698359.webp",
    "card": "assets/cards/698359.webp",
@@ -10633,10 +10213,6 @@ window.JJK_DATA = {
     "value": 0.03,
     "desc": "受到减益增伤；闪避 15%"
    },
-   "ultimate": {
-    "name": "未来的世界",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/703204.webp",
    "card": "assets/cards/703204.webp",
    "quality": {
@@ -10730,10 +10306,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "开场 4 秒攻击无效化；全队体术 / 术式 +15%；全队攻速 +10%；优先吸引攻击"
    },
-   "ultimate": {
-    "name": "稍微休息会吧（连携解放）（SP觉醒）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/706347.webp",
    "card": "assets/cards/706347.webp",
    "quality": {
@@ -10826,10 +10398,6 @@ window.JJK_DATA = {
     "value": 0.12,
     "desc": "开场必杀值 20"
    },
-   "ultimate": {
-    "name": "刍灵咒法【簪】（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
-   },
    "icon": "assets/units/707237.webp",
    "card": "assets/cards/707237.webp",
    "quality": {
@@ -10920,10 +10488,6 @@ window.JJK_DATA = {
     "kind": "mana_gain",
     "value": 0.12,
     "desc": "暴击/黑闪回复 10 咒力"
-   },
-   "ultimate": {
-    "name": "式神连携（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/707238.webp",
    "card": "assets/cards/707238.webp",
@@ -11035,10 +10599,6 @@ window.JJK_DATA = {
     "value": 0.06,
     "desc": "全队体术 / 术式 +8%"
    },
-   "ultimate": {
-    "name": "实事求是，严于律己（连携解放）",
-    "effect": "多段 → 对随机敌人打 3 段"
-   },
    "icon": "assets/units/717469.webp",
    "card": "assets/cards/717469.webp",
    "quality": {
@@ -11129,10 +10689,6 @@ window.JJK_DATA = {
     "kind": "mods",
     "value": 0.09,
     "desc": "无被动（纯数值卡）"
-   },
-   "ultimate": {
-    "name": "决意此途（连携解放）",
-    "effect": "群体 → 以目标为圆心 1 格 AoE"
    },
    "icon": "assets/units/721094.webp",
    "card": "assets/cards/721094.webp",
@@ -11227,10 +10783,6 @@ window.JJK_DATA = {
     "kind": "counter",
     "value": 0.22,
     "desc": "受近战攻击时反击 1.2 倍体术；减伤 10%；优先吸引攻击"
-   },
-   "ultimate": {
-    "name": "乱击一闪（连携解放）",
-    "effect": "领域展开 → 全场 AoE + 自身增伤 8 秒"
    },
    "icon": "assets/units/724611.webp",
    "card": "assets/cards/724611.webp",
