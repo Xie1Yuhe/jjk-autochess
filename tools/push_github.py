@@ -149,7 +149,15 @@ def main():
         return 0
 
     print("[push] 需提交 %d 个文件" % len(entries))
+    # 关键：第一批 tree 必须基于现有提交的 tree，
+    # 否则会只提交改动文件、把仓库其余文件全部冲掉（曾因此丢掉 460 个文件）
     tree_sha = None
+    if head and not full_mode:
+        try:
+            cur = api("/repos/%s/%s/git/commits/%s" % (owner, repo, head), token)
+            tree_sha = cur["tree"]["sha"]
+        except Exception:
+            tree_sha = None
     BATCH = 150
     for start in range(0, len(entries), BATCH):
         body = {"tree": entries[start:start + BATCH]}

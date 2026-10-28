@@ -57,6 +57,11 @@
       body.classList.toggle('phase-battle', ph === 'battle' || ph === 'result');
       syncDrawer();
       if (App.refit) App.refit();
+      // BGM：准备阶段与战斗阶段各一首
+      if (typeof JJK.Audio.startBgm === 'function') {
+        if (ph === 'battle' || ph === 'result') JJK.Audio.startBgm('battle');
+        else if (ph === 'planning' || ph === 'idle') JJK.Audio.startBgm('prep');
+      }
     }
     // ---------- 商店抽屉 ----------
     function syncDrawer() {

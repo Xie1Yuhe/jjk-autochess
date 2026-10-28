@@ -39,7 +39,7 @@
     if (!AC) return null;
     ctx = new AC();
     master = ctx.createGain();
-    master.gain.value = enabled ? volume * 0.55 : 0;
+    master.gain.value = enabled ? volume * 0.95 : 0;
     master.connect(ctx.destination);
 
     sfxBus = ctx.createGain();
@@ -452,10 +452,60 @@
     }, 1400);
   }
 
+  /* --------------------------------------------------------------- BGM */
+  var BGM_SRC = {
+    prep: 'assets/audio/bgm_prep.m4a',
+    battle: 'assets/audio/bgm_battle.m4a'
+  };
+  var bgmEl = null;
+  var bgmName = '';
+
+  function bgmVol() {
+    return enabled ? Math.min(1, volume * 0.45) : 0;
+  }
+
+  function startBgm(name) {
+    var src = BGM_SRC[name];
+    if (!src) return;
+    if (bgmName === name && bgmEl && !bgmEl.paused) {
+      bgmEl.volume = bgmVol();
+      return;
+    }
+    bgmName = name;
+    if (!bgmEl) {
+      bgmEl = new Audio();
+      bgmEl.loop = true;
+      bgmEl.preload = 'auto';
+    }
+    if (bgmEl.getAttribute('src') !== src) {
+      bgmEl.setAttribute('src', src);
+    }
+    bgmEl.volume = bgmVol();
+    var pr = bgmEl.play();
+    if (pr && pr.catch) pr.catch(function () { /* 需用户手势，忽略 */ });
+  }
+
+  function stopBgm() {
+    bgmName = '';
+    if (bgmEl) {
+      try { bgmEl.pause(); } catch (e) { /* ignore */ }
+    }
+  }
+
+  function syncBgmVolume() {
+    if (bgmEl) bgmEl.volume = bgmVol();
+    if (!enabled && bgmEl) { try { bgmEl.pause(); } catch (e) {} }
+    else if (enabled && bgmName && bgmEl && bgmEl.paused) {
+      var pr = bgmEl.play();
+      if (pr && pr.catch) pr.catch(function () {});
+    }
+  }
+
   /* -------------------------------------------------------------- 控制 */
   function setEnabled(v) {
     enabled = !!v;
-    if (master && ctx) master.gain.setTargetAtTime(enabled ? volume * 0.55 : 0, now(), 0.05);
+    if (master && ctx) master.gain.setTargetAtTime(enabled ? volume * 0.95 : 0, now(), 0.05);
+    syncBgmVolume();
     if (enabled && ambientOn === false && JJK.App && JJK.App.inGame) startAmbient();
     if (!enabled) stopAmbient();
     persist();
@@ -463,7 +513,8 @@
 
   function setVolume(v) {
     volume = Math.max(0, Math.min(1, v));
-    if (master && ctx) master.gain.setTargetAtTime(enabled ? volume * 0.55 : 0, now(), 0.05);
+    syncBgmVolume();
+    if (master && ctx) master.gain.setTargetAtTime(enabled ? volume * 0.95 : 0, now(), 0.05);
     persist();
   }
 
@@ -485,6 +536,8 @@
     setVoice: setVoice,
     setEnabled: setEnabled,
     setVolume: setVolume,
+    startBgm: startBgm,
+    stopBgm: stopBgm,
     isEnabled: function () { return enabled; },
     getVolume: function () { return volume; }
   };
