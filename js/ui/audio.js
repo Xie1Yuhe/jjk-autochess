@@ -386,16 +386,22 @@
     // 低频咒力底噪
     var droneGain = ctx.createGain();
     droneGain.gain.setValueAtTime(0.0001, t);
-    droneGain.gain.linearRampToValueAtTime(0.13, t + 3.5);
+    droneGain.gain.linearRampToValueAtTime(0.032, t + 3.5);
+    // 先切掉 90Hz 以下的闷响（嗡鸣来源），再低通掉高频毛刺
+    var hp = ctx.createBiquadFilter();
+    hp.type = 'highpass';
+    hp.frequency.value = 90;
+    hp.Q.value = 0.6;
     var lp = ctx.createBiquadFilter();
     lp.type = 'lowpass';
-    lp.frequency.value = 420;
+    lp.frequency.value = 520;
     lp.Q.value = 0.7;
-    droneGain.connect(lp);
+    droneGain.connect(hp);
+    hp.connect(lp);
     lp.connect(ambientBus);
 
     nodes.oscs = [];
-    [55, 82.41, 110].forEach(function (f, i) {
+    [110, 164.81, 220].forEach(function (f, i) {
       var o = ctx.createOscillator();
       o.type = i === 2 ? 'triangle' : 'sine';
       o.frequency.value = f;
@@ -423,7 +429,7 @@
     bp.frequency.value = 620;
     bp.Q.value = 0.8;
     var windGain = ctx.createGain();
-    windGain.gain.value = 0.016;
+    windGain.gain.value = 0.007;
     windSrc.connect(bp); bp.connect(windGain); windGain.connect(ambientBus);
     windSrc.start(t);
 
