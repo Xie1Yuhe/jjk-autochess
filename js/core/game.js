@@ -175,9 +175,10 @@
     for (var i = 0; i < board.length; i++) {
       var b = board[i];
       var bd = D.unitById[b.id] || {};
-      var nm = bd.name || b.name || '';
-      if (nm.indexOf('伏黑惠') >= 0) mega++;
-      if (nm.indexOf('宿傩') >= 0) suku++;
+      // 只认本体角色，避免「[宿傩的容器] 虎杖悠仁」被误算成宿傩
+      var base = bd.baseCharacter || '';
+      if (base === '伏黑惠' || (!base && (bd.name || '').indexOf('伏黑惠') >= 0)) mega++;
+      if (base === '两面宿傩' || base === '宿傩') suku++;   // 只认真的宿傩，不认虎杖悠仁
     }
     if (mega >= 3) return 'trio';
     if (mega >= 1 && suku >= 1) return 'pair';
