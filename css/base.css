@@ -1,0 +1,401 @@
+/* =========================================================================
+ *  base.css —— 复位 / 全局氛围 / 通用组件（按钮、面板、标签、滚动条）
+ * ========================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--ink);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input, select { font-family: inherit; color: inherit; }
+button { cursor: pointer; border: 0; background: none; }
+h1, h2, h3, h4, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+
+::selection { background: rgba(139, 92, 246, 0.45); }
+
+/* ------------------------------------------------------------ 滚动条 */
+* { scrollbar-width: thin; scrollbar-color: rgba(232, 200, 90, 0.32) transparent; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(232, 200, 90, 0.42), rgba(139, 92, 246, 0.42));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(232, 200, 90, 0.6); }
+
+/* ============================================================== 氛围层 */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% -10%, #1b1430 0%, #0c0916 42%, #060509 100%),
+    var(--ink);
+}
+
+.atmosphere .fog {
+  position: absolute;
+  width: 78vw;
+  height: 78vw;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.atmosphere .fog-a {
+  top: -26vw; left: -18vw;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.42) 0%, rgba(76, 42, 134, 0.14) 45%, transparent 70%);
+  animation: drift-a 34s var(--e-in-out) infinite alternate;
+}
+.atmosphere .fog-b {
+  bottom: -32vw; right: -16vw;
+  background: radial-gradient(circle, rgba(15, 118, 110, 0.34) 0%, rgba(13, 148, 136, 0.10) 46%, transparent 72%);
+  animation: drift-b 41s var(--e-in-out) infinite alternate;
+}
+.atmosphere .fog-c {
+  top: 22vh; left: 34vw;
+  width: 46vw; height: 46vw;
+  background: radial-gradient(circle, rgba(232, 200, 90, 0.10) 0%, transparent 68%);
+  animation: drift-c 27s var(--e-in-out) infinite alternate;
+}
+
+/* 棋盘焦点光：把视线拉到对局中心 */
+.atmosphere .focus {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(64% 48% at 42% 46%, rgba(139, 92, 246, 0.10) 0%, transparent 62%);
+}
+
+.atmosphere .vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 88% 82% at 50% 46%, transparent 32%, rgba(0, 0, 0, 0.42) 72%, rgba(0, 0, 0, 0.82) 100%);
+}
+
+.atmosphere .grain {
+  position: absolute;
+  inset: -50%;
+  background-image: var(--grain);
+  background-size: 160px 160px;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  animation: grain-shift 7s steps(4) infinite;
+}
+
+/* 顶部一道极光 */
+.atmosphere .aurora {
+  position: absolute;
+  top: -12vh; left: 50%;
+  width: 140vw; height: 34vh;
+  transform: translateX(-50%) rotate(-2deg);
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.16), rgba(232, 200, 90, 0.10), transparent);
+  filter: blur(38px);
+  animation: aurora-breathe 12s var(--e-in-out) infinite;
+}
+
+/* ============================================================== 文字 */
+.num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+.u-dim { color: var(--text-dim); }
+.u-faint { color: var(--text-faint); }
+.u-gold { color: var(--gold); }
+.u-crimson { color: var(--crimson); }
+.u-jade { color: var(--jade); }
+.u-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.u-center { text-align: center; }
+
+.title-face {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: linear-gradient(180deg, #fff8e2 0%, var(--gold-2) 34%, var(--gold) 62%, #9b7420 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 0.4px rgba(255, 240, 200, 0.28);
+  text-shadow: 0 2px 24px rgba(232, 200, 90, 0.28);
+}
+
+/* ============================================================== 面板 */
+.panel {
+  position: relative;
+  background:
+    linear-gradient(168deg, rgba(38, 31, 54, 0.62) 0%, rgba(16, 13, 24, 0.88) 46%, rgba(10, 8, 16, 0.94) 100%);
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-2), var(--sh-inset);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--stroke);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  text-transform: none;
+}
+.panel-head .ph-title {
+  font-family: var(--font-black);
+  font-weight: 900;
+  font-size: 12.5px;
+  color: var(--text-1);
+  letter-spacing: 0.16em;
+}
+.panel-head .ph-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+.panel-head .ph-sub {
+  margin-left: auto;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+}
+
+/* 四角装饰框（无额外 DOM） */
+.frame {
+  --fc: var(--gold);
+  --fl: 16px;
+  --fw: 2px;
+  position: relative;
+}
+.frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image:
+    linear-gradient(var(--fc), var(--fc)), linear-gradient(var(--fc), var(--fc)),
+    linear-gradient(var(--fc), var(--fc)), linear-gradient(var(--fc), var(--fc)),
+    linear-gradient(var(--fc), var(--fc)), linear-gradient(var(--fc), var(--fc)),
+    linear-gradient(var(--fc), var(--fc)), linear-gradient(var(--fc), var(--fc));
+  background-repeat: no-repeat;
+  background-size:
+    var(--fl) var(--fw), var(--fw) var(--fl),
+    var(--fl) var(--fw), var(--fw) var(--fl),
+    var(--fl) var(--fw), var(--fw) var(--fl),
+    var(--fl) var(--fw), var(--fw) var(--fl);
+  background-position:
+    left top, left top,
+    right top, right top,
+    left bottom, left bottom,
+    right bottom, right bottom;
+  opacity: 0.85;
+}
+
+/* ============================================================== 按钮 */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--stroke-2);
+  background: linear-gradient(180deg, rgba(52, 44, 72, 0.9), rgba(24, 20, 34, 0.95));
+  color: var(--text-1);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  box-shadow: var(--sh-1), var(--sh-inset);
+  transition: transform var(--t-fast) var(--e-out), box-shadow var(--t-fast),
+              border-color var(--t-fast), background var(--t-fast), color var(--t-fast);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.16) 46%, transparent 62%);
+  transform: translateX(-120%);
+  transition: transform 0.55s var(--e-out);
+  pointer-events: none;
+}
+.btn:hover { transform: translateY(-1px); border-color: rgba(232, 200, 90, 0.45); color: #fff; }
+.btn:hover::after { transform: translateX(120%); }
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn:disabled, .btn.is-disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+  transform: none;
+}
+.btn:disabled:hover::after { transform: translateX(-120%); }
+
+.btn .b-key {
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.10);
+  color: var(--text-dim);
+  letter-spacing: 0;
+}
+
+.btn-gold {
+  border-color: rgba(232, 200, 90, 0.52);
+  background: linear-gradient(180deg, #f3dc92 0%, #d9b64b 42%, #9d7520 100%);
+  color: #221a05;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35), 0 8px 24px rgba(232, 200, 90, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.btn-gold:hover { color: #1a1303; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3), 0 12px 34px rgba(232, 200, 90, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.6); }
+
+.btn-violet {
+  border-color: rgba(139, 92, 246, 0.55);
+  background: linear-gradient(180deg, #7c4dff 0%, #5b2fd6 50%, #3d1c96 100%);
+  color: #f4eeff;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 10px 28px rgba(139, 92, 246, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-danger {
+  border-color: rgba(255, 59, 92, 0.45);
+  background: linear-gradient(180deg, rgba(120, 30, 50, 0.9), rgba(58, 12, 24, 0.95));
+  color: #ffd7dd;
+}
+.btn-danger:hover { border-color: var(--crimson); box-shadow: 0 0 26px rgba(255, 59, 92, 0.35); }
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: var(--stroke);
+  color: var(--text-dim);
+}
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.075); color: var(--text); }
+
+.btn-sm { padding: 6px 11px; font-size: 12px; }
+.btn-xs { padding: 4px 8px; font-size: 11px; border-radius: var(--r-xs); }
+.btn-block { width: 100%; }
+
+.btn-lg {
+  padding: 14px 26px;
+  font-size: 17px;
+  border-radius: var(--r-md);
+  letter-spacing: 0.14em;
+  font-family: var(--font-black);
+  font-weight: 900;
+}
+
+/* 图标按钮（圆形） */
+.icon-btn {
+  width: 34px; height: 34px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim);
+  font-size: 14px;
+  transition: all var(--t-fast) var(--e-out);
+}
+.icon-btn:hover { color: var(--gold); border-color: var(--stroke-gold); background: rgba(232, 200, 90, 0.09); transform: translateY(-1px); }
+.icon-btn.is-on { color: var(--gold); border-color: var(--stroke-gold); background: rgba(232, 200, 90, 0.14); }
+
+/* ============================================================== 标签 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  border: 1px solid color-mix(in srgb, var(--tc, #888) 42%, transparent);
+  background: color-mix(in srgb, var(--tc, #888) 16%, transparent);
+  color: color-mix(in srgb, var(--tc, #ccc) 78%, #fff);
+  white-space: nowrap;
+}
+.chip.is-active {
+  border-color: color-mix(in srgb, var(--tc, #888) 78%, transparent);
+  background: color-mix(in srgb, var(--tc, #888) 30%, transparent);
+  color: #fff;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--tc, #888) 40%, transparent);
+}
+
+.tag-role {
+  font-size: 10px;
+  padding: 0 5px;
+  border-radius: 3px;
+  border: 1px solid var(--stroke);
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+/* 分割线 */
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--stroke-2) 20%, var(--stroke-2) 80%, transparent);
+  margin: 8px 0;
+}
+
+/* 金线标题 */
+.gold-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+}
+.gold-line::before, .gold-line::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--stroke-gold), transparent);
+}
+
+/* ============================================================== 吐司 */
+.toast-root {
+  position: fixed;
+  left: 50%;
+  top: 86px;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  pointer-events: none;
+}
+.toast {
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(16, 12, 26, 0.94);
+  border: 1px solid var(--stroke-2);
+  box-shadow: var(--sh-2);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  animation: toast-in 0.3s var(--e-back) both, toast-out 0.35s var(--e-in-out) 1.9s both;
+  white-space: nowrap;
+}
+.toast.warn { border-color: rgba(255, 59, 92, 0.5); color: #ffd3da; box-shadow: 0 8px 26px rgba(255, 59, 92, 0.25); }
+.toast.good { border-color: rgba(53, 201, 148, 0.5); color: #c8ffe8; box-shadow: 0 8px 26px rgba(53, 201, 148, 0.22); }
+.toast.gold { border-color: var(--stroke-gold); color: var(--gold-2); box-shadow: var(--glow-gold); }

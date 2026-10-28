@@ -118,11 +118,16 @@ def main():
     remote, head = remote_tree(owner, repo, token)
     print("[push] 本地 %d 个文件，远端 %d 个" % (len(files), len(remote)))
 
+    full_mode = "--full" in sys.argv
+    if full_mode:
+        msg = [a for a in sys.argv[4:] if a != "--full"]
+        msg = msg[0] if msg else "full sync"
+
     entries = []
     for rel, full in files:
         with open(full, "rb") as f:
             raw = f.read()
-        if remote.get(rel) == blob_sha(raw):
+        if not full_mode and remote.get(rel) == blob_sha(raw):
             continue
         ext = os.path.splitext(rel)[1].lower()
         text = None

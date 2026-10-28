@@ -1,0 +1,134 @@
+/* =========================================================================
+ *  panels.css —— 右栏细节：装备槽 / 背包 / 情报 / 战斗坞 / 选中高亮
+ * ========================================================================= */
+
+/* 右栏两个面板的内容区改成纵向排列 */
+.items-panel .panel-body {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 8px;
+}
+.traits-panel .panel-body { gap: 4px; }
+
+/* 选中棋子的装备槽 */
+.equip-block {
+  padding: 6px 7px;
+  border-radius: 8px;
+  border: 1px solid rgba(232, 200, 90, 0.22);
+  background: linear-gradient(180deg, rgba(232, 200, 90, 0.10), rgba(232, 200, 90, 0.02));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.equip-block .eq-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--gold-2);
+  letter-spacing: 0.04em;
+  max-width: 118px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.equip-block .eq-title img {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(232, 200, 90, 0.5);
+  flex: 0 0 auto;
+}
+.equip-block .equip-slots { margin-left: auto; }
+
+/* 背包 */
+.bag-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.bag-block .bag-title {
+  width: 100%;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+/* 情报条里的小字 */
+.intel .intel-name { white-space: nowrap; }
+
+/* 羁绊高亮：被高亮的棋子套金色光环 */
+.unit.is-focused .token,
+.bench-unit.is-focused .token {
+  box-shadow:
+    0 0 0 2px rgba(232, 200, 90, 0.9),
+    0 0 28px rgba(232, 200, 90, 0.7),
+    0 6px 16px rgba(0, 0, 0, 0.5);
+  animation: mana-pulse 1s ease-in-out infinite;
+}
+
+/* 拖动时给原位置画虚线框 */
+.unit.is-dragging::before {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 10px;
+  border: 1.5px dashed rgba(232, 200, 90, 0.55);
+  background: rgba(232, 200, 90, 0.05);
+  pointer-events: none;
+}
+
+/* 战斗中的单位不允许拖动 */
+.battle-unit { cursor: default; }
+
+/* 情报条里的强度标示 */
+.intel-scale { font-variant-numeric: tabular-nums; }
+
+/* 日志行内的高亮 */
+.log-line .ll-text b { color: var(--gold); }
+
+/* 羁绊面板底部：把下一步该干嘛直接说给玩家 */
+.traits-tips {
+  border-top: 1px solid var(--stroke);
+  padding: 7px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: linear-gradient(180deg, rgba(232, 200, 90, 0.05), transparent);
+}
+.traits-tips:empty { display: none; }
+.tips-head {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--text-faint);
+  margin-bottom: 1px;
+}
+.tips-line {
+  position: relative;
+  padding-left: 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.tips-line::before {
+  content: '';
+  position: absolute;
+  left: 1px; top: 6px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(232, 200, 90, 0.8);
+}
+.tips-trait::before { background: #c4a4ff; box-shadow: 0 0 8px rgba(196, 164, 255, 0.8); }
+.tips-star::before { background: #ffd166; box-shadow: 0 0 8px rgba(255, 209, 102, 0.9); }
+.tips-item::before { background: #6ee7f0; box-shadow: 0 0 8px rgba(110, 231, 240, 0.8); }
+.tips-gold::before { background: #7dffc8; box-shadow: 0 0 8px rgba(125, 255, 200, 0.8); }
+.tips-act { color: var(--text-1); }
+
+/* 面板在小屏下的压缩 */
+@media (max-width: 1180px) {
+  .traits-panel .panel-body { max-height: 120px; }
+  .items-panel .panel-body { max-height: 120px; }
+}
