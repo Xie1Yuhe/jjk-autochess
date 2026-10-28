@@ -213,11 +213,17 @@
     if (traits.indexOf('影') >= 0 && self._tier(t, '影') >= 1) {
       u.untargetUntil = 2.5;                                     // 影袭 Lv1 影中潜行
     }
+    if (traits.indexOf('幻') >= 0 && self._tier(t, '幻') >= 1) {
+      u.mods.immune = 0.18;                                    // 幻术 Lv1 虚像：攻击偏移
+    }
     if (traits.indexOf('幻') >= 0 && self._tier(t, '幻') >= 2) {
       u.mods.immune = 0.22;                                      // 幻术 Lv2 虚像
     }
     if (traits.indexOf('行') >= 0 && self._tier(t, '行') >= 1) {
       u.mods.move_fast = true;                                   // 行咒 Lv1 疾行
+    }
+    if (traits.indexOf('行') >= 0 && self._tier(t, '行') >= 2) {
+      u.mods.manaOnKill = (u.mods.manaOnKill || 0) + 35;        // 行咒 Lv2 追迹
     }
     if (traits.indexOf('行') >= 0 && self._tier(t, '行') >= 3) {
       u.mods.extra_attack = true;                                // 行咒 Lv3 行动自如
@@ -254,8 +260,21 @@
     if (traits.indexOf('特级') >= 0 && self._tier(t, '特级') >= 1) {
       u.mods.domain = true;
       u.mods.domain_owner = true;
+      u.ad *= 1.22; u.spell *= 1.22;                           // 特级 Lv1 领域展开：全体 +22%
     }
 
+    /* —— 咒具师（按携带咒具数量成长） —— */
+    if (traits.indexOf('咒具') >= 0 && self._tier(t, '咒具') >= 1) {
+      var _ic = (u.def.items || []).length;
+      if (_ic >= 2) {
+        u.ad *= 1.12; u.spell *= 1.12;
+        u.maxHp *= 1.12; u.hp = u.maxHp;                      // Lv1 随身咒具
+        if (self._tier(t, '咒具') >= 2) {
+          var _b = 1 + 0.08 * _ic;                            // Lv2 咒具精通
+          u.ad *= _b; u.spell *= _b;
+        }
+      }
+    }
     /* —— 阵营羁绊 —— */
     if (traits.indexOf('东京校') >= 0 && self._tier(t, '东京校') >= 1) {
       u.shield += u.maxHp * 0.15;                                // 东京校 Lv1 同窗
@@ -264,7 +283,7 @@
       u.dmgMult *= 1.12; u.ad *= 1.12; u.maxHp *= 1.12; u.hp = u.maxHp;  // Lv3 全校集结
     }
     if (traits.indexOf('京都校') >= 0 && self._tier(t, '京都校') >= 1) {
-      u.mods.thorns = 0.15;                                      // 京都校 Lv1 反制
+      u.mods.dmg_taken = (u.mods.dmg_taken || 0) - 0.15;         // 京都校 Lv1 反制：受到伤害 -15%
     }
     if (traits.indexOf('京都校') >= 0 && self._tier(t, '京都校') >= 2) {
       u.mods.counter = true;                                     // 京都校 Lv2 反击术式
