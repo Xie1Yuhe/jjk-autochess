@@ -65,6 +65,8 @@
     this.dotTime = 0;
     this.dmgMult = 1;
     this.isClone = false;
+    this.isSummon = false;   // 是否召唤物（召唤物不能再召唤）
+    this.gen = 0;            // 召唤代数
     this.cloneKind = '';   // 'shikigami'（伏黑式神） / 'shadow'（影袭分身）
     this.rec = { dealt: 0, taken: 0, heal: 0 };   // 战后统计
     this.stateUntil = 0;   // 状态切换（蒸升 / 全开速 / 猩猩模式…）到期时间
@@ -1294,9 +1296,27 @@
   };
 
   BattleSim.prototype._summonFamiliar = function (u) {
+    // ① 同队场上式神数量上限：防止反复施法把场子堆满
+    var live = 0;
+    for (var k = 0; k < this.units.length; k++) {
+      var o = this.units[k];
+      if (o.alive && o.team === u.team && o.cloneKind === 'shikigami') live++;
+    }
+    if (live >= 3) return;
+
     var clone = new BattleUnit();
     clone.id = this._nextId++;
-    clone.def = u.def;
+    // ② 召唤物不能再召唤：复制 def 但剥掉 skill / ult
+    //    （之前直接 clone.def = u.def，导致式神继承了「召唤」技能，无限链式召唤）
+    var stripped = {};
+    for (var kk in u.def) {
+      if (Object.prototype.hasOwnProperty.call(u.def, kk)) stripped[kk] = u.def[kk];
+    }
+    stripped.skill = null;
+    stripped.ult = null;
+    clone.def = stripped;
+    clone.isSummon = true;
+    clone.gen = (u.gen || 0) + 1;
     clone.team = u.team;
     clone.star = 1;
     clone.isClone = true;
