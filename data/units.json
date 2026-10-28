@@ -12423,8 +12423,8 @@
   "wikiTitle": "",
   "wikiUrl": "",
   "release": "彩蛋",
-  "cost": 4,
-  "costSource": "easter-egg",
+  "cost": 5,
+  "costSource": "easter-egg-5",
   "element": "行",
   "elementLabel": "行咒",
   "role": "召唤",
@@ -12543,8 +12543,17 @@
    "aura_power": 0.12
   },
   "batch": 3,
-  "design": "彩蛋：致敬历史上「式神无限召唤」的 bug。允许链式召唤，第 n 代式神数值 = 本体 × 0.3^n；场上式神越多越强，但每一代都更脆。",
-  "isEasterEgg": true
+  "design": "彩蛋：无星级，出现即 3 星。商店以 5 费、0.35% 的极低概率出现；更常见的触发方式是阵容——3 个伏黑惠，或 1 个伏黑惠 + 1 个宿傩，会自动登场。召唤物可继续召唤，第 n 代 = 本体 × 0.3^n。",
+  "isEasterEgg": true,
+  "noStar": true,
+  "autoSummon": {
+   "trio": "伏黑惠",
+   "pair": [
+    "伏黑惠",
+    "宿傩"
+   ],
+   "count": 3
+  }
  },
  {
   "id": "629916",

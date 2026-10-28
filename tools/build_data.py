@@ -93,6 +93,8 @@ def main():
             "baseCharacter": u.get("baseCharacter", ""),
             "variant": u.get("variant", ""),
         }
+        if u.get("noStar"): d["noStar"] = True
+        if u.get("autoSummon"): d["autoSummon"] = u["autoSummon"]
         out_units.append(d)
 
     traits_out = []
@@ -118,7 +120,7 @@ def main():
         },
         "units": out_units,
         "unitIndex": {u["id"]: {"name": u["name"], "base": u["baseCharacter"], "variant": u["variant"],
-                                "playable": u["playable"], "cost": u["cost"]} for u in units_all},
+                                "noStar": u.get("noStar", False), "autoSummon": u.get("autoSummon"), "playable": u["playable"], "cost": u["cost"]} for u in units_all},
         "traits": traits_out,
         "links": links,
     "decks": (lambda: (__import__('json').load(open(os.path.join(RAW, 'decks.json'), encoding='utf-8'))

@@ -3,7 +3,7 @@ window.JJK_DATA = {
  "meta": {
   "title": "咒术回战：幻影夜行 · 自走棋",
   "version": "1.2.0-web-phase7",
-  "generated": "2026-10-28 19:47",
+  "generated": "2026-10-28 19:52",
   "counts": {
    "unitsPlayable": 112,
    "unitsTotal": 112,
@@ -9085,7 +9085,7 @@ window.JJK_DATA = {
    "id": "900001",
    "name": "[无限式神] 魔虚罗",
    "title": "无限式神",
-   "cost": 4,
+   "cost": 5,
    "element": "行",
    "role": "召唤",
    "dmg": "术式",
@@ -9165,9 +9165,9 @@ window.JJK_DATA = {
    "icon": "assets/units/900001.webp",
    "card": "assets/cards/900001.webp",
    "quality": {
-    "key": "S",
-    "label": "S",
-    "index": 2
+    "key": "SS",
+    "label": "SS",
+    "index": 3
    },
    "rarity": "SSR",
    "rarityColor": "#f0c34a",
@@ -9177,7 +9177,16 @@ window.JJK_DATA = {
    "tierColor": "#ff4d6d",
    "element_label": "行咒",
    "baseCharacter": "魔虚罗",
-   "variant": "无限式神"
+   "variant": "无限式神",
+   "noStar": true,
+   "autoSummon": {
+    "trio": "伏黑惠",
+    "pair": [
+     "伏黑惠",
+     "宿傩"
+    ],
+    "count": 3
+   }
   },
   {
    "id": "629916",
@@ -11246,6 +11255,8 @@ window.JJK_DATA = {
    "name": "[叛逆的吊车尾] 禅院真希",
    "base": "禅院真希",
    "variant": "叛逆的吊车尾",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11253,6 +11264,8 @@ window.JJK_DATA = {
    "name": "[别小看人偶] 熊猫",
    "base": "熊猫",
    "variant": "别小看人偶",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11260,6 +11273,8 @@ window.JJK_DATA = {
    "name": "[友情的记忆] 东堂葵",
    "base": "东堂葵",
    "variant": "友情的记忆",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11267,6 +11282,8 @@ window.JJK_DATA = {
    "name": "[反转术式] 家入硝子",
    "base": "家入硝子",
    "variant": "反转术式",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11274,6 +11291,8 @@ window.JJK_DATA = {
    "name": "[越是弱小越是聚集] 禅院真希",
    "base": "禅院真希",
    "variant": "越是弱小越是聚集",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11281,6 +11300,8 @@ window.JJK_DATA = {
    "name": "[反击的接力棒] 狗卷棘",
    "base": "狗卷棘",
    "variant": "反击的接力棒",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11288,6 +11309,8 @@ window.JJK_DATA = {
    "name": "[御三家的血脉] 加茂宪纪",
    "base": "加茂宪纪",
    "variant": "御三家的血脉",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11295,6 +11318,8 @@ window.JJK_DATA = {
    "name": "[凌厉的子弹] 禅院真依",
    "base": "禅院真依",
    "variant": "凌厉的子弹",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11302,6 +11327,8 @@ window.JJK_DATA = {
    "name": "[决意的迎击] 三轮霞",
    "base": "三轮霞",
    "variant": "决意的迎击",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11309,6 +11336,8 @@ window.JJK_DATA = {
    "name": "[生命的价值] 吉野顺平",
    "base": "吉野顺平",
    "variant": "生命的价值",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11316,6 +11345,8 @@ window.JJK_DATA = {
    "name": "[不服来战] 龙胆咲",
    "base": "龙胆咲",
    "variant": "不服来战",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11323,6 +11354,8 @@ window.JJK_DATA = {
    "name": "[炮咒强化形态] 究极机械丸",
    "base": "究极机械丸",
    "variant": "炮咒强化形态",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11330,6 +11363,8 @@ window.JJK_DATA = {
    "name": "[野蛮的一级] 东堂葵",
    "base": "东堂葵",
    "variant": "野蛮的一级",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11337,6 +11372,8 @@ window.JJK_DATA = {
    "name": "[宿傩的容器] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "宿傩的容器",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11344,6 +11381,8 @@ window.JJK_DATA = {
    "name": "[不平等的救赎] 伏黑惠",
    "base": "伏黑惠",
    "variant": "不平等的救赎",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11351,6 +11390,8 @@ window.JJK_DATA = {
    "name": "[为了保持自我] 钉崎野蔷薇",
    "base": "钉崎野蔷薇",
    "variant": "为了保持自我",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11358,6 +11399,8 @@ window.JJK_DATA = {
    "name": "[天赐无才] 禅院真希",
    "base": "禅院真希",
    "variant": "天赐无才",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11365,6 +11408,8 @@ window.JJK_DATA = {
    "name": "[熊猫但不是熊猫] 熊猫",
    "base": "熊猫",
    "variant": "熊猫但不是熊猫",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11372,6 +11417,8 @@ window.JJK_DATA = {
    "name": "[送别者] 伊地知洁高",
    "base": "伊地知洁高",
    "variant": "送别者",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11379,6 +11426,8 @@ window.JJK_DATA = {
    "name": "[灾祸转咒] 龙胆咲",
    "base": "龙胆咲",
    "variant": "灾祸转咒",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11386,6 +11435,8 @@ window.JJK_DATA = {
    "name": "[需要帮助吗] 熊猫",
    "base": "熊猫",
    "variant": "需要帮助吗",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 1
   },
@@ -11393,6 +11444,8 @@ window.JJK_DATA = {
    "name": "[继承的术式] 伏黑惠",
    "base": "伏黑惠",
    "variant": "继承的术式",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11400,6 +11453,8 @@ window.JJK_DATA = {
    "name": "[觉悟的咒言] 狗卷棘",
    "base": "狗卷棘",
    "variant": "觉悟的咒言",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11407,6 +11462,8 @@ window.JJK_DATA = {
    "name": "[空中侦查] 西宫桃",
    "base": "西宫桃",
    "variant": "空中侦查",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11414,6 +11471,8 @@ window.JJK_DATA = {
    "name": "[不上班族术师] 七海建人",
    "base": "七海建人",
    "variant": "不上班族术师",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11421,6 +11480,8 @@ window.JJK_DATA = {
    "name": "[作为术师的觉悟] 结木海斗",
    "base": "结木海斗",
    "variant": "作为术师的觉悟",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11428,6 +11489,8 @@ window.JJK_DATA = {
    "name": "[以最短直线] 熊猫",
    "base": "熊猫",
    "variant": "以最短直线",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11435,6 +11498,8 @@ window.JJK_DATA = {
    "name": "[大义] 夏油杰",
    "base": "夏油杰",
    "variant": "大义",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11442,6 +11507,8 @@ window.JJK_DATA = {
    "name": "[呪錬礎術] 结木海斗",
    "base": "结木海斗",
    "variant": "呪錬礎術",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11449,6 +11516,8 @@ window.JJK_DATA = {
    "name": "[别小看我] 西宫桃",
    "base": "西宫桃",
    "variant": "别小看我",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11456,6 +11525,8 @@ window.JJK_DATA = {
    "name": "[和高田酱一起] 东堂葵",
    "base": "东堂葵",
    "variant": "和高田酱一起",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11463,6 +11534,8 @@ window.JJK_DATA = {
    "name": "[注入咒力吧] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "注入咒力吧",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11470,6 +11543,8 @@ window.JJK_DATA = {
    "name": "[术师杀手] 伏黑甚尔",
    "base": "伏黑甚尔",
    "variant": "术师杀手",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11477,6 +11552,8 @@ window.JJK_DATA = {
    "name": "[心怀觉悟] 龙胆咲",
    "base": "龙胆咲",
    "variant": "心怀觉悟",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11484,6 +11561,8 @@ window.JJK_DATA = {
    "name": "[大刀乱舞] 禅院真希",
    "base": "禅院真希",
    "variant": "大刀乱舞",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11491,6 +11570,8 @@ window.JJK_DATA = {
    "name": "[最后的子弹] 禅院真依",
    "base": "禅院真依",
    "variant": "最后的子弹",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11498,6 +11579,8 @@ window.JJK_DATA = {
    "name": "[心怀意志] 结木海斗",
    "base": "结木海斗",
    "variant": "心怀意志",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11505,6 +11588,8 @@ window.JJK_DATA = {
    "name": "[破晓启程] 禅院真希",
    "base": "禅院真希",
    "variant": "破晓启程",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11512,6 +11597,8 @@ window.JJK_DATA = {
    "name": "[群鸦翩舞之夜] 冥冥",
    "base": "冥冥",
    "variant": "群鸦翩舞之夜",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11519,6 +11606,8 @@ window.JJK_DATA = {
    "name": "[心无骄慢] 猪野琢真",
    "base": "猪野琢真",
    "variant": "心无骄慢",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11526,6 +11615,8 @@ window.JJK_DATA = {
    "name": "[觉醒] 五条悟",
    "base": "五条悟",
    "variant": "觉醒",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11533,6 +11624,8 @@ window.JJK_DATA = {
    "name": "[降灵] 伏黑甚尔",
    "base": "伏黑甚尔",
    "variant": "降灵",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11540,6 +11633,8 @@ window.JJK_DATA = {
    "name": "[唯快不破] 禅院直毘人",
    "base": "禅院直毘人",
    "variant": "唯快不破",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11547,6 +11642,8 @@ window.JJK_DATA = {
    "name": "[慰劳的接送] 伊地知洁高",
    "base": "伊地知洁高",
    "variant": "慰劳的接送",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 2
   },
@@ -11554,6 +11651,8 @@ window.JJK_DATA = {
    "name": "[铁骨娘] 钉崎野蔷薇",
    "base": "钉崎野蔷薇",
    "variant": "铁骨娘",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11561,6 +11660,8 @@ window.JJK_DATA = {
    "name": "[最强] 五条悟",
    "base": "五条悟",
    "variant": "最强",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11568,6 +11669,8 @@ window.JJK_DATA = {
    "name": "[十划呪法] 七海建人",
    "base": "七海建人",
    "variant": "十划呪法",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11575,6 +11678,8 @@ window.JJK_DATA = {
    "name": "[幼鱼和逆罚] 吉野顺平",
    "base": "吉野顺平",
    "variant": "幼鱼和逆罚",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11582,6 +11687,8 @@ window.JJK_DATA = {
    "name": "[教育者] 夜蛾正道",
    "base": "夜蛾正道",
    "variant": "教育者",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11589,6 +11696,8 @@ window.JJK_DATA = {
    "name": "[诅咒的言灵] 狗卷棘",
    "base": "狗卷棘",
    "variant": "诅咒的言灵",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11596,6 +11705,8 @@ window.JJK_DATA = {
    "name": "[寄宿于血中的决心] 加茂宪纪",
    "base": "加茂宪纪",
    "variant": "寄宿于血中的决心",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11603,6 +11714,8 @@ window.JJK_DATA = {
    "name": "[相性极差] 钉崎野蔷薇",
    "base": "钉崎野蔷薇",
    "variant": "相性极差",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11610,6 +11723,8 @@ window.JJK_DATA = {
    "name": "[刀源解放] 究极机械丸",
    "base": "究极机械丸",
    "variant": "刀源解放",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11617,6 +11732,8 @@ window.JJK_DATA = {
    "name": "[加班时间] 七海建人",
    "base": "七海建人",
    "variant": "加班时间",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11624,6 +11741,8 @@ window.JJK_DATA = {
    "name": "[咒力的旋律] 乐岩寺嘉伸",
    "base": "乐岩寺嘉伸",
    "variant": "咒力的旋律",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11631,6 +11750,8 @@ window.JJK_DATA = {
    "name": "[钉进去] 钉崎野蔷薇",
    "base": "钉崎野蔷薇",
    "variant": "钉进去",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11638,6 +11759,8 @@ window.JJK_DATA = {
    "name": "[成对的牵绊] 伏黑惠",
    "base": "伏黑惠",
    "variant": "成对的牵绊",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11645,6 +11768,8 @@ window.JJK_DATA = {
    "name": "[目睹一切] 与幸吉",
    "base": "与幸吉",
    "variant": "目睹一切",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11652,6 +11777,8 @@ window.JJK_DATA = {
    "name": "[夜隐咒言师] 狗卷棘",
    "base": "狗卷棘",
    "variant": "夜隐咒言师",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11659,6 +11786,8 @@ window.JJK_DATA = {
    "name": "[咻咻] 家入硝子",
    "base": "家入硝子",
    "variant": "咻咻",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11666,6 +11795,8 @@ window.JJK_DATA = {
    "name": "[炽烈的火球] 漏瑚",
    "base": "漏瑚",
    "variant": "炽烈的火球",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11673,6 +11804,8 @@ window.JJK_DATA = {
    "name": "[化解锐刃] 日下部笃也",
    "base": "日下部笃也",
    "variant": "化解锐刃",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11680,6 +11813,8 @@ window.JJK_DATA = {
    "name": "[付丧操术] 西宫桃",
    "base": "西宫桃",
    "variant": "付丧操术",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11687,6 +11822,8 @@ window.JJK_DATA = {
    "name": "[连锁纹「全开速」] 漆英司",
    "base": "漆英司",
    "variant": "连锁纹「全开速」",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11694,6 +11831,8 @@ window.JJK_DATA = {
    "name": "[有效射程] 禅院真依",
    "base": "禅院真依",
    "variant": "有效射程",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11701,6 +11840,8 @@ window.JJK_DATA = {
    "name": "[燃烧的意志] 灰原雄",
    "base": "灰原雄",
    "variant": "燃烧的意志",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11708,6 +11849,8 @@ window.JJK_DATA = {
    "name": "[美刃的轮舞] 冥冥",
    "base": "冥冥",
    "variant": "美刃的轮舞",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 3
   },
@@ -11715,6 +11858,8 @@ window.JJK_DATA = {
    "name": "[咒力闪耀黑光] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "咒力闪耀黑光",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11722,6 +11867,8 @@ window.JJK_DATA = {
    "name": "[咒灵的矜持] 漏瑚",
    "base": "漏瑚",
    "variant": "咒灵的矜持",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11729,6 +11876,8 @@ window.JJK_DATA = {
    "name": "[战斗的愉悦] 花御",
    "base": "花御",
    "variant": "战斗的愉悦",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11736,6 +11885,8 @@ window.JJK_DATA = {
    "name": "[把力量借给我] 乙骨忧太",
    "base": "乙骨忧太",
    "variant": "把力量借给我",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11743,6 +11894,8 @@ window.JJK_DATA = {
    "name": "[不完全的领域] 伏黑惠",
    "base": "伏黑惠",
    "variant": "不完全的领域",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11750,6 +11903,8 @@ window.JJK_DATA = {
    "name": "[轻快的身体] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "轻快的身体",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11757,6 +11912,8 @@ window.JJK_DATA = {
    "name": "[虚式「茈」] 五条悟",
    "base": "五条悟",
    "variant": "虚式「茈」",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11764,6 +11921,8 @@ window.JJK_DATA = {
    "name": "[由死而生的灵感] 真人",
    "base": "真人",
    "variant": "由死而生的灵感",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11771,6 +11930,8 @@ window.JJK_DATA = {
    "name": "[苍之最强] 五条悟",
    "base": "五条悟",
    "variant": "苍之最强",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11778,6 +11939,8 @@ window.JJK_DATA = {
    "name": "[为了保护非术师] 夏油杰",
    "base": "夏油杰",
    "variant": "为了保护非术师",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11785,6 +11948,8 @@ window.JJK_DATA = {
    "name": "[残心] 三轮霞",
    "base": "三轮霞",
    "variant": "残心",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11792,6 +11957,8 @@ window.JJK_DATA = {
    "name": "[一级术师的实力] 七海建人",
    "base": "七海建人",
    "variant": "一级术师的实力",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11799,6 +11966,8 @@ window.JJK_DATA = {
    "name": "[「破碎吧」] 狗卷棘",
    "base": "狗卷棘",
    "variant": "「破碎吧」",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11806,6 +11975,8 @@ window.JJK_DATA = {
    "name": "[拦路的指标] 米格尔",
    "base": "米格尔",
    "variant": "拦路的指标",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11813,6 +11984,8 @@ window.JJK_DATA = {
    "name": "[真正的咒术] 两面宿傩",
    "base": "两面宿傩",
    "variant": "真正的咒术",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11820,6 +11993,8 @@ window.JJK_DATA = {
    "name": "[疾走] 三轮霞",
    "base": "三轮霞",
    "variant": "疾走",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11827,6 +12002,8 @@ window.JJK_DATA = {
    "name": "[拯救生命] 家入硝子",
    "base": "家入硝子",
    "variant": "拯救生命",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11834,6 +12011,8 @@ window.JJK_DATA = {
    "name": "[无尽的式神] 陀艮",
    "base": "陀艮",
    "variant": "无尽的式神",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11841,6 +12020,8 @@ window.JJK_DATA = {
    "name": "[兔之搅乱] 伏黑惠",
    "base": "伏黑惠",
    "variant": "兔之搅乱",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11848,6 +12029,8 @@ window.JJK_DATA = {
    "name": "[诅咒的女王] 乙骨忧太",
    "base": "乙骨忧太",
    "variant": "诅咒的女王",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11855,6 +12038,8 @@ window.JJK_DATA = {
    "name": "[退下废物] 里梅",
    "base": "里梅",
    "variant": "退下废物",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11862,6 +12047,8 @@ window.JJK_DATA = {
    "name": "[死刑执行人] 乙骨忧太",
    "base": "乙骨忧太",
    "variant": "死刑执行人",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11869,6 +12056,8 @@ window.JJK_DATA = {
    "name": "[苍穹扣杀] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "苍穹扣杀",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11876,6 +12065,8 @@ window.JJK_DATA = {
    "name": "[老奸巨猾摇滚] 乐岩寺嘉伸",
    "base": "乐岩寺嘉伸",
    "variant": "老奸巨猾摇滚",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 4
   },
@@ -11883,13 +12074,24 @@ window.JJK_DATA = {
    "name": "[无限式神] 魔虚罗",
    "base": "魔虚罗",
    "variant": "无限式神",
+   "noStar": true,
+   "autoSummon": {
+    "trio": "伏黑惠",
+    "pair": [
+     "伏黑惠",
+     "宿傩"
+    ],
+    "count": 3
+   },
    "playable": true,
-   "cost": 4
+   "cost": 5
   },
   "629916": {
    "name": "[咒骸临战] 夜蛾正道",
    "base": "夜蛾正道",
    "variant": "咒骸临战",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11897,6 +12099,8 @@ window.JJK_DATA = {
    "name": "[zone] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "zone",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11904,6 +12108,8 @@ window.JJK_DATA = {
    "name": "[无下限的内侧] 五条悟",
    "base": "五条悟",
    "variant": "无下限的内侧",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11911,6 +12117,8 @@ window.JJK_DATA = {
    "name": "[有望的新生] 七海建人",
    "base": "七海建人",
    "variant": "有望的新生",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11918,6 +12126,8 @@ window.JJK_DATA = {
    "name": "[履行哥哥的责任] 胀相",
    "base": "胀相",
    "variant": "履行哥哥的责任",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11925,6 +12135,8 @@ window.JJK_DATA = {
    "name": "[最大咒力输出] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "最大咒力输出",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11932,6 +12144,8 @@ window.JJK_DATA = {
    "name": "[你这样就满足了吗？] 东堂葵",
    "base": "东堂葵",
    "variant": "你这样就满足了吗？",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11939,6 +12153,8 @@ window.JJK_DATA = {
    "name": "[火力胜负] 两面宿傩",
    "base": "两面宿傩",
    "variant": "火力胜负",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11946,6 +12162,8 @@ window.JJK_DATA = {
    "name": "[暴露的灵魂] 真人",
    "base": "真人",
    "variant": "暴露的灵魂",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11953,6 +12171,8 @@ window.JJK_DATA = {
    "name": "[0.2秒的领域展开] 五条悟",
    "base": "五条悟",
    "variant": "0.2秒的领域展开",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11960,6 +12180,8 @@ window.JJK_DATA = {
    "name": "[被托付的生命] 虎杖悠仁",
    "base": "虎杖悠仁",
    "variant": "被托付的生命",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11967,6 +12189,8 @@ window.JJK_DATA = {
    "name": "[无言的压制] 七海建人",
    "base": "七海建人",
    "variant": "无言的压制",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11974,6 +12198,8 @@ window.JJK_DATA = {
    "name": "[枢要守望者] 夜蛾正道",
    "base": "夜蛾正道",
    "variant": "枢要守望者",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11981,6 +12207,8 @@ window.JJK_DATA = {
    "name": "[咒术全盛时代] 加茂宪伦",
    "base": "加茂宪伦",
    "variant": "咒术全盛时代",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11988,6 +12216,8 @@ window.JJK_DATA = {
    "name": "[冰菓消溶] 五条悟",
    "base": "五条悟",
    "variant": "冰菓消溶",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -11995,6 +12225,8 @@ window.JJK_DATA = {
    "name": "[出片常夏] 钉崎野蔷薇",
    "base": "钉崎野蔷薇",
    "variant": "出片常夏",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -12002,6 +12234,8 @@ window.JJK_DATA = {
    "name": "[清凉海风] 伏黑惠",
    "base": "伏黑惠",
    "variant": "清凉海风",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -12009,6 +12243,8 @@ window.JJK_DATA = {
    "name": "[不挠的瑞兽] 猪野琢真",
    "base": "猪野琢真",
    "variant": "不挠的瑞兽",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -12016,6 +12252,8 @@ window.JJK_DATA = {
    "name": "[终焉之物] 夏油杰",
    "base": "夏油杰",
    "variant": "终焉之物",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   },
@@ -12023,6 +12261,8 @@ window.JJK_DATA = {
    "name": "[薄暮的冷光] 日下部笃也",
    "base": "日下部笃也",
    "variant": "薄暮的冷光",
+   "noStar": false,
+   "autoSummon": null,
    "playable": true,
    "cost": 5
   }

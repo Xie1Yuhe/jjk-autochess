@@ -156,6 +156,61 @@
     return cands[Math.floor(Math.random() * cands.length)];
   };
 
+  /* ---------------------------------------------------- 彩蛋 ---------- */
+  var EGG_ID = '900001';
+  var EGG_SHOP_RATE = 0.0035;     // 0.35%
+  var EGG_MIN_LEVEL = 7;
+
+  Game.prototype._pickEasterEgg = function () {
+    if (this.eggSeenStore) return null;
+    if (this.level < EGG_MIN_LEVEL) return null;
+    if (Math.random() >= EGG_SHOP_RATE) return null;
+    return EGG_ID;
+  };
+
+  // 阵容条件：3 伏黑惠 / 1 伏黑惠 + 1 宿傩
+  Game.prototype._eggConditionMet = function () {
+    var board = this.boardUnits();
+    var mega = 0, suku = 0;
+    for (var i = 0; i < board.length; i++) {
+      var b = board[i];
+      var bd = D.unitById[b.id] || {};
+      var nm = bd.name || b.name || '';
+      if (nm.indexOf('伏黑惠') >= 0) mega++;
+      if (nm.indexOf('宿傩') >= 0) suku++;
+    }
+    if (mega >= 3) return 'trio';
+    if (mega >= 1 && suku >= 1) return 'pair';
+    return '';
+  };
+
+  Game.prototype._checkEasterEgg = function () {
+    if (this.eggTriggered) return null;
+    if (this.phase !== 'planning') return null;
+    var why = this._eggConditionMet();
+    if (!why) return null;
+    // 找空位
+    var spot = null;
+    for (var y = 0; y < GRID_H && !spot; y++) {
+      for (var x = 0; x < 4; x++) {
+        if (!this.unitAtCell(x, y)) { spot = { x: x, y: y }; break; }
+      }
+    }
+    if (!spot) return null;
+
+    var inst = this._addUnit ? this._addUnit(EGG_ID) : null;   // 返回的是实例本身
+    if (!inst) return null;
+    inst.star = 3;                 // 无星级：出现即满星
+    inst.pos = spot;
+    inst.bench = -1;
+    this.eggTriggered = true;
+    this.addLog('★ 彩蛋触发：' + (why === 'trio' ? '三个伏黑惠' : '伏黑惠与宿傩')
+      + ' 引来了「无限式神」——魔虚罗登场！', 'upgrade');
+    this.bus.emit('change', 'roster');
+    this.bus.emit('easterEgg', { why: why, uid: inst.uid });
+    return why;
+  };
+
   Game.prototype.rollShop = function () {
     this.shop = [];
     var dup = {};
@@ -163,6 +218,13 @@
       var id = this._pickUnit(dup);
       dup[id] = (dup[id] || 0) + 1;
       this.shop.push(id);
+    }
+    // 彩蛋：以极低概率替换一格
+    var egg = this._pickEasterEgg();
+    if (egg) {
+      this.shop[Math.floor(Math.random() * this.shop.length)] = egg;
+      this.eggSeenStore = true;
+      this.addLog('商店里似乎混进了什么不对劲的东西……', 'warn');
     }
     this.bus.emit('change', 'shop');
   };
@@ -293,11 +355,14 @@
         this.gold += D.unitById[id].cost;
       }
     }
+    if (D.unitById[inst.id] && D.unitById[inst.id].noStar) inst.star = 3;
     return inst;
   };
 
   // 返回被保留（升级主体）的实例数组，便于 UI 播升星动画
   Game.prototype._tryCombine = function (id) {
+    // 彩蛋角色不参与三合一升星
+    if (D.unitById[id] && D.unitById[id].noStar) return [];
     var keeps = [];
     if (!id) return keeps;
     for (var star = 1; star <= 2; star++) {
@@ -402,6 +467,7 @@
       inst.pos = { x: dest.x, y: dest.y };
       inst.bench = -1;
       this.bus.emit('change', 'roster');
+      this._checkEasterEgg();
       return { ok: true };
     }
 
@@ -727,6 +793,7 @@
 
   /* ======================================================== 回合 ======== */
   Game.prototype.startRound = function () {
+    this._checkEasterEgg();
     this.rollItemShop();
     this.round += 1;
     this.phase = 'planning';

@@ -102,6 +102,28 @@
     g.bus.on('battle:start', function () { setTimeout(applyPhaseClass, 0); });
     g.bus.on('round:start', function () { setTimeout(applyPhaseClass, 0); });
 
+    // ---------- 彩蛋：无限式神 ----------
+    g.bus.on('easterEgg', function (payload) {
+      var bd = document.body;
+      bd.classList.add('egg-on');
+      var flash = document.createElement('div'); flash.className = 'egg-flash';
+      var ring  = document.createElement('div'); ring.className  = 'egg-ring';
+      var title = document.createElement('div'); title.className = 'egg-title';
+      title.textContent = '∞  无 限 式 神  ·  魔 虚 罗';
+      bd.appendChild(flash); bd.appendChild(ring); bd.appendChild(title);
+      if (JJK.FX && JJK.FX.banner) {
+        JJK.FX.banner('无限式神 · 魔虚罗',
+          payload && payload.why === 'trio' ? '三个伏黑惠，唤来了不可控之物'
+                                            : '伏黑惠与宿傩，跨过了那条线',
+          3200, '#c084fc');
+      }
+      if (JJK.Audio && JJK.Audio.play) { try { JJK.Audio.play('domain'); } catch (e) {} }
+      setTimeout(function () {
+        bd.classList.remove('egg-on');
+        [flash, ring, title].forEach(function (el) { if (el.parentNode) el.parentNode.removeChild(el); });
+      }, 2800);
+    });
+
     g.bus.on('change', function (part) {
       if (!App.inGame) return;
       if (part === 'phase' || part === 'all') applyPhaseClass();
