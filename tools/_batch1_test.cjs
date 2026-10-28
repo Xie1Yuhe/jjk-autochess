@@ -43,8 +43,8 @@ ok('15 枚都在可玩池', IDS.every(id => D.unitById[id]));
 ok('15 枚都有 combat 必杀', IDS.every(id => D.unitById[id].ult && D.unitById[id].ult.combat));
 ok('15 枚都有必杀槽', IDS.every(id => D.unitById[id].ultCost > 0),
   IDS.map(id => D.unitById[id].ultCost).join(','));
-ok('全部 111 张都有必杀',
-  D.units.filter(u => u.ult && u.ult.combat).length === 111,
+ok('全部 112 张都有必杀',
+  D.units.filter(u => u.ult && u.ult.combat).length === 112,
   '实际 ' + D.units.filter(u => u.ult && u.ult.combat).length);
 ok('三面板：体术技能走 phys', D.unitById['706232'].skill.panel === 'phys');
 ok('三面板：术式技能走 magic', D.unitById['640936'].ult.panel === 'magic');

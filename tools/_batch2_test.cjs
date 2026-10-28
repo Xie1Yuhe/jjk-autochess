@@ -41,8 +41,8 @@ const IDS = ['632100', '695641', '668491', '621266', '619763', '684667',
 console.log('=== 数据完整性 ===');
 ok('14 枚都在可玩池', IDS.every(id => D.unitById[id]), IDS.filter(id => !D.unitById[id]).join(','));
 ok('14 枚都有 combat 必杀', IDS.every(id => D.unitById[id].ult && D.unitById[id].ult.combat));
-ok('必杀总数 = 111（全部实装）',
-  D.units.filter(u => u.ult && u.ult.combat).length === 111,
+ok('必杀总数 = 112（含彩蛋）',
+  D.units.filter(u => u.ult && u.ult.combat).length === 112,
   '实际 ' + D.units.filter(u => u.ult && u.ult.combat).length);
 ok('冥冥已进入可玩池', D.unitById['722687'] && D.units.some(u => u.id === '722687'));
 

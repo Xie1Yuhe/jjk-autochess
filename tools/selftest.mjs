@@ -53,13 +53,13 @@ function section(t) { console.log('\n## ' + t); }
 
 /* ------------------------------------------------------------ 1 数据 */
 section('数据完整性');
-ok('棋子 111 名（全量实装）', D.units.length === 111, '实际 ' + D.units.length);
+ok('棋子 112 名（111 + 彩蛋魔虚罗）', D.units.length === 112, '实际 ' + D.units.length);
 ok('羁绊 10 条', D.traits.length === 10, '实际 ' + D.traits.length);
 ok('咒具 20 件（散件 8 / 成装 12）', D.items.length === 20, '实际 ' + D.items.length);
 ok('PvE 3 波', D.pve.length === 3, '实际 ' + D.pve.length);
 ok('AI 蓝图 3 套', D.plans.length === 3, '实际 ' + D.plans.length);
-ok('费用分布 21/23/23/24/20（领域角色上调后）',
-  [1, 2, 3, 4, 5].every((c) => D.unitsByCost[c].length === { 1: 21, 2: 23, 3: 23, 4: 24, 5: 20 }[c]),
+ok('费用分布 21/23/23/25/20（含彩蛋魔虚罗 cost4）',
+  [1, 2, 3, 4, 5].every((c) => D.unitsByCost[c].length === { 1: 21, 2: 23, 3: 23, 4: 25, 5: 20 }[c]),
   [1, 2, 3, 4, 5].map((c) => D.unitsByCost[c].length).join('/'));
 if (D.raw.links) {
   ok('异格联动定义 5 组', D.raw.links.length === 5, D.raw.links.map((l) => l.id).join(','));

@@ -1296,13 +1296,16 @@
   };
 
   BattleSim.prototype._summonFamiliar = function (u) {
+    // 彩蛋角色允许链式召唤（式神可以继续召唤），普通角色不允许
+    var chain = !!(u.def && u.def.skill && u.def.skill.chain);
+
     // ① 同队场上式神数量上限：防止反复施法把场子堆满
     var live = 0;
     for (var k = 0; k < this.units.length; k++) {
       var o = this.units[k];
       if (o.alive && o.team === u.team && o.cloneKind === 'shikigami') live++;
     }
-    if (live >= 3) return;
+    if (live >= (chain ? 30 : 3)) return;
 
     var clone = new BattleUnit();
     clone.id = this._nextId++;
@@ -1312,8 +1315,8 @@
     for (var kk in u.def) {
       if (Object.prototype.hasOwnProperty.call(u.def, kk)) stripped[kk] = u.def[kk];
     }
-    stripped.skill = null;
     stripped.ult = null;
+    if (!chain) stripped.skill = null;
     clone.def = stripped;
     clone.isSummon = true;
     clone.gen = (u.gen || 0) + 1;

@@ -41,9 +41,9 @@ const IDS = ['607846', '607992', '607996', '719571', '635863', '712114', '625876
 console.log('=== 数据完整性 ===');
 ok('14 枚都可玩', IDS.every(id => D.units.some(u => u.id === id)), IDS.filter(id => !D.units.some(u => u.id === id)).join(','));
 ok('14 枚都有 combat 必杀', IDS.every(id => D.unitById[id].ult && D.unitById[id].ult.combat));
-ok('必杀总数 = 111（全部实装）', D.units.filter(u => u.ult && u.ult.combat).length === 111,
+ok('必杀总数 = 112（含彩蛋）', D.units.filter(u => u.ult && u.ult.combat).length === 112,
   '实际 ' + D.units.filter(u => u.ult && u.ult.combat).length);
-ok('可玩池 111', D.units.length === 111, String(D.units.length));
+ok('可玩池 112', D.units.length === 112, String(D.units.length));
 ok('联动 5 组', D.raw.links.length === 5, D.raw.links.map(l => l.id).join(','));
 ok('低费池已补厚（1+2 费 ≥ 33）',
   D.units.filter(u => u.cost <= 2).length >= 33,
