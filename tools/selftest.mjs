@@ -54,7 +54,7 @@ function section(t) { console.log('\n## ' + t); }
 /* ------------------------------------------------------------ 1 数据 */
 section('数据完整性');
 ok('棋子 112 名（111 + 彩蛋魔虚罗）', D.units.length === 112, '实际 ' + D.units.length);
-ok('羁绊 11 条（新增咒具师）', D.traits.length === 11, '实际 ' + D.traits.length);
+ok('羁绊 13 条（+咒具师/反转/影法）', D.traits.length === 13, '实际 ' + D.traits.length);
 ok('咒具 20 件（散件 8 / 成装 12）', D.items.length === 20, '实际 ' + D.items.length);
 ok('PvE 3 波', D.pve.length === 3, '实际 ' + D.pve.length);
 ok('AI 蓝图 3 套', D.plans.length === 3, '实际 ' + D.plans.length);

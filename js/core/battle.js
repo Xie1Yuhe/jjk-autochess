@@ -263,6 +263,11 @@
       u.ad *= 1.22; u.spell *= 1.22;                           // 特级 Lv1 领域展开：全体 +22%
     }
 
+    /* —— 反转术式 —— */
+    if (self._tier(t, '反转') >= 1) {                          // 治愈之光（反转术式 Lv1）
+      u.mods.regen = true;
+      u.mods.regenPct = Math.max(u.mods.regenPct || 0, 0.006);
+    }
     /* —— 咒具师（按携带咒具数量成长） —— */
     if (traits.indexOf('咒具') >= 0 && self._tier(t, '咒具') >= 1) {
       var _ic = (u.def.items || []).length;
@@ -532,7 +537,15 @@
       if (u.slowTimer <= 0) u.slow = 0;
     }
     if (u.mods.regen && u.hp < u.maxHp) {
-      u.hp = Math.min(u.maxHp, u.hp + u.maxHp * 0.02 * dt);
+      var _rp = u.mods.regenPct || 0.02;                    // 反转术式 Lv1 可覆盖回复速率
+      u.hp = Math.min(u.maxHp, u.hp + u.maxHp * _rp * dt);
+    }
+    // 反转生得（反转术式 Lv2）：首次低血自动回复
+    if (this._tier(u.team, '反转') >= 2 && !u.mods.hpSave && u.alive && u.hp > 0
+        && u.hp < u.maxHp * 0.3) {
+      u.mods.hpSave = true;
+      u.hp = Math.min(u.maxHp, u.hp + u.maxHp * 0.25);
+      this._emit({ t: 'heal', pos: { x: u.pos.x, y: u.pos.y }, targetId: u.id, amount: u.maxHp * 0.25 });
     }
     if (u.mods.mana_drain) {
       u.mana = Math.max(0, u.mana - u.mods.mana_drain * dt);
@@ -1343,10 +1356,12 @@
     clone.star = 1;
     clone.isClone = true;
     clone.cloneKind = 'shikigami';
-    clone.maxHp = u.maxHp * 0.3;
+    var _shT = this._tier(u.team, '影法');
+    var _shMul = _shT >= 1 ? 1.2 : 1;              // 影法 Lv1 召唤物 +20%
+    clone.maxHp = u.maxHp * 0.3 * _shMul;
     clone.hp = clone.maxHp;
-    clone.ad = u.ad * 0.35;
-    clone.spell = u.spell * 0.35;
+    clone.ad = u.ad * 0.35 * _shMul + (_shT >= 2 ? u.ad * 0.10 : 0);  // Lv2 继承 10% 体术
+    clone.spell = u.spell * 0.35 * _shMul;
     clone.asRate = u.asRate;
     clone.atkRange = 1;
     clone.manaMax = 100;
