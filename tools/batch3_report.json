@@ -1,0 +1,97 @@
+{
+ "applied": 14,
+ "playable": 73,
+ "costDist": {
+  "1": 18,
+  "2": 17,
+  "3": 15,
+  "4": 12,
+  "5": 11
+ },
+ "list": [
+  {
+   "name": "[不上班族术师] 七海建人",
+   "cost": 1,
+   "tier": "A",
+   "ultCost": 76
+  },
+  {
+   "name": "[诅咒的言灵] 狗卷棘",
+   "cost": 1,
+   "tier": "S",
+   "ultCost": 76
+  },
+  {
+   "name": "[呪錬礎術] 结木海斗",
+   "cost": 1,
+   "tier": "S",
+   "ultCost": 70
+  },
+  {
+   "name": "[燃烧的意志] 灰原雄",
+   "cost": 1,
+   "tier": "SS",
+   "ultCost": 87
+  },
+  {
+   "name": "[最后的子弹] 禅院真依",
+   "cost": 1,
+   "tier": "S",
+   "ultCost": 87
+  },
+  {
+   "name": "[慰劳的接送] 伊地知洁高",
+   "cost": 1,
+   "tier": "S",
+   "ultCost": 96
+  },
+  {
+   "name": "[残心] 三轮霞",
+   "cost": 1,
+   "tier": "SSS",
+   "ultCost": 70
+  },
+  {
+   "name": "[作为术师的觉悟] 结木海斗",
+   "cost": 1,
+   "tier": "A",
+   "ultCost": 79
+  },
+  {
+   "name": "[咒骸临战] 夜蛾正道",
+   "cost": 2,
+   "tier": "SSS",
+   "ultCost": 87
+  },
+  {
+   "name": "[反转术式] 家入硝子",
+   "cost": 2,
+   "tier": "B",
+   "ultCost": 104
+  },
+  {
+   "name": "[群鸦翩舞之夜] 冥冥",
+   "cost": 2,
+   "tier": "A",
+   "ultCost": 79
+  },
+  {
+   "name": "[咒力的旋律] 乐岩寺嘉伸",
+   "cost": 2,
+   "tier": "S",
+   "ultCost": 96
+  },
+  {
+   "name": "[教育者] 夜蛾正道",
+   "cost": 2,
+   "tier": "S",
+   "ultCost": 96
+  },
+  {
+   "name": "[目睹一切] 与幸吉",
+   "cost": 2,
+   "tier": "S",
+   "ultCost": 74
+  }
+ ]
+}

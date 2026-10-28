@@ -1,0 +1,2749 @@
+﻿/* =========================================================================
+ *  v2-juice.css —— Phase 7「UI 灵动化」视觉层
+ *
+ *  这一层在 tokens/base/layout/board/cards/panels/overlays/anim 之后加载，
+ *  只做"覆盖 + 新增"，不改动原有结构，便于回滚与评审。
+ *
+ *  参考来源（调研记录见 DESIGN_RESEARCH_UI.md）：
+ *   · [Game Mechanics: Screen Effects (Juice/Polish/Feel)](https://github.com/raduacg/game-mechanics-optimizations/blob/main/G_05_screen_effects.md)
+ *     —— 震屏分级（轻 ±2-5px / 中 ±5-10px / 重 ±10-20px，指数衰减）、
+ *        顿帧（轻 33-50ms / 重 83-133ms / 暴击 133-200ms）、
+ *        跳字（1 秒上升 50-150px、按 log 伤害分级、最后 0.3s 淡出）、
+ *        粒子（命中 10-30 / 暴击 50-100，必须对象池）
+ *   · 商业自走棋的材质语言：半透明磨砂 + 分层的 1px 高光边 + 品质色弱发光
+ *
+ *  分节：
+ *   1. 材质与厚度（面板 / 顶栏 / 按钮 / 滚动条）
+ *   2. 卡牌物理感（悬停 / 选中 / 拖拽 / 品质光）
+ *   3. 羁绊面板与 SVG 图标
+ *   4. 数值反馈（金币 / 生命 / 等级 / 连势）
+ *   5. 战斗打击感（跳字 / 白闪 / 冲击波 / 顿帧视觉）
+ *   6. 变强感知（羁绊激活 / 升星 / 升级）
+ * ========================================================================= */
+
+/* ============================================================== 0. 变量 */
+:root {
+  /* 弹性曲线：overshoot 用于"按下去会弹回来"的物理直觉 */
+  --e-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --e-spring-soft: cubic-bezier(0.22, 1.18, 0.36, 1);
+  --e-snap: cubic-bezier(0.2, 0.9, 0.25, 1);
+
+  /* 材质 */
+  --mat-1: rgba(28, 24, 40, 0.72);
+  --mat-2: rgba(14, 11, 22, 0.9);
+  --mat-edge-top: rgba(255, 255, 255, 0.16);
+  --mat-edge-bot: rgba(0, 0, 0, 0.7);
+
+  /* 分层阴影：近处锐利 + 远处弥散，才有"厚度" */
+  --sh-layer:
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 8px 18px -6px rgba(0, 0, 0, 0.7),
+    0 28px 64px -28px rgba(0, 0, 0, 0.95);
+  --sh-bevel:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+/* ============================================================ 1. 材质 */
+/* 通用面板：磨砂 + 顶部高光边 + 分层的底阴影 + 颗粒 */
+.panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0) 26%),
+    linear-gradient(165deg, rgba(40, 33, 58, 0.74) 0%, rgba(17, 14, 26, 0.92) 52%, rgba(9, 7, 14, 0.97) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 14px;
+  box-shadow: var(--sh-layer), var(--sh-bevel);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  isolation: isolate;
+}
+/* 渐变描边（只描边不填充）：上亮下暗，像被打磨过的金属边缘 */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(175deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 26%,
+    rgba(0, 0, 0, 0.28) 68%,
+    rgba(0, 0, 0, 0.5) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+/* 面板头的分隔线做成"刻线"而不是实线 */
+.panel-head {
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.55);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+.panel-head .ph-dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold), 0 0 22px rgba(232, 200, 90, 0.5);
+}
+
+/* 顶栏：更重的玻璃 + 底部一道金线 */
+.hud {
+  background:
+    linear-gradient(180deg, rgba(30, 25, 44, 0.92) 0%, rgba(10, 8, 17, 0.86) 62%, rgba(8, 6, 13, 0.9) 100%);
+  backdrop-filter: blur(20px) saturate(1.35);
+  -webkit-backdrop-filter: blur(20px) saturate(1.35);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.8) inset,
+    0 10px 34px -12px rgba(0, 0, 0, 0.9);
+}
+.hud::after {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent, rgba(232, 200, 90, 0.55) 18%, rgba(196, 164, 255, 0.45) 52%,
+    rgba(232, 200, 90, 0.55) 82%, transparent);
+  box-shadow: 0 0 12px rgba(232, 200, 90, 0.35);
+}
+
+/* 顶栏舱：内凹的"仪表"感 */
+.hud-chip {
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 34%),
+    linear-gradient(180deg, rgba(36, 29, 52, 0.8), rgba(10, 8, 17, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -6px 12px -8px rgba(0, 0, 0, 0.9),
+    0 3px 10px -3px rgba(0, 0, 0, 0.7);
+  transition: border-color var(--t-mid) var(--e-out), box-shadow var(--t-mid) var(--e-out),
+              transform var(--t-mid) var(--e-spring-soft);
+}
+.hud-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -6px 12px -8px rgba(0, 0, 0, 0.9),
+    0 6px 18px -6px rgba(0, 0, 0, 0.8),
+    0 0 0 1px color-mix(in srgb, var(--hc, #e8c85a) 22%, transparent);
+}
+.hud-chip .hc-glyph {
+  display: inline-grid;
+  place-items: center;
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  font-size: 13px;
+  background:
+    radial-gradient(circle at 50% 24%, color-mix(in srgb, var(--hc, #e8c85a) 40%, transparent), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(0, 0, 0, 0.25));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 0 14px -4px var(--hc, #e8c85a);
+}
+
+/* 按钮：金属键帽 */
+.btn {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(180deg, rgba(54, 45, 76, 0.92), rgba(20, 17, 30, 0.96));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -2px 6px -2px rgba(0, 0, 0, 0.8),
+    0 2px 0 rgba(0, 0, 0, 0.45),
+    0 8px 20px -8px rgba(0, 0, 0, 0.8);
+  transition: transform 0.14s var(--e-spring), box-shadow 0.16s var(--e-out),
+              border-color 0.16s, color 0.16s, background 0.16s;
+}
+.btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -2px 6px -2px rgba(0, 0, 0, 0.8),
+    0 3px 0 rgba(0, 0, 0, 0.4),
+    0 14px 30px -10px rgba(0, 0, 0, 0.85),
+    0 0 22px -6px rgba(232, 200, 90, 0.35);
+}
+.btn:active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow:
+    inset 0 3px 10px -2px rgba(0, 0, 0, 0.75),
+    0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.btn-gold {
+  border-color: rgba(255, 238, 180, 0.55);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 38%),
+    linear-gradient(180deg, #ffe9a8 0%, #e3be55 40%, #b98d24 74%, #8a6516 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -3px 8px -2px rgba(90, 60, 0, 0.55),
+    0 2px 0 rgba(0, 0, 0, 0.4),
+    0 12px 30px -10px rgba(232, 200, 90, 0.6);
+}
+.btn-gold:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -3px 8px -2px rgba(90, 60, 0, 0.55),
+    0 3px 0 rgba(0, 0, 0, 0.35),
+    0 18px 40px -12px rgba(232, 200, 90, 0.85),
+    0 0 30px -6px rgba(255, 220, 120, 0.6);
+}
+
+/* 开战按钮：战场号角的质感 */
+.btn-start {
+  border: 1px solid rgba(255, 240, 190, 0.62);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0) 34%),
+    linear-gradient(180deg, #fff3c4 0%, #eccb63 32%, #c69c2c 66%, #8f6a19 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -4px 12px -2px rgba(80, 52, 0, 0.6),
+    0 3px 0 rgba(0, 0, 0, 0.42),
+    0 16px 40px -12px rgba(232, 200, 90, 0.6),
+    0 0 0 1px rgba(0, 0, 0, 0.35);
+  transition: transform 0.16s var(--e-spring), box-shadow 0.2s var(--e-out), filter 0.2s;
+}
+.btn-start:hover { transform: translateY(-2px) scale(1.012); filter: brightness(1.05); }
+.btn-start:active { transform: translateY(1px) scale(0.995); }
+
+/* 滚动条：更细、带光 */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(232, 200, 90, 0.35), rgba(139, 92, 246, 0.35));
+  box-shadow: 0 0 8px rgba(232, 200, 90, 0.25);
+}
+
+/* ======================================================== 2. 卡牌物理感 */
+.shop-card {
+  border-radius: 13px;
+  border: 1px solid color-mix(in srgb, var(--qc) 55%, #000);
+  background: #0a0810;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.85),
+    0 2px 4px rgba(0, 0, 0, 0.55),
+    0 14px 30px -12px rgba(0, 0, 0, 0.9),
+    0 0 22px -8px var(--qg, rgba(154, 163, 178, 0.3)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transform-style: preserve-3d;
+  transform: perspective(760px) translateZ(0);
+  transition:
+    transform 0.34s var(--e-spring),
+    box-shadow 0.24s var(--e-out),
+    filter 0.2s var(--e-out);
+  will-change: transform;
+}
+.shop-card .sc-art {
+  transform: scale(1.04) translateZ(0);
+  transition: transform 0.55s var(--e-out), filter 0.35s var(--e-out);
+}
+/* 立绘与底板之间：双层渐隐，杜绝"硬切" */
+.shop-card .sc-scrim {
+  background:
+    linear-gradient(180deg, rgba(8, 6, 14, 0.55) 0%, transparent 20%),
+    linear-gradient(180deg, transparent 44%, rgba(8, 6, 14, 0.35) 62%, rgba(8, 6, 14, 0.86) 82%, #08060e 100%),
+    radial-gradient(120% 60% at 50% 108%, rgba(8, 6, 14, 0.95) 0%, transparent 70%);
+}
+/* 玻璃反光：一道斜向高光，常驻但很淡 */
+.shop-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(104deg,
+    rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 12%,
+    transparent 26%, transparent 78%, rgba(255, 255, 255, 0.05) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 4;
+}
+/* 品质内描边：像镶了一圈金属 */
+.shop-card::before {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--qc) 46%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6);
+}
+
+.shop-card:hover {
+  transform: perspective(760px)
+             translateY(-16px)
+             translateZ(26px)
+             scale(1.055)
+             rotateX(var(--rx, 0deg))
+             rotateY(var(--ry, 0deg));
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 26px 50px -18px rgba(0, 0, 0, 0.95),
+    0 0 38px -6px var(--qg, rgba(154, 163, 178, 0.4)),
+    0 0 80px -20px color-mix(in srgb, var(--qc) 55%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  z-index: 8;
+}
+.shop-card:hover .sc-art {
+  transform: scale(1.13) translateY(-2%) translateZ(0);
+  filter: saturate(1.14) brightness(1.08) contrast(1.03);
+}
+/* 悬停时光泽跟随鼠标 */
+.shop-card .sc-gloss {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    220px 220px at var(--mx, 50%) var(--my, 0%),
+    rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.08) 38%, transparent 62%);
+  mix-blend-mode: soft-light;
+  transition: opacity 0.2s var(--e-out);
+}
+.shop-card:hover .sc-gloss { opacity: 1; }
+
+/* 选中（拖拽/购买后短暂高亮） */
+.shop-card.is-active {
+  transform: perspective(760px) translateY(-10px) translateZ(18px) scale(1.03);
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 0 30px -4px rgba(232, 200, 90, 0.75),
+    0 22px 44px -16px rgba(0, 0, 0, 0.9);
+}
+
+/* 费用角标：圆章 + 高光 + 品质描边 */
+.shop-card .sc-cost {
+  min-width: 23px; height: 23px;
+  border-radius: 50%;
+  font-size: 12px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 52%),
+    linear-gradient(180deg, #ffe9a8 0%, #e0bd54 52%, #a87f1e 100%);
+  border: 1.5px solid color-mix(in srgb, var(--qc) 70%, #fff 30%);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.6),
+    0 0 16px -2px var(--qg),
+    inset 0 -2px 4px -1px rgba(90, 60, 0, 0.6);
+}
+/* 品质徽记：做成小旗子 */
+.shop-card .sc-rank {
+  border-radius: 3px 8px 3px 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 14px -2px var(--qg);
+}
+
+/* 名字条：一条压暗的底，保证文字绝对清晰 */
+.shop-card .sc-foot {
+  padding: 5px 6px 7px;
+  background: linear-gradient(180deg, rgba(6, 4, 12, 0) 0%, rgba(6, 4, 12, 0.55) 38%, rgba(6, 4, 12, 0.92) 100%);
+}
+.shop-card .sc-name {
+  font-family: var(--font-black);
+  font-weight: 900;
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 2px #000, 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 18px rgba(0, 0, 0, 0.8);
+}
+.shop-card .sc-variant {
+  text-shadow: 0 1px 2px #000, 0 0 10px rgba(0, 0, 0, 0.95);
+}
+
+/* 拖拽中的克隆体：更强的手感 */
+.drag-ghost .token {
+  box-shadow:
+    0 0 0 1px rgba(232, 200, 90, 0.5),
+    0 26px 44px -14px rgba(0, 0, 0, 0.95),
+    0 0 40px -8px rgba(232, 200, 90, 0.55);
+}
+.drag-ghost { transition: filter 0.2s var(--e-out); }
+.drag-ghost .dg-name {
+  animation: ghost-label 2.2s var(--e-in-out) infinite;
+}
+
+/* =================================================== 3. 羁绊与 SVG 图标 */
+.trait-row {
+  grid-template-columns: 26px minmax(46px, auto) 1fr auto;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+  border: 1px solid rgba(255, 255, 255, 0.045);
+  transition: transform 0.18s var(--e-spring), background 0.16s, border-color 0.16s, box-shadow 0.2s;
+}
+.trait-row:hover {
+  transform: translateX(2px) scale(1.012);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.03));
+  border-color: rgba(255, 255, 255, 0.10);
+}
+.trait-row .tr-glyph {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 22%, color-mix(in srgb, var(--tc) 55%, transparent), transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--tc) 85%, #000), color-mix(in srgb, var(--tc) 35%, #000));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 5px -1px rgba(0, 0, 0, 0.6),
+    0 0 14px -3px color-mix(in srgb, var(--tc) 70%, transparent);
+}
+.trait-row .tr-glyph svg {
+  width: 15px; height: 15px;
+  display: block;
+  color: #0a0710;
+  filter: drop-shadow(0 1px 0 color-mix(in srgb, var(--tc) 40%, #fff 60%));
+}
+.trait-row .tr-glyph span { display: none; }
+
+.trait-row.is-on {
+  border-color: color-mix(in srgb, var(--tc) 42%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--tc) 22%, transparent) 0%, transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+  box-shadow:
+    inset 2px 0 0 var(--tc),
+    0 0 22px -8px color-mix(in srgb, var(--tc) 60%, transparent);
+  animation: trait-breathe-v2 3.4s ease-in-out infinite;
+}
+.trait-row.is-on .tr-name { color: #fff; text-shadow: 0 0 12px color-mix(in srgb, var(--tc) 55%, transparent); }
+.trait-row.is-on .tr-count b { color: var(--tc); text-shadow: 0 0 10px color-mix(in srgb, var(--tc) 60%, transparent); }
+
+/* 差一个就激活：右侧脉冲呼吸 */
+.trait-row.is-near { border-color: rgba(232, 200, 90, 0.42); }
+.trait-row.is-near::after {
+  content: '';
+  position: absolute;
+  right: 4px; top: 50%;
+  width: 5px; height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  animation: near-dot 1.2s ease-in-out infinite;
+}
+
+/* 激活瞬间：整行炸光 */
+.trait-row.is-flash {
+  animation: trait-flash-v2 1s var(--e-out);
+}
+
+/* ===================================================== 4. 数值反馈 */
+.hud-chip.is-bump { animation: chip-bump-v2 0.5s var(--e-spring); }
+.hud-chip.is-up .hc-value { animation: value-up 0.55s var(--e-out); }
+.hud-chip.is-down .hc-value { animation: value-down 0.55s var(--e-out); }
+
+/* 金币变化时的漂浮数字 */
+.float-delta {
+  position: fixed;
+  z-index: 95;
+  font-family: var(--font-black);
+  font-weight: 900;
+  font-size: 15px;
+  pointer-events: none;
+  text-shadow: 0 1px 2px #000, 0 0 14px currentColor;
+  animation: delta-rise 0.95s var(--e-out) forwards;
+}
+.float-delta.up { color: #7dffc8; }
+.float-delta.down { color: #ff8fa2; }
+
+/* 金币图标被"点亮"的瞬间 */
+.hud-chip.is-up .hc-glyph { animation: glyph-pop 0.5s var(--e-spring); }
+
+/* ===================================================== 5. 战斗打击感 */
+/* 跳字：白色为主 + 深色描边，保证在任何底色上都能读清 */
+.dmg-float {
+  font-size: calc(var(--cell) * 0.22);
+  letter-spacing: 0.01em;
+  color: #fff;
+  -webkit-text-stroke: 0;
+  text-shadow:
+    0 1px 0 #000, 0 -1px 0 #000, 1px 0 0 #000, -1px 0 0 #000,
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 0 12px rgba(0, 0, 0, 0.8);
+  animation: none;                    /* 改由 JS 用 WAAPI 逐条驱动 */
+  will-change: transform, opacity;
+}
+.dmg-float.skill {
+  font-size: calc(var(--cell) * 0.28);
+  color: #ffe9a8;
+  text-shadow:
+    0 1px 0 #3a1f00, 0 -1px 0 #3a1f00, 1px 0 0 #3a1f00, -1px 0 0 #3a1f00,
+    0 3px 8px rgba(0, 0, 0, 0.9),
+    0 0 18px rgba(255, 200, 80, 0.9),
+    0 0 34px rgba(255, 160, 20, 0.5);
+}
+.dmg-float.crit {
+  font-size: calc(var(--cell) * 0.34);
+  color: #fff;
+  text-shadow:
+    0 1px 0 #5a0010, 0 -1px 0 #5a0010, 1px 0 0 #5a0010, -1px 0 0 #5a0010,
+    0 0 14px #ff2d55, 0 0 30px #ff2d55, 0 0 54px rgba(255, 45, 85, 0.6);
+}
+.dmg-float.heal {
+  color: #a9ffd4;
+  text-shadow:
+    0 1px 0 #00311c, 0 -1px 0 #00311c, 1px 0 0 #00311c, -1px 0 0 #00311c,
+    0 0 16px rgba(60, 255, 160, 0.85);
+}
+.dmg-float.bf {
+  font-size: calc(var(--cell) * 0.38);
+  color: #fff;
+  text-shadow:
+    0 0 12px #ff2d55, 0 0 34px #ff2d55, 0 0 60px rgba(255, 20, 60, 0.7),
+    0 3px 0 #5a0010;
+}
+.dmg-float.miss { color: #c3d0ff; font-size: calc(var(--cell) * 0.17); }
+.dmg-float.label { font-family: var(--font-ui); font-weight: 700; }
+
+/* 受击：白闪（0.05s）+ 抖动 */
+.battle-unit.is-hit .token img { filter: brightness(2.4) saturate(0.35) contrast(1.2); }
+.battle-unit.is-hit .token {
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.9),
+    0 0 30px 4px rgba(255, 220, 200, 0.75),
+    0 6px 16px rgba(0, 0, 0, 0.6);
+}
+/* 冲击波：以受击点为中心扩散的环 */
+.fx-shock {
+  position: absolute;
+  width: calc(var(--cell) * 0.6);
+  height: calc(var(--cell) * 0.6);
+  margin-left: calc(var(--cell) * -0.3);
+  margin-top: calc(var(--cell) * -0.3);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 20px rgba(255, 220, 180, 0.8), inset 0 0 18px rgba(255, 200, 150, 0.6);
+  animation: shock-ring 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  mix-blend-mode: screen;
+}
+/* 暴击时的径向爆闪 + 色差 */
+.fx-crit {
+  position: absolute;
+  width: calc(var(--cell) * 1.9);
+  height: calc(var(--cell) * 1.9);
+  margin-left: calc(var(--cell) * -0.95);
+  margin-top: calc(var(--cell) * -0.95);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 90, 110, 0.9) 22%, rgba(255, 30, 70, 0.45) 46%, transparent 70%);
+  animation: crit-burst 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  mix-blend-mode: screen;
+}
+/* 技能落点的十字星芒 */
+.fx-star {
+  position: absolute;
+  width: calc(var(--cell) * 1.2);
+  height: calc(var(--cell) * 1.2);
+  margin-left: calc(var(--cell) * -0.6);
+  margin-top: calc(var(--cell) * -0.6);
+  background:
+    linear-gradient(0deg, transparent 46%, rgba(255, 255, 255, 0.95) 50%, transparent 54%),
+    linear-gradient(90deg, transparent 46%, rgba(255, 255, 255, 0.95) 50%, transparent 54%);
+  animation: star-burst-fx 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  mix-blend-mode: screen;
+  filter: blur(0.4px);
+}
+
+/* 顿帧时的全屏色差脉冲（视觉替身：真实顿帧由 JS 冻结模拟） */
+.hitstop-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 88;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255, 255, 255, 0.16), transparent 70%);
+  animation: hitstop-pulse 0.16s var(--e-out) forwards;
+  mix-blend-mode: screen;
+}
+
+/* 战斗中的棋盘：轻微聚焦（四周压暗，中心提亮） */
+.screen-game.is-battle .board {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 30px 80px -20px rgba(0, 0, 0, 0.8),
+    inset 0 0 90px rgba(0, 0, 0, 0.6),
+    0 0 90px -30px rgba(139, 92, 246, 0.55);
+}
+
+/* ===================================================== 6. 变强感知 */
+/* 羁绊激活横幅 */
+.trait-activate {
+  position: fixed;
+  left: 50%;
+  top: 96px;
+  transform: translateX(-50%);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px 8px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--tc, #e8c85a) 55%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--tc, #e8c85a) 22%, rgba(12, 9, 20, 0.95)),
+                            rgba(10, 8, 16, 0.97));
+  box-shadow:
+    0 0 30px -6px color-mix(in srgb, var(--tc, #e8c85a) 65%, transparent),
+    0 16px 40px -16px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  animation: trait-banner 2.1s var(--e-out) forwards;
+  pointer-events: none;
+}
+.trait-activate .ta-icon {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  background: var(--tc, #e8c85a);
+  box-shadow: 0 0 16px -2px var(--tc, #e8c85a);
+}
+.trait-activate .ta-icon svg { width: 15px; height: 15px; color: #0a0710; }
+.trait-activate .ta-text { display: flex; flex-direction: column; line-height: 1.2; }
+.trait-activate .ta-name {
+  font-family: var(--font-black);
+  font-weight: 900;
+  font-size: 14px;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--tc, #e8c85a) 70%, transparent);
+}
+.trait-activate .ta-tier { font-size: 10px; letter-spacing: 0.2em; color: color-mix(in srgb, var(--tc, #e8c85a) 80%, #fff); }
+
+/* 升级横幅 */
+.levelup-banner {
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  z-index: 92;
+  text-align: center;
+  pointer-events: none;
+  animation: levelup-flash 1.8s var(--e-out) forwards;
+}
+.levelup-banner .lb-main {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 44px;
+  letter-spacing: 0.24em;
+  margin-left: 0.24em;
+  background: linear-gradient(180deg, #fffdf3, #ffe9a8 40%, #d9b64b 72%, #8f6a19);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 26px rgba(232, 200, 90, 0.8));
+}
+.levelup-banner .lb-sub {
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  color: var(--gold-2);
+  margin-top: 2px;
+  text-shadow: 0 0 18px rgba(232, 200, 90, 0.7);
+}
+
+/* ============================================================ 7. 关键帧 */
+@keyframes ghost-label {
+  0%, 100% { transform: translateY(0); opacity: 0.92; }
+  50%      { transform: translateY(-2px); opacity: 1; }
+}
+@keyframes trait-breathe-v2 {
+  0%, 100% { box-shadow: inset 2px 0 0 var(--tc), 0 0 18px -8px color-mix(in srgb, var(--tc) 50%, transparent); }
+  50%      { box-shadow: inset 2px 0 0 var(--tc), 0 0 28px -6px color-mix(in srgb, var(--tc) 75%, transparent); }
+}
+@keyframes near-dot {
+  0%, 100% { opacity: 0.35; transform: scale(0.8); }
+  50%      { opacity: 1;    transform: scale(1.25); }
+}
+@keyframes trait-flash-v2 {
+  0%   { background: color-mix(in srgb, var(--tc) 62%, transparent); transform: scale(1); box-shadow: 0 0 40px -4px var(--tc); }
+  22%  { background: color-mix(in srgb, var(--tc) 46%, transparent); transform: scale(1.035); }
+  100% { background: linear-gradient(90deg, color-mix(in srgb, var(--tc) 22%, transparent), transparent 62%); transform: scale(1); }
+}
+@keyframes chip-bump-v2 {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.10) translateY(-2px); }
+  60%  { transform: scale(0.985) translateY(1px); }
+  100% { transform: scale(1) translateY(0); }
+}
+@keyframes value-up {
+  0%   { color: #7dffc8; text-shadow: 0 0 22px rgba(125, 255, 200, 0.95); transform: scale(1.18); }
+  60%  { color: #7dffc8; text-shadow: 0 0 14px rgba(125, 255, 200, 0.6); transform: scale(1); }
+  100% { text-shadow: none; }
+}
+@keyframes value-down {
+  0%   { color: #ff8fa2; text-shadow: 0 0 22px rgba(255, 90, 120, 0.95); transform: scale(1.18); }
+  60%  { color: #ff8fa2; text-shadow: 0 0 14px rgba(255, 90, 120, 0.6); transform: scale(1); }
+  100% { text-shadow: none; }
+}
+@keyframes delta-rise {
+  0%   { opacity: 0; transform: translate(-50%, 6px) scale(0.8); }
+  18%  { opacity: 1; transform: translate(-50%, -4px) scale(1.15); }
+  34%  { transform: translate(-50%, -8px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -38px) scale(0.95); }
+}
+@keyframes glyph-pop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.22) rotate(-6deg); }
+  70%  { transform: scale(0.96) rotate(2deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes shock-ring {
+  0%   { opacity: 0.95; transform: scale(0.35); border-width: 3px; }
+  100% { opacity: 0;    transform: scale(2.1); border-width: 0.5px; }
+}
+@keyframes crit-burst {
+  0%   { opacity: 1;   transform: scale(0.25) rotate(0deg); }
+  45%  { opacity: 1;   transform: scale(1.02) rotate(14deg); }
+  100% { opacity: 0;   transform: scale(1.45) rotate(28deg); }
+}
+@keyframes star-burst-fx {
+  0%   { opacity: 0;   transform: scale(0.3) rotate(0deg); }
+  30%  { opacity: 1;   transform: scale(1.05) rotate(12deg); }
+  100% { opacity: 0;   transform: scale(1.5) rotate(24deg); }
+}
+@keyframes hitstop-pulse {
+  0%   { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+@keyframes trait-banner {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(0.9); }
+  12%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.04); }
+  22%  { transform: translateX(-50%) translateY(0) scale(1); }
+  78%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-10px) scale(0.98); }
+}
+@keyframes levelup-flash {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  14%  { opacity: 1; transform: translate(-50%, -50%) scale(1.06); }
+  24%  { transform: translate(-50%, -50%) scale(1); }
+  76%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -56%) scale(1.02); }
+}
+@keyframes coin-fly {
+  0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--dx, 0px), var(--dy, -80px)) scale(0.5); }
+}
+
+/* 尊重减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .shop-card:hover { transform: translateY(-6px) scale(1.02); }
+  .trait-activate, .levelup-banner { animation-duration: 0.01ms !important; }
+}
+
+/* 数字与"差一个"提示点留出间距 */
+.trait-row .tr-count { padding-right: 11px; }
+
+/* ====================================================== 8. 粒子层 / 弧线跳字 */
+.particle-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  pointer-events: none;
+}
+
+@keyframes dmg-arc {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.55) rotate(var(--rot));
+  }
+  16% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx) * 0.25), calc(-50% - var(--rise) * 0.14))
+               scale(1) rotate(var(--rot));
+  }
+  64% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx) * 0.82), calc(-50% - var(--rise) * 0.64))
+               scale(1) rotate(var(--rot));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% - var(--rise)))
+               scale(0.88) rotate(var(--rot));
+  }
+}
+
+/* 战斗单位入场：只做缩放/亮度，不做透明度 —— 任何情况下都不会"隐身" */
+.battle-unit .token {
+  animation: unit-in 0.36s var(--e-spring) backwards;
+  animation-delay: var(--in-delay, 0ms);
+}
+@keyframes unit-in {
+  0%   { transform: scale(0.52); filter: brightness(2.2) saturate(0.6); }
+  62%  { transform: scale(1.06); filter: brightness(1.15); }
+  100% { transform: scale(1); filter: none; }
+}
+
+/* 羁绊列表：不再用 mask 淡出（会露出"半行"），改为干净裁切 */
+.traits-panel .panel-body {
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+  gap: 4px;
+  padding: 6px;
+}
+
+/* ================================================== 9. 棋盘内部氛围 */
+/* 竞技场式打光：中心亮、边缘暗，让棋子有"站在场地上"的感觉 */
+.board .board-floor::after {
+  background:
+    radial-gradient(58% 64% at 50% 46%, rgba(196, 164, 255, 0.10) 0%, transparent 62%),
+    linear-gradient(90deg,
+      rgba(139, 92, 246, 0.12) 0%,
+      rgba(139, 92, 246, 0.03) 30%,
+      transparent 46%,
+      transparent 54%,
+      rgba(255, 59, 92, 0.05) 72%,
+      rgba(255, 59, 92, 0.16) 100%);
+}
+/* 阵法更清楚一点，但依然克制 */
+.board-seal { opacity: 0.42; }
+.board-seal .ring { box-shadow: 0 0 26px rgba(232, 200, 90, 0.12); }
+/* 格子：内凹的高光边，像一块块地砖 */
+.cell:not(.foe) {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+/* 敌方半场：压暗 + 红调，和己方区分 */
+.board .cell.foe {
+  background: linear-gradient(180deg, rgba(255, 59, 92, 0.045), rgba(0, 0, 0, 0.20));
+}
+/* 对手情报令牌：可读性提高 */
+.preview-layer .unit {
+  opacity: 0.72;
+  filter: saturate(0.62) brightness(0.86) contrast(1.04);
+}
+.preview-layer .unit .token { border-color: rgba(255, 90, 120, 0.55); }
+.preview-layer .pv-name { font-size: 10px; color: #ffd2da; }
+
+/* ================================================== 10. 商店坞背景 */
+.shop-dock {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(8, 6, 13, 0) 0%, rgba(8, 6, 13, 0.55) 40%, rgba(6, 4, 10, 0.78) 100%);
+}
+.shop-dock::before {
+  content: '';
+  position: absolute;
+  left: 18px; right: 18px; top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.10) 30%, rgba(255, 255, 255, 0.10) 70%, transparent);
+  pointer-events: none;
+}
+
+/* ================================================== 11. 悬停态（供验收截图） */
+/*  :hover 无法用脚本触发，这里提供一个等价的 .force-hover 用于自动化截图 */
+.shop-card.force-hover {
+  transform: perspective(760px) translateY(-16px) translateZ(26px) scale(1.055)
+             rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 26px 50px -18px rgba(0, 0, 0, 0.95),
+    0 0 38px -6px var(--qg, rgba(154, 163, 178, 0.4)),
+    0 0 80px -20px color-mix(in srgb, var(--qc) 55%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  z-index: 8;
+}
+.shop-card.force-hover .sc-art { transform: scale(1.13) translateY(-2%); filter: saturate(1.14) brightness(1.08); }
+.shop-card.force-hover .sc-gloss { opacity: 1; }
+.shop-card.force-hover .sc-foot { opacity: 0; }
+.shop-card.force-hover .sc-buy { opacity: 1; transform: translateY(0); }
+
+/* =================================== 12. 棋盘符纹底纹（纯 SVG，离线可用） */
+.board {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76' viewBox='0 0 76 76'%3E%3Cg fill='none' stroke='%23e8c85a' stroke-width='1'%3E%3Cpath d='M38 14 L46 38 L38 62 L30 38 Z'/%3E%3Ccircle cx='38' cy='38' r='3.2'/%3E%3Cpath d='M14 38 H21 M55 38 H62 M38 14 V21 M38 55 V62'/%3E%3Cpath d='M8 8 L16 8 M8 8 L8 16 M68 8 L60 8 M68 8 L68 16 M8 68 L16 68 M8 68 L8 60 M68 68 L60 68 M68 68 L68 60'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(90% 120% at 50% 50%, rgba(58, 40, 92, 0.55) 0%, rgba(16, 12, 26, 0.96) 68%),
+    linear-gradient(180deg, #0d0a16, #07050c);
+  background-size: 76px 76px, cover, cover;
+  background-position: 0 0, center, center;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: overlay, normal, normal;
+}
+.board > .board-floor { background: none; }
+.board::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =================================== 13. 日志条：终端感 */
+.log-dock {
+  position: relative;
+  border-color: rgba(255, 255, 255, 0.07);
+  background:
+    linear-gradient(180deg, rgba(20, 16, 30, 0.92), rgba(8, 6, 13, 0.96));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 8px 24px -12px rgba(0, 0, 0, 0.9);
+}
+.log-dock::after {
+  content: '战 报';
+  position: absolute;
+  right: 10px; top: -9px;
+  padding: 0 8px;
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  color: var(--text-faint);
+  background: #0a0812;
+  border-radius: 4px;
+  pointer-events: none;
+}
+.log-stream .log-line .ll-text { text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6); }
+
+/* 右栏面板：比棋盘更暗，形成主次 */
+.col-right .panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0) 24%),
+    linear-gradient(165deg, rgba(34, 28, 50, 0.70) 0%, rgba(14, 11, 22, 0.90) 54%, rgba(8, 6, 12, 0.95) 100%);
+}
+
+/* =================================== 14. 吐司改到底部，避免遮挡棋盘与横幅 */
+.toast-root {
+  top: auto;
+  bottom: 118px;
+  left: 50%;
+  align-items: center;
+}
+.toast {
+  animation: toast-in-v2 0.28s var(--e-spring) both, toast-out 0.32s var(--e-in-out) 1.6s both;
+  font-size: 12px;
+  padding: 6px 14px;
+}
+@keyframes toast-in-v2 {
+  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-height: 800px) {
+  .toast-root { bottom: 96px; }
+}
+
+/* =================================== 15. 矮屏收口 */
+@media (max-height: 850px) {
+  /* 提示块在矮屏让位给羁绊列表（panels.css 的 display:flex 会覆盖 layout.css，必须写在这里） */
+  .traits-tips { display: none !important; }
+  .intel { height: 24px; }
+  .intel .intel-unit { font-size: 9.5px; }
+}
+/* 情报条内容过多时右侧柔化，而不是硬切一半 */
+.intel .intel-list {
+  mask-image: linear-gradient(90deg, #000 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent 100%);
+}
+
+/* =================================== 16. 异格联动 UI */
+.link-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px 6px 6px;
+  margin: -2px -2px 2px;
+  border-bottom: 1px dashed rgba(232, 200, 90, 0.22);
+}
+.link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px 2px 6px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--lc, #e8c85a) 55%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--lc, #e8c85a) 26%, transparent), rgba(10, 8, 16, 0.85));
+  box-shadow: 0 0 14px -4px color-mix(in srgb, var(--lc, #e8c85a) 70%, transparent);
+  cursor: help;
+  animation: link-pulse 2.6s ease-in-out infinite;
+}
+.link-chip .lk-name {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--lc, #e8c85a) 80%, transparent);
+}
+.link-chip .lk-tag {
+  font-size: 9px;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--lc, #e8c85a) 85%, transparent);
+  color: #0a0710;
+  font-weight: 700;
+}
+@keyframes link-pulse {
+  0%, 100% { box-shadow: 0 0 12px -6px color-mix(in srgb, var(--lc, #e8c85a) 60%, transparent); }
+  50%      { box-shadow: 0 0 22px -4px color-mix(in srgb, var(--lc, #e8c85a) 90%, transparent); }
+}
+
+/* 棋盘上被联动强化的棋子：金色外环 */
+.unit.is-linked .token {
+  box-shadow:
+    0 0 0 1.5px rgba(232, 200, 90, 0.85),
+    0 0 26px -4px rgba(232, 200, 90, 0.8),
+    0 6px 16px rgba(0, 0, 0, 0.55);
+}
+.unit.is-linked::before {
+  content: '联';
+  position: absolute;
+  bottom: 3px; left: 3px;
+  z-index: 6;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  font-size: 8px;
+  line-height: 13px;
+  text-align: center;
+  font-weight: 700;
+  color: #1a1305;
+  background: linear-gradient(180deg, #ffe9a8, #d9b64b);
+  box-shadow: 0 0 10px rgba(232, 200, 90, 0.85);
+}
+
+/* 品质徽记：SSR 更宽，需要压缩字号 */
+.sc-rank { letter-spacing: 0.02em; font-size: 9px; padding: 0 5px; min-width: 20px; text-align: center; }
+.cu-rank { min-width: 18px; text-align: center; }
+
+/* =================================== 17. 强度档位（官方强度榜） */
+.sc-tier {
+  position: absolute;
+  top: 30px; right: 5px;
+  height: 14px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-family: var(--font-black);
+  font-weight: 900;
+  font-size: 8.5px;
+  line-height: 14px;
+  letter-spacing: 0.04em;
+  color: #0a0710;
+  background: var(--tc, #8b95a7);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55), 0 0 10px -2px var(--tc, #8b95a7);
+  z-index: 4;
+}
+/* SSS/SS 给一点脉动，提示"这是顶级卡" */
+.sc-tier.t-sss { animation: tier-glow 2.4s ease-in-out infinite; }
+.sc-tier.t-ss  { animation: tier-glow 3.2s ease-in-out infinite; }
+@keyframes tier-glow {
+  0%, 100% { box-shadow: 0 1px 4px rgba(0,0,0,.55), 0 0 8px -3px var(--tc); }
+  50%      { box-shadow: 0 1px 4px rgba(0,0,0,.55), 0 0 16px -1px var(--tc); }
+}
+.tt-tier {
+  display: inline-block;
+  margin-top: 3px;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #0a0710;
+  background: var(--tc, #8b95a7);
+  box-shadow: 0 0 12px -3px var(--tc, #8b95a7);
+}
+
+/* 图鉴卡的强度档位 */
+.cu-tier {
+  position: absolute;
+  top: 26px; right: 6px;
+  height: 14px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-family: var(--font-black);
+  font-weight: 900;
+  font-size: 8.5px;
+  line-height: 14px;
+  letter-spacing: 0.04em;
+  color: #0a0710;
+  background: var(--tc, #8b95a7);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55), 0 0 10px -2px var(--tc, #8b95a7);
+  z-index: 4;
+}
+.cu-tier.t-sss, .cu-tier.t-ss { animation: tier-glow 2.6s ease-in-out infinite; }
+
+/* =================================== 18. 属性克制 */
+.tt-elem-line {
+  display: flex;
+  gap: 6px;
+  margin-top: 3px;
+}
+.tt-elem-line span {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  line-height: 15px;
+}
+.tt-elem-line .te-win { color: #0a0710; background: #7dffc8; box-shadow: 0 0 10px -3px #7dffc8; }
+.tt-elem-line .te-lose { color: #ffd2da; background: rgba(255, 60, 96, 0.22); border: 1px solid rgba(255, 90, 120, 0.5); }
+
+/* =================================== 19. 必杀块（tooltip） */
+.tt-block.is-ult {
+  border-color: rgba(255, 176, 32, 0.42);
+  background:
+    linear-gradient(90deg, rgba(255, 176, 32, 0.14) 0%, rgba(255, 176, 32, 0.03) 55%, transparent 100%),
+    rgba(255, 255, 255, 0.02);
+  box-shadow: inset 2px 0 0 #ffb020, 0 0 18px -10px rgba(255, 176, 32, 0.8);
+}
+.tt-block.is-ult .b-name { color: #ffd98a; }
+.tt-block.is-ult .b-type {
+  color: #1a1305;
+  background: linear-gradient(180deg, #ffd98a, #d9a326);
+  font-weight: 700;
+}
+
+/* =================================== 20. 棋盘放大 + 日志改悬浮抽屉 */
+/* 侧栏收窄，把宽度让给棋盘 */
+.stage { grid-template-columns: minmax(0, 1fr) 316px; }
+
+/* 日志：脱离文档流 → 棋盘与备战区拿回整块竖向空间 */
+.log-dock {
+  position: fixed;
+  right: 18px;
+  top: 74px;
+  width: 430px;
+  height: auto;
+  max-height: min(58vh, 540px);
+  margin: 0;
+  padding: 0;
+  display: none;
+  flex-direction: column;
+  z-index: 80;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background:
+    linear-gradient(180deg, rgba(24, 21, 33, 0.97) 0%, rgba(12, 11, 18, 0.985) 100%);
+  box-shadow: 0 22px 60px -20px rgba(0, 0, 0, 0.92), 0 0 0 1px rgba(0, 0, 0, 0.5) inset;
+  overflow: hidden;
+  animation: log-drawer-in 0.18s var(--e-out);
+}
+.log-dock.is-open { display: flex; }
+@keyframes log-drawer-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+.log-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent);
+}
+.log-head:hover { background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent); }
+.lh-caret { color: var(--gold); font-size: 10px; transform: rotate(90deg); }
+.lh-title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--text);
+}
+.lh-close {
+  margin-left: auto;
+  color: var(--text-faint);
+  font-size: 12px;
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+.lh-close:hover { color: #ff8fa2; background: rgba(255, 90, 120, 0.12); }
+
+/* 战斗中的人数/计时压缩成一行放进抽屉标题 */
+.log-dock .combat-dock {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  height: auto;
+}
+.log-dock .combat-dock .cd-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10.5px;
+  color: var(--text-faint);
+}
+.log-dock .combat-dock .cd-row b { color: var(--text); font-variant-numeric: tabular-nums; }
+.log-dock .combat-dock .cd-sep { color: rgba(255, 255, 255, 0.25); font-size: 10px; }
+.log-dock .combat-dock .cd-time {
+  margin-left: 4px;
+  font-size: 10px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.log-dock .log-stream {
+  flex: 1 1 auto;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 12px 10px;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* 日志入口按钮的激活态 */
+.icon-btn.is-on { color: var(--gold); border-color: rgba(232, 200, 90, 0.5); box-shadow: 0 0 12px -4px rgba(232, 200, 90, 0.7); }
+
+/* 小屏：抽屉贴边铺开 */
+@media (max-width: 1180px) {
+  .log-dock { right: 10px; left: 10px; width: auto; top: 66px; max-height: 52vh; }
+}
+
+/* =================================== 21. 竖向预算：压缩商店与 HUD，把高度让给棋盘 */
+:root { --card-w: clamp(114px, 10.1vw, 146px); }
+.hud { height: 56px; }
+.stage { padding: 6px 18px 0; gap: 10px; }
+.shop-dock { padding: 6px 18px 4px; gap: 12px; }
+.bench-row { gap: 8px; }
+
+@media (max-height: 850px) {
+  :root { --card-w: clamp(108px, 9.6vw, 138px); }
+  .hud { height: 52px; }
+}
+
+/* =================================== 22. 咒具图标 */
+.item-chip { position: relative; overflow: hidden; }
+.item-chip .ic-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none;
+  user-select: none;
+}
+.item-chip.is-complete .ic-art {
+  filter: drop-shadow(0 0 6px rgba(232, 200, 90, 0.45));
+}
+.item-chip.is-armed .ic-art { filter: brightness(1.18); }
+.item-chip .ic-count {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  z-index: 2;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: #12101a;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: var(--text);
+  font-size: 9.5px;
+  line-height: 13px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =================================== 23. 四特性徽记（取代强度档位） */
+/* 卡面右上角：行 / 幻 / 夜 / 影 */
+.sc-elem, .cu-elem {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 11px;
+  line-height: 1;
+  color: #0a0710;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ec) 82%, #fff) 0%, var(--ec) 100%);
+  border: 1px solid color-mix(in srgb, var(--ec) 55%, #000);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.6),
+    0 0 12px -3px var(--eg, var(--ec));
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  z-index: 4;
+  pointer-events: none;
+}
+.cu-elem { top: 26px; width: 18px; height: 18px; font-size: 10px; border-radius: 5px; }
+
+/* 旧的强度档位样式不再使用，保留类名避免别处引用报错 */
+.sc-tier, .cu-tier { display: none !important; }
+
+/* =================================== 24. 图鉴浮窗层级修正 */
+/* 卡面的特性徽记是 z-index:4，浮窗只有 3 → 徽记会浮在浮窗上面。
+   把浮窗提到网格之上，并建立独立层叠上下文。 */
+.codex-detail {
+  z-index: 60 !important;
+  isolation: isolate;
+  box-shadow: -18px 0 46px -18px rgba(0, 0, 0, 0.92);
+}
+
+/* =================================== 25. 必杀奥义图（横贯全屏切入） */
+.cut-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 210;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ult-cut {
+  position: absolute;
+  inset: 0;
+  --uc: #e8c85a;
+  animation: uc-out 0.34s cubic-bezier(0.7, 0, 0.9, 0.4) 0.98s forwards;
+}
+.ult-cut.is-foe { --uc: #ff5c7a; }
+@keyframes uc-out {
+  to { opacity: 0; transform: translateX(14%) skewX(-4deg); }
+}
+
+/* 斜切色带：从左侧扫入 */
+.uc-band {
+  position: absolute;
+  top: 50%;
+  left: -20%;
+  width: 150%;
+  height: 34vh;
+  margin-top: -17vh;
+  transform-origin: left center;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--uc) 26%, transparent) 12%,
+      rgba(10, 8, 16, 0.92) 26%,
+      rgba(6, 5, 10, 0.97) 62%,
+      color-mix(in srgb, var(--uc) 20%, transparent) 88%,
+      transparent 100%);
+  border-top: 1.5px solid color-mix(in srgb, var(--uc) 70%, transparent);
+  border-bottom: 1.5px solid color-mix(in srgb, var(--uc) 45%, transparent);
+  box-shadow: 0 0 90px -20px var(--uc), inset 0 0 60px -30px var(--uc);
+  transform: scaleX(0) skewX(-9deg);
+  animation: uc-band 0.46s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes uc-band {
+  to { transform: scaleX(1) skewX(-9deg); }
+}
+
+/* 立绘：从右侧冲进来，左侧用渐变淡出接缝 */
+.uc-art {
+  position: absolute;
+  top: 50%;
+  right: 2vw;
+  height: 52vh;
+  width: 40vh;
+  margin-top: -26vh;
+  transform: translateX(60vw) skewX(-9deg);
+  animation: uc-art 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.06s forwards;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 34%, #000 100%);
+}
+.uc-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 12%;
+  filter: drop-shadow(0 0 26px color-mix(in srgb, var(--uc) 55%, transparent)) contrast(1.06) saturate(1.08);
+}
+@keyframes uc-art {
+  to { transform: translateX(0) skewX(-9deg); }
+}
+
+/* 光晕扫过 */
+.uc-glow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 34vw;
+  height: 60vh;
+  margin-top: -30vh;
+  background: radial-gradient(ellipse at left, color-mix(in srgb, var(--uc) 55%, transparent), transparent 68%);
+  opacity: 0;
+  animation: uc-glow 0.7s ease-out 0.12s;
+  mix-blend-mode: screen;
+}
+@keyframes uc-glow {
+  0% { opacity: 0; transform: translateX(-30%); }
+  35% { opacity: 0.85; }
+  100% { opacity: 0; transform: translateX(46%); }
+}
+
+/* 必杀名：从左侧推入 */
+.uc-text {
+  position: absolute;
+  top: 50%;
+  left: 6vw;
+  transform: translate(-40px, -50%) skewX(-9deg);
+  opacity: 0;
+  animation: uc-text 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.85);
+}
+@keyframes uc-text {
+  to { transform: translate(0, -50%) skewX(-9deg); opacity: 1; }
+}
+.uc-kicker {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.54em;
+  color: var(--uc);
+  margin-bottom: 6px;
+  opacity: 0.9;
+}
+.uc-title {
+  font-family: var(--font-black, var(--font-display));
+  font-weight: 900;
+  font-size: clamp(26px, 3.6vw, 54px);
+  line-height: 1.06;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(180deg, #ffffff 0%, #ffe9a8 58%, var(--uc) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--uc) 60%, transparent));
+  max-width: 56vw;
+}
+.uc-name {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* =================================== 26. 黑闪雷击 */
+.bf-storm {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  animation: bf-fade 0.6s ease-out forwards;
+}
+@keyframes bf-fade {
+  0% { opacity: 1; }
+  70% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+.bf-core {
+  position: absolute;
+  left: -46px;
+  top: -46px;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #c4b5fd 26%, #4c1d95 52%, transparent 72%);
+  filter: blur(1.5px);
+  animation: bf-core-pop 0.34s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes bf-core-pop {
+  0% { transform: scale(0.2); opacity: 1; }
+  60% { transform: scale(1.5); opacity: 0.9; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+.bf-bolt {
+  position: absolute;
+  left: -160px;
+  top: -160px;
+  overflow: visible;
+  animation: bf-bolt-in 0.5s steps(7, end) forwards;
+}
+@keyframes bf-bolt-in {
+  0% { opacity: 0; transform: scale(0.35); }
+  12% { opacity: 1; transform: scale(0.7); }
+  30% { opacity: 0.55; transform: scale(1); }
+  46% { opacity: 1; }
+  70% { opacity: 0.4; }
+  100% { opacity: 0; transform: scale(1.12); }
+}
+.bf-line {
+  stroke: #07050c;
+  stroke-width: 11;
+  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.95)) drop-shadow(0 0 26px rgba(76, 29, 149, 0.8));
+}
+.bf-line-core {
+  stroke: #e9e3ff;
+  stroke-width: 2.4;
+  opacity: 0.95;
+}
+
+/* =================================== 27. 布局收紧：棋盘再放大、整体上移 */
+.hud { height: 50px; }
+.stage {
+  grid-template-columns: minmax(0, 1fr) 292px;
+  padding: 4px 10px 0;
+  gap: 8px;
+}
+.shop-dock { padding: 5px 10px 3px; }
+:root { --card-w: clamp(110px, 9.4vw, 134px); }
+
+/* 黑闪雷：提高对比度，让"黑雷"在暗底上也能看清 */
+.bf-line {
+  stroke-width: 13;
+  filter:
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 14px rgba(167, 139, 250, 0.95))
+    drop-shadow(0 0 34px rgba(109, 40, 217, 0.85));
+}
+.bf-line-core { stroke-width: 3; }
+
+@media (max-height: 850px) {
+  .hud { height: 48px; }
+  :root { --card-w: clamp(104px, 9vw, 126px); }
+}
+
+/* =================================== 28. 奥义图改用 wiki 全图（16:9 宽幅） */
+.uc-band { height: 44vh; margin-top: -22vh; }
+
+.uc-art {
+  top: 50%;
+  right: -2vw;
+  width: 66vw;
+  height: 42vh;
+  margin-top: -21vh;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 16%, #000 42%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 16%, #000 42%, #000 100%);
+}
+.uc-art img {
+  object-position: 50% 32%;
+  filter: drop-shadow(0 0 30px color-mix(in srgb, var(--uc) 45%, transparent)) contrast(1.05) saturate(1.06);
+}
+/* 立绘右侧压一点暗角，避免和侧栏打架 */
+.uc-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    rgba(6,5,10,0.72) 0%, rgba(6,5,10,0.24) 34%, transparent 58%);
+  pointer-events: none;
+}
+
+/* 必杀名压在立绘左侧上方一点，读起来更"海报" */
+.uc-text { left: 5vw; }
+.uc-title { max-width: 46vw; }
+
+@media (max-width: 1180px) {
+  .uc-art { width: 74vw; height: 36vh; margin-top: -18vh; }
+  .uc-title { max-width: 60vw; }
+}
+
+/* =================================== 29. 大屏适配：放开 1700px 上限 */
+/* 原来 .stage / .shop-dock 被锁在 1700px 居中，2K 屏两侧会空出一大截。
+   改成只在高到离谱的屏上才收，正常 2K / 4K 都吃满宽度。 */
+.stage { max-width: 2600px; }
+.shop-dock { max-width: 2600px; }
+.hud { max-width: 2600px; margin-left: auto; margin-right: auto; }
+
+/* 大屏下商店卡也跟着放大，否则相对棋盘会显得太小 */
+@media (min-width: 1600px) {
+  :root { --card-w: clamp(140px, 8.2vw, 186px); }
+}
+@media (min-width: 2000px) {
+  :root { --card-w: clamp(160px, 7.6vw, 210px); }
+  .stage { grid-template-columns: minmax(0, 1fr) 340px; }
+}
+
+/* =================================== 30. 备战区 / 商店 / 棋盘 之间的呼吸感 */
+/* 之前三层是贴着的：棋盘底边 → 8px → 备战席 → 6px → 商店。
+   现在拉开间距，并给备战席一块独立的底板。 */
+.col-left { gap: 16px; }
+.bench-row {
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(22, 18, 33, 0.72) 0%, rgba(9, 7, 14, 0.55) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.9);
+}
+.bench-row .bench {
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+.bench-row .sell-zone { border-radius: 11px; }
+
+.shop-dock { padding-top: 10px; }
+
+/* 棋盘与备战席之间加一道细分割，视觉上不再连成一块 */
+.board-shell::after {
+  content: '';
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: -8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09) 30%, rgba(255, 255, 255, 0.09) 70%, transparent);
+  pointer-events: none;
+}
+
+/* 棋盘容器不再被 flex 压缩（否则棋盘会溢出、压到备战席） */
+.board-shell {
+  flex: 0 0 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 商店整条往下挪一点，和备战席之间留白 */
+.shop-dock { margin-top: 12px; padding-top: 8px; }
+
+/* =================================== 31. 影分身角标（与式神区分） */
+.battle-unit.is-clone[data-clone="shadow"] .token {
+  border-color: rgba(167, 139, 250, 0.85);
+  box-shadow: 0 0 16px -4px rgba(167, 139, 250, 0.8),
+              inset 0 0 18px -10px rgba(167, 139, 250, 0.9);
+}
+.battle-unit.is-clone[data-clone="shadow"] .token::after {
+  content: '影分身';
+  color: #1b1030;
+  background: linear-gradient(180deg, #d8ccff 0%, #a78bfa 100%);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.65), 0 0 10px rgba(167, 139, 250, 0.7);
+}
+
+/* =================================== 32. 标题页：左文右滚卡墙 */
+.title-core {
+  max-width: 860px;
+}
+.tc-logo { font-size: clamp(52px, 6.4vw, 104px); }
+.tc-desc {
+  font-size: 15.5px;
+  line-height: 1.95;
+  max-width: 720px;
+}
+.tc-feat b { font-size: 26px; }
+.tc-actions .btn { font-size: 15px; }
+
+/* 右侧：两列竖向滚动的卡墙 */
+#tb-fan.is-marquee {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(42vw, 620px);
+  display: flex;
+  gap: 14px;
+  padding: 0 12px;
+  pointer-events: auto;
+  justify-content: center;
+  transform: none;
+  filter: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+.tbm-col {
+  flex: 0 0 auto;
+  width: 128px;
+  overflow: hidden;
+}
+.tbm-track {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: tbm-up var(--dur, 80s) linear infinite;
+  will-change: transform;
+}
+.tbm-col.is-down .tbm-track {
+  animation-name: tbm-down;
+}
+#tb-fan.is-marquee:hover .tbm-track { animation-play-state: paused; }
+@keyframes tbm-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes tbm-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+.tbm-card {
+  position: relative;
+  width: 128px;
+  height: 179px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.95);
+  opacity: 0.86;
+  transition: opacity 0.2s, transform 0.2s;
+  flex: 0 0 auto;
+}
+.tbm-card:hover { opacity: 1; transform: scale(1.04); z-index: 3; }
+.tbm-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tbm-cost {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 17px; height: 17px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-black);
+  font-size: 9.5px;
+  color: #0a0710;
+}
+.tbm-elem {
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 16px; height: 16px;
+  border-radius: 4px;
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 9px;
+  color: #0a0710;
+}
+
+@media (max-width: 1180px) {
+  #tb-fan.is-marquee { width: 40vw; }
+  .tbm-card, .tbm-col { width: 104px; }
+  .tbm-card { height: 146px; }
+}
+
+/* 标题页排版微调：文字块更宽、卡墙更靠中、卡片更实 */
+.title-core { max-width: 940px; margin-left: 3vw; }
+#tb-fan.is-marquee { width: min(50vw, 820px); right: 1vw; }
+.tbm-card { opacity: 0.94; border-color: rgba(255, 255, 255, 0.16); }
+.tbm-card:hover { opacity: 1; }
+
+/* =================================== 33. 可升星高亮 */
+.shop-card.can-merge {
+  border-color: rgba(255, 209, 102, 0.95) !important;
+  animation: merge-pulse 1.15s ease-in-out infinite;
+  z-index: 3;
+}
+@keyframes merge-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(255, 209, 102, 0.55),
+      0 0 18px -4px rgba(255, 209, 102, 0.85),
+      0 14px 30px -12px rgba(0, 0, 0, 0.9);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(255, 230, 150, 0.95),
+      0 0 34px 0 rgba(255, 209, 102, 0.95),
+      0 14px 30px -12px rgba(0, 0, 0, 0.9);
+  }
+}
+.sc-merge-tag {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  z-index: 6;
+  height: 15px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 9px;
+  line-height: 15px;
+  letter-spacing: 0.06em;
+  color: #2a1d00;
+  background: linear-gradient(180deg, #ffe9a8 0%, #ffc93c 100%);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 209, 102, 0.7);
+  pointer-events: none;
+}
+/* 图鉴特性筛选按钮：选中时用特性色描边 */
+.codex-filter.is-on[style*="--tc"] {
+  border-color: var(--tc);
+  color: var(--tc);
+  box-shadow: 0 0 14px -4px var(--tc);
+}
+
+/* =================================== 34. 必杀槽（血条/蓝条之上） */
+.tk-ult {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.72);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+.tk-ult > i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #a16207, #e8c85a 60%, #ffe9a8);
+  box-shadow: 0 0 6px rgba(232, 200, 90, 0.75);
+  transition: width 0.16s linear;
+}
+.tk-ult.full {
+  height: 5px;
+  animation: ult-ready 0.85s ease-in-out infinite;
+}
+.tk-ult.full > i {
+  background: linear-gradient(90deg, #ffd166, #fff3c4 60%, #ffffff);
+  box-shadow: 0 0 12px rgba(255, 220, 120, 0.95);
+}
+@keyframes ult-ready {
+  0%, 100% { box-shadow: 0 0 6px rgba(255, 209, 102, 0.7); }
+  50%      { box-shadow: 0 0 16px rgba(255, 235, 150, 1); }
+}
+
+/* =================================== 35. 奥义图：敌我区分 */
+/* 我方：金色调，色带左→右扫入，立绘从右冲入，文字在左 */
+/* 敌方：猩红色，色带右→左扫入，立绘从左冲入，文字在右，整体镜像 */
+.ult-cut.is-mine {
+  --uc-band-a: rgba(12, 9, 6, 0.94);
+  --uc-band-b: rgba(6, 5, 10, 0.98);
+}
+.ult-cut.is-foe {
+  --uc: #ff3b5c;
+  --uc-band-a: rgba(26, 4, 10, 0.95);
+  --uc-band-b: rgba(10, 3, 6, 0.985);
+}
+.ult-cut.is-foe .uc-band {
+  background:
+    linear-gradient(270deg,
+      transparent 0%,
+      color-mix(in srgb, var(--uc) 30%, transparent) 12%,
+      var(--uc-band-a) 26%,
+      var(--uc-band-b) 62%,
+      color-mix(in srgb, var(--uc) 22%, transparent) 88%,
+      transparent 100%);
+  border-top-color: color-mix(in srgb, var(--uc) 75%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--uc) 48%, transparent);
+  box-shadow: 0 0 100px -18px var(--uc), inset 0 0 70px -30px var(--uc);
+  transform-origin: right center;
+  transform: scaleX(0) skewX(9deg);
+  animation-name: uc-band-r;
+}
+@keyframes uc-band-r {
+  to { transform: scaleX(1) skewX(9deg); }
+}
+
+/* 敌方立绘：贴左，从左冲进来，遮罩反过来 */
+.ult-cut.is-foe .uc-art {
+  right: auto;
+  left: -2vw;
+  transform: translateX(-60vw) skewX(9deg);
+  animation-name: uc-art-r;
+  -webkit-mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,.35) 16%, #000 42%, #000 100%);
+  mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,.35) 16%, #000 42%, #000 100%);
+}
+@keyframes uc-art-r {
+  to { transform: translateX(0) skewX(9deg); }
+}
+
+/* 敌方文字：靠右、右对齐 */
+.ult-cut.is-foe .uc-text {
+  left: auto;
+  right: 6vw;
+  text-align: right;
+  transform: translate(40px, -50%) skewX(9deg);
+  animation-name: uc-text-r;
+}
+@keyframes uc-text-r {
+  to { transform: translate(0, -50%) skewX(9deg); opacity: 1; }
+}
+.ult-cut.is-foe .uc-kicker { color: #ff8fa2; }
+.ult-cut.is-foe .uc-title {
+  background: linear-gradient(180deg, #ffffff 0%, #ffd0d8 55%, var(--uc) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 22px rgba(255, 59, 92, 0.75));
+}
+.ult-cut.is-foe .uc-name { color: rgba(255, 210, 218, 0.8); }
+/* 敌方：整体向右飞出（镜像） */
+.ult-cut.is-foe {
+  animation-name: uc-out-foe;
+}
+@keyframes uc-out-foe {
+  to { opacity: 0; transform: translateX(-14%) skewX(4deg); }
+}
+
+/* =================================== 36. 卡组选择器 */
+.deck-picker { width: 100%; max-width: 760px; margin: 14px 0 6px; }
+.deck-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.deck-btn {
+  --dc: #e8c85a;
+  padding: 7px 14px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: all .16s var(--e-out);
+}
+.deck-btn:hover { border-color: color-mix(in srgb, var(--dc) 60%, transparent); color: #fff; }
+.deck-btn.is-on {
+  border-color: var(--dc);
+  color: #0a0710;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--dc) 88%, #fff), var(--dc));
+  box-shadow: 0 0 18px -6px var(--dc);
+  font-weight: 700;
+}
+.deck-btn.deck-edit { border-style: dashed; color: #b9b2c9; }
+.deck-summary {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  letter-spacing: .02em;
+}
+.deck-summary.is-all { color: #ffb27a; }
+
+/* 组卡器 */
+.modal.deck-editor { width: min(92vw, 980px); max-height: 86vh; display: flex; flex-direction: column; }
+.de-bar {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--text-dim);
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.de-bar #de-count { font-family: var(--font-black); font-size: 16px; color: #7dffc8; }
+.de-hint { margin-left: auto; color: var(--text-faint); font-size: 11px; }
+.de-grid {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 12px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 7px;
+}
+.de-chip {
+  position: relative; padding: 0; border-radius: 8px; overflow: hidden;
+  border: 2px solid transparent; background: #0b0812; cursor: pointer;
+  aspect-ratio: 240 / 336;
+}
+.de-chip img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .78; }
+.de-chip span {
+  position: absolute; top: 2px; right: 3px; font-size: 9px; font-weight: 900;
+  color: #0a0710; background: #e8c85a; border-radius: 4px; padding: 0 3px;
+}
+.de-chip.is-on { border-color: #ffd166; box-shadow: 0 0 14px -3px rgba(255,209,102,.9); }
+.de-chip.is-on img { opacity: 1; }
+
+/* =================================== 37. 卡组选择（标题页，醒目版） */
+.deck-picker {
+  width: 100%;
+  max-width: 780px;
+  margin: 18px 0 4px;
+  padding: 14px 16px 12px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(20, 16, 30, 0.82), rgba(10, 8, 16, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 14px 40px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.deck-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.deck-label {
+  font-family: var(--font-black);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  color: #f3e6c4;
+  text-shadow: 0 0 16px rgba(240, 200, 90, 0.35);
+}
+.deck-tip { font-size: 11px; color: var(--text-faint); }
+.deck-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 8px;
+}
+.deck-card {
+  --dc: #e8c85a;
+  position: relative;
+  text-align: left;
+  padding: 9px 11px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  transition: transform 0.14s var(--e-out), border-color 0.14s, box-shadow 0.14s;
+  overflow: hidden;
+}
+.deck-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--dc);
+  opacity: 0.85;
+}
+.deck-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--dc) 55%, transparent);
+}
+.deck-card.is-on {
+  border-color: var(--dc);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--dc) 18%, transparent),
+    rgba(255, 255, 255, 0.03));
+  box-shadow: 0 0 22px -8px var(--dc), inset 0 0 24px -18px var(--dc);
+}
+.dc-top { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.dc-name {
+  font-family: var(--font-black);
+  font-size: 13.5px;
+  color: #f7f2e6;
+  letter-spacing: 0.02em;
+}
+.dc-badge {
+  margin-left: auto;
+  min-width: 20px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: 5px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 17px;
+  text-align: center;
+  color: #0a0710;
+  background: var(--dc);
+}
+.dc-sub { font-size: 10.5px; color: var(--text-faint); margin-bottom: 6px; }
+.dc-dist {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: color-mix(in srgb, var(--dc) 78%, #fff);
+  opacity: 0.9;
+}
+.deck-summary {
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+.deck-summary.is-all { color: #ffb27a; }
+
+/* 组卡器 */
+.modal.deck-editor { width: min(94vw, 1000px); max-height: 88vh; display: flex; flex-direction: column; }
+.de-bar {
+  padding: 9px 18px;
+  font-size: 12px;
+  color: var(--text-dim);
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.de-bar #de-count { font-family: var(--font-black); font-size: 17px; color: #7dffc8; }
+.de-hint { margin-left: auto; font-size: 11px; color: var(--text-faint); }
+.de-grid {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 12px 14px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(66px, 1fr)); gap: 6px;
+}
+.de-chip {
+  position: relative; padding: 0; border-radius: 7px; overflow: hidden;
+  border: 2px solid transparent; background: #0b0812; cursor: pointer;
+  aspect-ratio: 240 / 336;
+  transition: transform 0.12s var(--e-out);
+}
+.de-chip:hover { transform: translateY(-2px); }
+.de-chip img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.72; }
+.de-chip.is-on { border-color: #ffd166; box-shadow: 0 0 14px -3px rgba(255, 209, 102, 0.9); }
+.de-chip.is-on img { opacity: 1; }
+.de-cost {
+  position: absolute; top: 2px; right: 3px;
+  font-size: 9px; font-weight: 900; line-height: 13px;
+  color: #0a0710; background: #e8c85a; border-radius: 4px; padding: 0 3px;
+}
+
+/* =================================== 38. 难度选择（与卡组面板统一） */
+.tc-diff {
+  width: 100%;
+  max-width: 780px;
+  box-sizing: border-box;
+  margin: 14px 0 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(20, 16, 30, 0.82), rgba(10, 8, 16, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 14px 40px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tc-diff-label {
+  font-family: var(--font-black);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  color: #f3e6c4;
+  padding: 0;
+  text-shadow: 0 0 16px rgba(240, 200, 90, 0.35);
+}
+.diff-opt {
+  flex: 0 0 auto;
+  min-width: 84px;
+  padding: 8px 18px;
+  font-family: var(--font-black);
+  font-size: 13.5px;
+  letter-spacing: 0.08em;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.14s var(--e-out);
+}
+.diff-opt:hover { transform: translateY(-1px); border-color: rgba(255, 209, 102, 0.5); color: #fff; }
+.diff-opt.is-on {
+  color: #0a0710;
+  background: linear-gradient(180deg, #ffe4a1, #e8c85a);
+  border-color: #ffe4a1;
+  box-shadow: 0 0 22px -8px rgba(255, 209, 102, 0.95);
+}
+.diff-desc {
+  width: 100%;
+  max-width: 780px;
+  box-sizing: border-box;
+  padding: 7px 4px 0;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+}
+
+/* =================================== 39. 战后战斗总结 */
+.bsum {
+  width: 100%;
+  margin: 6px 0 2px;
+  padding: 10px 12px 8px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.bsum-title {
+  font-family: var(--font-black);
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.bsum-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bsum-col { min-width: 0; }
+.bsum-head {
+  font-family: var(--font-black);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  padding: 3px 6px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  color: #0a0710;
+  background: linear-gradient(90deg, #ffe4a1, #e8c85a);
+}
+.bsum-col.foe .bsum-head { background: linear-gradient(90deg, #ff6b83, #c81e3c); color: #fff; }
+.bsum-total {
+  display: flex; align-items: baseline; gap: 4px;
+  font-size: 10px; color: var(--text-faint);
+  padding: 2px 6px 5px;
+  border-bottom: 1px dashed rgba(255,255,255,.1);
+  margin-bottom: 4px;
+}
+.bsum-total b { font-family: var(--font-mono, monospace); font-size: 10.5px; color: #fff; }
+.bsum-total span:first-child { margin-right: auto; letter-spacing: .1em; }
+.bs-dim { color: var(--text-faint); font-size: 9.5px; }
+
+.bsum-row {
+  display: grid;
+  grid-template-columns: 13px 1fr 46px 46px 40px;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  border-radius: 5px;
+  font-size: 10.5px;
+}
+.bsum-row:nth-child(odd) { background: rgba(255,255,255,.022); }
+.bsum-row.is-dead { opacity: .42; }
+.bsum-rank {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px; color: var(--text-faint); text-align: right;
+}
+.bsum-nm {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: #e8e2d6;
+}
+.bsum-v {
+  position: relative;
+  height: 14px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.05);
+  overflow: hidden;
+}
+.bsum-v i {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0;
+  transition: width .5s var(--e-out);
+}
+.bsum-v span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  text-align: right;
+  padding-right: 3px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  line-height: 14px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.85);
+}
+.bsum-v.dealt i { background: linear-gradient(90deg, rgba(255,140,60,.55), rgba(255,190,90,.9)); }
+.bsum-v.taken i { background: linear-gradient(90deg, rgba(255,70,90,.5), rgba(255,110,130,.85)); }
+.bsum-v.heal  i { background: linear-gradient(90deg, rgba(60,200,140,.45), rgba(110,255,190,.85)); }
+.bsum-legend {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 8px; padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  font-size: 9.5px; color: var(--text-faint);
+}
+.bsum-legend .lg {
+  display: inline-flex; align-items: center; gap: 3px;
+}
+.bsum-legend .lg::before {
+  content: ''; width: 8px; height: 8px; border-radius: 2px;
+}
+.bsum-legend .lg.d::before { background: linear-gradient(90deg, #ff8c3c, #ffbe5a); }
+.bsum-legend .lg.t::before { background: linear-gradient(90deg, #ff465a, #ff6e82); }
+.bsum-legend .lg.h::before { background: linear-gradient(90deg, #3cc88c, #6effbe); }
+.bsum-legend .bs-dim { margin-left: auto; }
+
+/* =================================== 40. 奥义图：阵营大字 + 边条 */
+.ult-cut .uc-side {
+  position: absolute;
+  top: 50%;
+  left: 2.2vw;
+  z-index: 6;
+  transform: translateY(-50%) skewX(-9deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  animation: uc-side-in .32s cubic-bezier(.2,.9,.25,1) both;
+}
+@keyframes uc-side-in {
+  from { opacity: 0; transform: translate(-18px, -50%) skewX(-9deg); }
+  to   { opacity: 1; transform: translate(0, -50%) skewX(-9deg); }
+}
+.ult-cut .uc-side b {
+  font-family: var(--font-black);
+  font-size: clamp(30px, 4.4vw, 62px);
+  line-height: .92;
+  color: #ffd166;
+  text-shadow:
+    0 0 18px rgba(255, 209, 102, .9),
+    0 0 42px rgba(255, 160, 40, .6),
+    0 3px 0 rgba(0,0,0,.55);
+}
+.ult-cut .uc-side span {
+  font-family: var(--font-black);
+  font-size: clamp(13px, 1.5vw, 20px);
+  letter-spacing: .3em;
+  color: rgba(255, 230, 170, .92);
+  text-shadow: 0 2px 6px rgba(0,0,0,.8);
+}
+.ult-cut .uc-side i {
+  margin-top: 5px;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: .34em;
+  color: rgba(255, 220, 150, .62);
+}
+
+/* 敌方：侧标镜像到右边、改血红 */
+.ult-cut.is-foe .uc-side {
+  left: auto;
+  right: 2.2vw;
+  transform: translateY(-50%) skewX(9deg);
+  animation-name: uc-side-in-foe;
+}
+@keyframes uc-side-in-foe {
+  from { opacity: 0; transform: translate(18px, -50%) skewX(9deg); }
+  to   { opacity: 1; transform: translate(0, -50%) skewX(9deg); }
+}
+.ult-cut.is-foe .uc-side b {
+  color: #ff3b5c;
+  text-shadow:
+    0 0 18px rgba(255, 59, 92, .95),
+    0 0 46px rgba(200, 20, 50, .7),
+    0 3px 0 rgba(0,0,0,.55);
+}
+.ult-cut.is-foe .uc-side span { color: rgba(255, 190, 200, .95); }
+.ult-cut.is-foe .uc-side i { color: rgba(255, 150, 165, .7); }
+
+/* 边条：我方左侧金色，敌方右侧血红 */
+.ult-cut .uc-edge {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0;
+  width: 6px;
+  z-index: 7;
+  background: linear-gradient(180deg, transparent, #ffd166 18%, #fff3c4 50%, #ffd166 82%, transparent);
+  box-shadow: 0 0 26px rgba(255, 209, 102, .85);
+}
+.ult-cut.is-foe .uc-edge {
+  left: auto;
+  right: 0;
+  background: linear-gradient(180deg, transparent, #ff3b5c 18%, #ffd0d8 50%, #ff3b5c 82%, transparent);
+  box-shadow: 0 0 26px rgba(255, 59, 92, .9);
+}
+
+/* 侧标占位：文字整体让开，避免和阵营大字重叠 */
+.ult-cut.is-mine .uc-text { left: 9vw; }
+.ult-cut.is-foe  .uc-text { right: 9vw; }
+/* 侧标略微收窄 */
+.ult-cut .uc-side { left: 1.6vw; }
+.ult-cut.is-foe .uc-side { right: 1.6vw; }
+.ult-cut .uc-side b { font-size: clamp(26px, 3.6vw, 52px); }
+.ult-cut .uc-side span { font-size: clamp(11px, 1.2vw, 16px); }
+.ult-cut .uc-side i { font-size: 8px; margin-top: 3px; }
+
+/* =================================== 41. 商店锁定：🔒 + 锁链 */
+.shop-card.is-locked { filter: saturate(.75) brightness(.9); }
+.sc-lock {
+  position: absolute;
+  left: 50%; top: -3px;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9;
+}
+.sc-lock-head {
+  position: absolute;
+  left: 50%; top: -14px;
+  transform: translateX(-50%);
+  font-size: 17px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.9)) drop-shadow(0 0 8px rgba(255,209,102,.9));
+  animation: lock-bob 1.6s ease-in-out infinite;
+}
+@keyframes lock-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-3px); }
+}
+.sc-lock-chain {
+  position: absolute;
+  top: -1px;
+  width: 3px;
+  height: 0;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    180deg,
+    #d9c98a 0 5px,
+    #8a7b4c 5px 7px
+  );
+  box-shadow: 0 0 6px rgba(255, 209, 102, .65);
+  animation: chain-drop .42s cubic-bezier(.3,1.2,.5,1) forwards;
+}
+.sc-lock-chain.l { left: 22%;  --h: 62%; transform-origin: top center; animation-delay: .04s; }
+.sc-lock-chain.r { left: 74%;  --h: 62%; transform-origin: top center; animation-delay: .12s; }
+@keyframes chain-drop {
+  0%   { height: 0; opacity: 0; }
+  60%  { opacity: 1; }
+  100% { height: var(--h); opacity: 1; }
+}
+.shop-card.is-locked::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 209, 102, .55),
+              inset 0 0 22px -6px rgba(255, 209, 102, .6);
+  pointer-events: none;
+  z-index: 8;
+}
+/* 羁绊 4 人档横幅：用羁绊自己的主色 */
+.battle-banner.has-tint {
+  --bb: #ffd166;
+  border-color: color-mix(in srgb, var(--bb) 55%, transparent);
+  box-shadow: 0 0 60px -18px var(--bb), inset 0 0 40px -30px var(--bb);
+}
+.battle-banner.has-tint .bb-main {
+  color: var(--bb);
+  text-shadow: 0 0 22px color-mix(in srgb, var(--bb) 70%, transparent);
+}
+
+/* =================================== 42. 按阶段调整商店 / 棋盘占比 */
+:root { --phase-ease: cubic-bezier(.22,.9,.26,1); }
+
+.shop-dock {
+  transition: transform .42s var(--phase-ease), opacity .3s var(--phase-ease),
+              max-height .42s var(--phase-ease), margin .42s var(--phase-ease);
+  transform-origin: 50% 100%;
+  z-index: 30;
+}
+.board-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 188px;
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(14, 11, 22, .82);
+  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s var(--phase-ease), transform .2s var(--phase-ease), border-color .2s;
+}
+.board-toggle .bt-icon { font-size: 13px; }
+body.phase-buy .board-toggle { opacity: 1; pointer-events: auto; }
+.board-toggle:hover { border-color: rgba(255, 209, 102, .6); color: #fff; transform: translateY(-2px); }
+
+/* 购买阶段：商店上浮放大，棋盘缩下去但还看得见 */
+body.phase-buy .shop-dock {
+  transform: translateY(-26px) scale(1.055);
+  filter: drop-shadow(0 22px 48px rgba(0, 0, 0, .85));
+}
+body.phase-buy .board-shell {
+  transform: scale(.90) translateY(10px);
+  opacity: .72;
+  filter: saturate(.75) brightness(.85);
+  transition: transform .42s var(--phase-ease), opacity .42s, filter .42s;
+}
+/* 战斗阶段：商店收起，棋盘恢复满幅 */
+body.phase-battle .shop-dock {
+  transform: translateY(122%) scale(.92);
+  opacity: 0;
+  pointer-events: none;
+}
+body.phase-battle .board-shell {
+  transform: none;
+  opacity: 1;
+  filter: none;
+  transition: transform .42s var(--phase-ease), opacity .3s, filter .3s;
+}
+
+/* 玩家手动展开棋盘：商店让位 */
+body.phase-buy.board-expanded .shop-dock {
+  transform: translateY(120%) scale(.92);
+  opacity: 0;
+  pointer-events: none;
+}
+body.phase-buy.board-expanded .board-shell {
+  transform: none;
+  opacity: 1;
+  filter: none;
+}
+
+/* 购买阶段：更强的对比——棋盘退到背景，商店上浮到视觉中心 */
+body.phase-buy .board-shell {
+  transform: scale(.74) translateY(-14px);
+  opacity: .46;
+  filter: saturate(.55) brightness(.7) blur(.6px);
+}
+body.phase-buy .shop-dock {
+  transform: translateY(-64px) scale(1.13);
+  filter: drop-shadow(0 28px 60px rgba(0, 0, 0, .92));
+}
+body.phase-buy .bench {
+  opacity: .82;
+}
+
+/* 锁定徽记：卡片有 overflow:hidden，徽记要放进卡内可见区 */
+.sc-lock-head {
+  top: 3px;
+  font-size: 15px;
+}
+.sc-lock-chain {
+  top: 19px;
+  --h: 46%;
+}
+.sc-lock-chain.l { left: 26%; }
+.sc-lock-chain.r { left: 70%; }
+
+/* =================================== 43. 锁定：中央大锁 + 四角真实锁链 */
+.sc-lock {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+}
+.sc-lock-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+/* 锁链从中心向四角生长 */
+.sc-lock-svg .sc-chain {
+  animation: chain-grow .5s cubic-bezier(.2,.9,.25,1) forwards;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.9));
+}
+.sc-lock-svg .sc-chain:nth-child(2) { animation-delay: .02s; }
+.sc-lock-svg .sc-chain:nth-child(3) { animation-delay: .06s; }
+.sc-lock-svg .sc-chain:nth-child(4) { animation-delay: .10s; }
+.sc-lock-svg .sc-chain:nth-child(5) { animation-delay: .14s; }
+@keyframes chain-grow {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 中央大锁 */
+.sc-lock-head {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  line-height: 1;
+  filter:
+    drop-shadow(0 3px 6px rgba(0, 0, 0, .95))
+    drop-shadow(0 0 14px rgba(255, 209, 102, .95))
+    drop-shadow(0 0 30px rgba(255, 160, 40, .6));
+  animation: lock-idle 2.1s ease-in-out infinite;
+}
+@keyframes lock-idle {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(-2deg); }
+  50%      { transform: translate(-50%, -50%) scale(1.07) rotate(2deg); }
+}
+
+/* 锁定卡整体压暗，让锁更跳 */
+.shop-card.is-locked { filter: saturate(.62) brightness(.78); }
+.shop-card.is-locked::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1.5px rgba(226, 209, 154, .55),
+              inset 0 0 30px -8px rgba(255, 209, 102, .55);
+  pointer-events: none;
+  z-index: 8;
+}
+
+/* 链环生长动画 + 挂锁样式（覆盖旧版） */
+.sc-lock-svg .sc-chain-link {
+  opacity: 0;
+  animation: chain-link-in .26s ease-out forwards;
+}
+@keyframes chain-link-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.sc-lock-body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 42px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  filter:
+    drop-shadow(0 3px 7px rgba(0, 0, 0, .95))
+    drop-shadow(0 0 14px rgba(255, 200, 70, .85));
+  animation: padlock-idle 2.2s ease-in-out infinite;
+}
+@keyframes padlock-idle {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(-2deg); }
+  50%      { transform: translate(-50%, -50%) scale(1.06) rotate(2deg); }
+}
+/* 旧 emoji 版挂锁若残留则隐藏 */
+.sc-lock-head { display: none; }
+
+/* 修正：锁定层必须有明确尺寸，否则 SVG 高度为 0、链环不显示 */
+.sc-lock {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.sc-lock-svg {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.sc-lock-body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+/* 锁定挂锁：轻微呼吸，不再依赖 CSS 定位 */
+.sc-padlock {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.9)) drop-shadow(0 0 7px rgba(255,200,70,.8));
+  transform-origin: 50px 70px;
+  animation: padlock-breathe 2.2s ease-in-out infinite;
+}
+@keyframes padlock-breathe {
+  0%, 100% { transform: scale(1) rotate(-1.5deg); }
+  50%      { transform: scale(1.07) rotate(1.5deg); }
+}
+.sc-lock-head, .sc-lock-body { display: none !important; }
+
+/* 清掉旧版 .sc-lock 的居中位移与顶部偏移，避免覆盖内联定位 */
+.sc-lock {
+  left: 0 !important;
+  top: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+
+/* ============================================================
+   44. 阶段驱动动态布局 Phase-Driven Dynamic Layout（v2）
+   ============================================================ */
+.col-right {
+  position: relative;
+  z-index: 60;          /* 必须高于 .shop-dock(30)，否则放大后的商店会压住「开始战斗」 */
+}
+
+.board-shell {
+  transition:
+    transform .44s cubic-bezier(.22,.9,.26,1),
+    opacity .34s cubic-bezier(.22,.9,.26,1),
+    filter .34s cubic-bezier(.22,.9,.26,1);
+  transform-origin: 50% 42%;
+  will-change: transform;
+}
+.shop-dock {
+  transition:
+    transform .46s cubic-bezier(.22,.9,.26,1),
+    opacity .30s cubic-bezier(.22,.9,.26,1);
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+.shop-rail {
+  transition: gap .42s cubic-bezier(.22,.9,.26,1);
+}
+
+/* ---------- 购买阶段：商店成为视觉中心，棋盘退后 ---------- */
+body.phase-buy .board-shell {
+  transform: scale(.70) translateY(-2%);
+  opacity: .42;
+  filter: saturate(.42) brightness(.62) blur(1.2px);
+}
+body.phase-buy .shop-dock {
+  transform: translateY(-92px) scale(1.16);
+  filter: drop-shadow(0 30px 64px rgba(0, 0, 0, .95));
+}
+body.phase-buy .shop-rail { gap: 26px; }
+/* 商店区微弱金色高亮边框 */
+body.phase-buy .shop-dock::after {
+  content: '';
+  position: absolute;
+  inset: 2px 12px 6px;
+  border-radius: 16px;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1px rgba(255, 209, 102, .28),
+    0 0 42px -10px rgba(255, 200, 90, .55),
+    inset 0 0 60px -40px rgba(255, 209, 102, .5);
+  opacity: 1;
+  transition: opacity .4s;
+}
+/* 「查看棋盘」按钮 */
+.board-toggle { bottom: 208px; right: auto; left: 26px; }
+
+/* ---------- 战斗阶段：商店离场，棋盘成为绝对焦点 ---------- */
+body.phase-battle .shop-dock {
+  transform: translateY(124%) scale(.88);
+  opacity: 0;
+  pointer-events: none;
+}
+body.phase-battle .shop-dock::after { opacity: 0; }
+body.phase-battle .board-shell {
+  transform: scale(1.06);
+  opacity: 1;
+  filter: none;
+}
+/* 棋盘区微弱青色高亮边框 */
+body.phase-battle .board-shell::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1px rgba(120, 200, 255, .22),
+    0 0 60px -14px rgba(90, 180, 255, .45);
+}
+
+/* ---------- 手动展开棋盘：商店让位 ---------- */
+body.phase-buy.board-expanded .board-shell {
+  transform: scale(1.02);
+  opacity: 1;
+  filter: none;
+}
+body.phase-buy.board-expanded .shop-dock {
+  transform: translateY(124%) scale(.88);
+  opacity: 0;
+  pointer-events: none;
+}
+body.phase-buy.board-expanded .shop-dock::after { opacity: 0; }
+
+/* ---------- 拖拽期间冻结过渡，避免坐标漂移 ---------- */
+body.dragging .board-shell,
+body.dragging .shop-dock,
+body.dragging .shop-rail {
+  transition: none !important;
+}
+
+/* 拖拽期间冻结布局过渡（body.is-dragging 由 board.js 维护） */
+body.is-dragging .board-shell,
+body.is-dragging .shop-dock,
+body.is-dragging .shop-rail {
+  transition: none !important;
+}
+
+/* 战斗阶段隐藏「展开棋盘」按钮；购买阶段加强商店金色辉光 */
+body.phase-battle .board-toggle { opacity: 0 !important; pointer-events: none !important; }
+body.phase-buy .shop-dock::after {
+  box-shadow:
+    0 0 0 1px rgba(255, 209, 102, .42),
+    0 0 60px -6px rgba(255, 200, 90, .55),
+    inset 0 0 80px -50px rgba(255, 220, 140, .65);
+}
+
+/* ============================================================
+   45. 阶段布局 v3：战斗时真正让出空间（不只是位移）
+   ============================================================ */
+.stage {
+  transition: grid-template-columns .46s cubic-bezier(.22,.9,.26,1);
+}
+.shop-dock {
+  max-height: 280px;
+  overflow: visible;
+  transition:
+    transform .46s cubic-bezier(.22,.9,.26,1),
+    opacity .30s cubic-bezier(.22,.9,.26,1),
+    max-height .46s cubic-bezier(.22,.9,.26,1),
+    padding .46s cubic-bezier(.22,.9,.26,1),
+    margin .46s cubic-bezier(.22,.9,.26,1);
+}
+/* 战斗：商店真正从布局里退出，stage 获得全部高度 */
+body.phase-battle .shop-dock {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
+  transform: translateY(124%) scale(.88);
+  opacity: 0;
+  pointer-events: none;
+}
+/* 战斗：右栏收窄，把横向空间也让给棋盘 */
+body.phase-battle .stage { grid-template-columns: minmax(0, 1fr) 208px; }
+body.phase-battle .col-right { gap: 6px; }
+body.phase-battle .board-shell { transform: none; }
+/* 购买：恢复 */
+body.phase-buy .stage { grid-template-columns: minmax(0, 1fr) 340px; }
+
+/* 战斗阶段：棋盘吃满剩余高度，按钮隐藏 */
+body.phase-battle .board-toggle { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+body.phase-battle .col-left { justify-content: stretch; }
+body.phase-battle .board-shell { flex: 1 1 auto; min-height: 0; }
+/* 已移除：height:100% 会把棋盘拉成方形（宽高不同步） */
+body.phase-battle .bench { flex: 0 0 auto; }
+/* 购买阶段：棋盘让出高度给商店 */
+body.phase-buy .board-shell { flex: 0 1 auto; }

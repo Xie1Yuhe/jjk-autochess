@@ -1,0 +1,49 @@
+{
+ "total": 111,
+ "playable": 44,
+ "inferredCost": 67,
+ "passiveFromWiki": 0,
+ "skillFromWiki": 111,
+ "noPassive": 10,
+ "altFormGroups": 30,
+ "costDist": {
+  "1": 20,
+  "2": 18,
+  "3": 34,
+  "4": 24,
+  "5": 15
+ },
+ "elementDist": {
+  "夜": 29,
+  "影": 30,
+  "幻": 27,
+  "行": 25
+ },
+ "skillTypeDist": {
+  "strike": 37,
+  "drain": 10,
+  "shield": 2,
+  "stun": 4,
+  "slam": 16,
+  "beam": 5,
+  "barrage": 18,
+  "heal": 3,
+  "domain": 4,
+  "dot": 6,
+  "buff": 4,
+  "summon": 2
+ },
+ "passiveTypeDist": {
+  "bf": 24,
+  "dodge": 3,
+  "lifesteal": 9,
+  "erode": 46,
+  "taunt": 2,
+  "mana_on_cast": 10,
+  "aura_haste": 1,
+  "aura_power": 6,
+  "mana_steal": 3,
+  "regen_aura": 6,
+  "slow_on_hit": 1
+ }
+}

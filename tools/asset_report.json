@@ -1,0 +1,520 @@
+{
+ "units": {
+  "607846": {
+   "icon_bytes": 7780,
+   "card_bytes": 9048
+  },
+  "646160": {
+   "icon_bytes": 8216,
+   "card_bytes": 21352
+  },
+  "607853": {
+   "icon_bytes": 7152,
+   "card_bytes": 7992
+  },
+  "607994": {
+   "icon_bytes": 11444,
+   "card_bytes": 13190
+  },
+  "607989": {
+   "icon_bytes": 10838,
+   "card_bytes": 13250
+  },
+  "607841": {
+   "icon_bytes": 9620,
+   "card_bytes": 11238
+  },
+  "607847": {
+   "icon_bytes": 8418,
+   "card_bytes": 9972
+  },
+  "606014": {
+   "icon_bytes": 9462,
+   "card_bytes": 18738
+  },
+  "607993": {
+   "icon_bytes": 7802,
+   "card_bytes": 8824
+  },
+  "607992": {
+   "icon_bytes": 7452,
+   "card_bytes": 9902
+  },
+  "607844": {
+   "icon_bytes": 7646,
+   "card_bytes": 9292
+  },
+  "633431": {
+   "icon_bytes": 8986,
+   "card_bytes": 26562
+  },
+  "607991": {
+   "icon_bytes": 7204,
+   "card_bytes": 8114
+  },
+  "607851": {
+   "icon_bytes": 7898,
+   "card_bytes": 8878
+  },
+  "640904": {
+   "icon_bytes": 8586,
+   "card_bytes": 19222
+  },
+  "607988": {
+   "icon_bytes": 12074,
+   "card_bytes": 14064
+  },
+  "694133": {
+   "icon_bytes": 6752,
+   "card_bytes": 11962
+  },
+  "607990": {
+   "icon_bytes": 9214,
+   "card_bytes": 11534
+  },
+  "607848": {
+   "icon_bytes": 13290,
+   "card_bytes": 15550
+  },
+  "607995": {
+   "icon_bytes": 10512,
+   "card_bytes": 12496
+  },
+  "607845": {
+   "icon_bytes": 10774,
+   "card_bytes": 13294
+  },
+  "629917": {
+   "icon_bytes": 10418,
+   "card_bytes": 12326
+  },
+  "676882": {
+   "icon_bytes": 7126,
+   "card_bytes": 19834
+  },
+  "639616": {
+   "icon_bytes": 7630,
+   "card_bytes": 18000
+  },
+  "606636": {
+   "icon_bytes": 8440,
+   "card_bytes": 9928
+  },
+  "607837": {
+   "icon_bytes": 6934,
+   "card_bytes": 9332
+  },
+  "607834": {
+   "icon_bytes": 7936,
+   "card_bytes": 9280
+  },
+  "607854": {
+   "icon_bytes": 6106,
+   "card_bytes": 7766
+  },
+  "607840": {
+   "icon_bytes": 4572,
+   "card_bytes": 5838
+  },
+  "648046": {
+   "icon_bytes": 7722,
+   "card_bytes": 13288
+  },
+  "606010": {
+   "icon_bytes": 10100,
+   "card_bytes": 12862
+  },
+  "675539": {
+   "icon_bytes": 10818,
+   "card_bytes": 22306
+  },
+  "607839": {
+   "icon_bytes": 9116,
+   "card_bytes": 11508
+  },
+  "607849": {
+   "icon_bytes": 8686,
+   "card_bytes": 10720
+  },
+  "607996": {
+   "icon_bytes": 10094,
+   "card_bytes": 11552
+  },
+  "605988": {
+   "icon_bytes": 8000,
+   "card_bytes": 21826
+  },
+  "607835": {
+   "icon_bytes": 8546,
+   "card_bytes": 10488
+  },
+  "639110": {
+   "icon_bytes": 7584,
+   "card_bytes": 22644
+  },
+  "632100": {
+   "icon_bytes": 9762,
+   "card_bytes": 11716
+  },
+  "606028": {
+   "icon_bytes": 10688,
+   "card_bytes": 13130
+  },
+  "695641": {
+   "icon_bytes": 9688,
+   "card_bytes": 22720
+  },
+  "668491": {
+   "icon_bytes": 7934,
+   "card_bytes": 13292
+  },
+  "625876": {
+   "icon_bytes": 8742,
+   "card_bytes": 10600
+  },
+  "645834": {
+   "icon_bytes": 7462,
+   "card_bytes": 10060
+  },
+  "606019": {
+   "icon_bytes": 8856,
+   "card_bytes": 11546
+  },
+  "618983": {
+   "icon_bytes": 9396,
+   "card_bytes": 20454
+  },
+  "713476": {
+   "icon_bytes": 10770,
+   "card_bytes": 13098
+  },
+  "712114": {
+   "icon_bytes": 7604,
+   "card_bytes": 10340
+  },
+  "605992": {
+   "icon_bytes": 8750,
+   "card_bytes": 9710
+  },
+  "722687": {
+   "icon_bytes": 9702,
+   "card_bytes": 11528
+  },
+  "652636": {
+   "icon_bytes": 7804,
+   "card_bytes": 9528
+  },
+  "614519": {
+   "icon_bytes": 9632,
+   "card_bytes": 15590
+  },
+  "629916": {
+   "icon_bytes": 8868,
+   "card_bytes": 11442
+  },
+  "698359": {
+   "icon_bytes": 6374,
+   "card_bytes": 10522
+  },
+  "661933": {
+   "icon_bytes": 8580,
+   "card_bytes": 20782
+  },
+  "649666": {
+   "icon_bytes": 5692,
+   "card_bytes": 8236
+  },
+  "724611": {
+   "icon_bytes": 6684,
+   "card_bytes": 23266
+  },
+  "719571": {
+   "icon_bytes": 10208,
+   "card_bytes": 12372
+  },
+  "620332": {
+   "icon_bytes": 4384,
+   "card_bytes": 4256
+  },
+  "637822": {
+   "icon_bytes": 9926,
+   "card_bytes": 13146
+  },
+  "658698": {
+   "icon_bytes": 5854,
+   "card_bytes": 14710
+  },
+  "619763": {
+   "icon_bytes": 9638,
+   "card_bytes": 25770
+  },
+  "635863": {
+   "icon_bytes": 11714,
+   "card_bytes": 14020
+  },
+  "714626": {
+   "icon_bytes": 5038,
+   "card_bytes": 6972
+  },
+  "606003": {
+   "icon_bytes": 8686,
+   "card_bytes": 10436
+  },
+  "642790": {
+   "icon_bytes": 9458,
+   "card_bytes": 14264
+  },
+  "683413": {
+   "icon_bytes": 15036,
+   "card_bytes": 23702
+  },
+  "619762": {
+   "icon_bytes": 8328,
+   "card_bytes": 9410
+  },
+  "614518": {
+   "icon_bytes": 9526,
+   "card_bytes": 12630
+  },
+  "691924": {
+   "icon_bytes": 9486,
+   "card_bytes": 27310
+  },
+  "615301": {
+   "icon_bytes": 9062,
+   "card_bytes": 11412
+  },
+  "605996": {
+   "icon_bytes": 8706,
+   "card_bytes": 9632
+  },
+  "621266": {
+   "icon_bytes": 8392,
+   "card_bytes": 17132
+  },
+  "683430": {
+   "icon_bytes": 13788,
+   "card_bytes": 15854
+  },
+  "609120": {
+   "icon_bytes": 5662,
+   "card_bytes": 17006
+  },
+  "707238": {
+   "icon_bytes": 6660,
+   "card_bytes": 8176
+  },
+  "703204": {
+   "icon_bytes": 6708,
+   "card_bytes": 16628
+  },
+  "622643": {
+   "icon_bytes": 9160,
+   "card_bytes": 11002
+  },
+  "607979": {
+   "icon_bytes": 6236,
+   "card_bytes": 17938
+  },
+  "721094": {
+   "icon_bytes": 9332,
+   "card_bytes": 11498
+  },
+  "678629": {
+   "icon_bytes": 6288,
+   "card_bytes": 8006
+  },
+  "701554": {
+   "icon_bytes": 10882,
+   "card_bytes": 27820
+  },
+  "607872": {
+   "icon_bytes": 13684,
+   "card_bytes": 23810
+  },
+  "677690": {
+   "icon_bytes": 8374,
+   "card_bytes": 17284
+  },
+  "717469": {
+   "icon_bytes": 15882,
+   "card_bytes": 17176
+  },
+  "684667": {
+   "icon_bytes": 12914,
+   "card_bytes": 19868
+  },
+  "652057": {
+   "icon_bytes": 7976,
+   "card_bytes": 10190
+  },
+  "617492": {
+   "icon_bytes": 8098,
+   "card_bytes": 21404
+  },
+  "672458": {
+   "icon_bytes": 10558,
+   "card_bytes": 22268
+  },
+  "607873": {
+   "icon_bytes": 9740,
+   "card_bytes": 19700
+  },
+  "640934": {
+   "icon_bytes": 9910,
+   "card_bytes": 18590
+  },
+  "706232": {
+   "icon_bytes": 12094,
+   "card_bytes": 15294
+  },
+  "689190": {
+   "icon_bytes": 9554,
+   "card_bytes": 11706
+  },
+  "610359": {
+   "icon_bytes": 9792,
+   "card_bytes": 12512
+  },
+  "707237": {
+   "icon_bytes": 10966,
+   "card_bytes": 12576
+  },
+  "628287": {
+   "icon_bytes": 10576,
+   "card_bytes": 12326
+  },
+  "684163": {
+   "icon_bytes": 15730,
+   "card_bytes": 27068
+  },
+  "644233": {
+   "icon_bytes": 7262,
+   "card_bytes": 15370
+  },
+  "607978": {
+   "icon_bytes": 11204,
+   "card_bytes": 13804
+  },
+  "699088": {
+   "icon_bytes": 9014,
+   "card_bytes": 21208
+  },
+  "680362": {
+   "icon_bytes": 8110,
+   "card_bytes": 25422
+  },
+  "687394": {
+   "icon_bytes": 16122,
+   "card_bytes": 19930
+  },
+  "706347": {
+   "icon_bytes": 11092,
+   "card_bytes": 14366
+  },
+  "640936": {
+   "icon_bytes": 10186,
+   "card_bytes": 21682
+  },
+  "606026": {
+   "icon_bytes": 11144,
+   "card_bytes": 14208
+  },
+  "622642": {
+   "icon_bytes": 8860,
+   "card_bytes": 11766
+  },
+  "612295": {
+   "icon_bytes": 12230,
+   "card_bytes": 14136
+  },
+  "661932": {
+   "icon_bytes": 9652,
+   "card_bytes": 15978
+  },
+  "623845": {
+   "icon_bytes": 9286,
+   "card_bytes": 19112
+  },
+  "674677": {
+   "icon_bytes": 8264,
+   "card_bytes": 10278
+  },
+  "671525": {
+   "icon_bytes": 8894,
+   "card_bytes": 26000
+  }
+ },
+ "total_bytes": 2646928,
+ "missing": [
+  "607846",
+  "607853",
+  "607994",
+  "607989",
+  "607841",
+  "607847",
+  "607993",
+  "607992",
+  "607844",
+  "607991",
+  "607851",
+  "607988",
+  "607990",
+  "607848",
+  "607995",
+  "607845",
+  "629917",
+  "606636",
+  "607837",
+  "607834",
+  "607854",
+  "607840",
+  "606010",
+  "607839",
+  "607849",
+  "607996",
+  "607835",
+  "632100",
+  "606028",
+  "625876",
+  "645834",
+  "606019",
+  "713476",
+  "712114",
+  "605992",
+  "722687",
+  "652636",
+  "629916",
+  "649666",
+  "719571",
+  "620332",
+  "637822",
+  "635863",
+  "714626",
+  "606003",
+  "619762",
+  "614518",
+  "615301",
+  "605996",
+  "683430",
+  "707238",
+  "622643",
+  "721094",
+  "678629",
+  "717469",
+  "652057",
+  "706232",
+  "689190",
+  "610359",
+  "707237",
+  "628287",
+  "607978",
+  "687394",
+  "706347",
+  "606026",
+  "622642",
+  "612295",
+  "674677"
+ ],
+ "grain_bytes": 19438
+}

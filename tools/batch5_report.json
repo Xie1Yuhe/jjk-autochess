@@ -1,0 +1,110 @@
+{
+ "applied": 16,
+ "playable": 103,
+ "total": 111,
+ "costDist": {
+  "1": 30,
+  "2": 17,
+  "3": 23,
+  "4": 18,
+  "5": 15
+ },
+ "list": [
+  {
+   "name": "[0.2秒的领域展开] 五条悟",
+   "cost": 5,
+   "tier": "SSS",
+   "ultCost": 130
+  },
+  {
+   "name": "[冰菓消溶] 五条悟",
+   "cost": 5,
+   "tier": "SS",
+   "ultCost": 96
+  },
+  {
+   "name": "[虚式「茈」] 五条悟",
+   "cost": 5,
+   "tier": "SS",
+   "ultCost": 79
+  },
+  {
+   "name": "[降灵] 伏黑甚尔",
+   "cost": 5,
+   "tier": "A",
+   "ultCost": 96
+  },
+  {
+   "name": "[送别者] 伊地知洁高",
+   "cost": 1,
+   "tier": "B",
+   "ultCost": 76
+  },
+  {
+   "name": "[不平等的救赎] 伏黑惠",
+   "cost": 1,
+   "tier": "C",
+   "ultCost": 76
+  },
+  {
+   "name": "[生命的价值] 吉野顺平",
+   "cost": 1,
+   "tier": "C",
+   "ultCost": 76
+  },
+  {
+   "name": "[熊猫但不是熊猫] 熊猫",
+   "cost": 1,
+   "tier": "C",
+   "ultCost": 76
+  },
+  {
+   "name": "[凌厉的子弹] 禅院真依",
+   "cost": 1,
+   "tier": "C",
+   "ultCost": 76
+  },
+  {
+   "name": "[为了保持自我] 钉崎野蔷薇",
+   "cost": 1,
+   "tier": "C",
+   "ultCost": 76
+  },
+  {
+   "name": "[不服来战] 龙胆咲",
+   "cost": 1,
+   "tier": "B",
+   "ultCost": 76
+  },
+  {
+   "name": "[灾祸转咒] 龙胆咲",
+   "cost": 1,
+   "tier": "B",
+   "ultCost": 76
+  },
+  {
+   "name": "[决意的迎击] 三轮霞",
+   "cost": 1,
+   "tier": "B",
+   "ultCost": 70
+  },
+  {
+   "name": "[空中侦查] 西宫桃",
+   "cost": 1,
+   "tier": "A",
+   "ultCost": 87
+  },
+  {
+   "name": "[有效射程] 禅院真依",
+   "cost": 1,
+   "tier": "SS",
+   "ultCost": 96
+  },
+  {
+   "name": "[心怀觉悟] 龙胆咲",
+   "cost": 1,
+   "tier": "A",
+   "ultCost": 87
+  }
+ ]
+}

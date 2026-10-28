@@ -1,0 +1,97 @@
+{
+ "applied": 14,
+ "playable": 87,
+ "costDist": {
+  "1": 18,
+  "2": 17,
+  "3": 23,
+  "4": 18,
+  "5": 11
+ },
+ "list": [
+  {
+   "name": "[觉悟的咒言] 狗卷棘",
+   "cost": 3,
+   "tier": "B",
+   "ultCost": 70
+  },
+  {
+   "name": "[继承的术式] 伏黑惠",
+   "cost": 3,
+   "tier": "A",
+   "ultCost": 79
+  },
+  {
+   "name": "[拯救生命] 家入硝子",
+   "cost": 3,
+   "tier": "SSS",
+   "ultCost": 87
+  },
+  {
+   "name": "[叛逆的吊车尾] 禅院真希",
+   "cost": 3,
+   "tier": "C",
+   "ultCost": 79
+  },
+  {
+   "name": "[铁骨娘] 钉崎野蔷薇",
+   "cost": 3,
+   "tier": "S",
+   "ultCost": 79
+  },
+  {
+   "name": "[你这样就满足了吗？] 东堂葵",
+   "cost": 3,
+   "tier": "SSS",
+   "ultCost": 96
+  },
+  {
+   "name": "[化解锐刃] 日下部笃也",
+   "cost": 3,
+   "tier": "S",
+   "ultCost": 87
+  },
+  {
+   "name": "[不挠的瑞兽] 猪野琢真",
+   "cost": 3,
+   "tier": "SSS",
+   "ultCost": 87
+  },
+  {
+   "name": "[十划呪法] 七海建人",
+   "cost": 4,
+   "tier": "S",
+   "ultCost": 79
+  },
+  {
+   "name": "[老奸巨猾摇滚] 乐岩寺嘉伸",
+   "cost": 4,
+   "tier": "SS",
+   "ultCost": 96
+  },
+  {
+   "name": "[注入咒力吧] 虎杖悠仁",
+   "cost": 4,
+   "tier": "A",
+   "ultCost": 79
+  },
+  {
+   "name": "[为了保护非术师] 夏油杰",
+   "cost": 4,
+   "tier": "S",
+   "ultCost": 79
+  },
+  {
+   "name": "[被托付的生命] 虎杖悠仁",
+   "cost": 4,
+   "tier": "SSS",
+   "ultCost": 87
+  },
+  {
+   "name": "[轻快的身体] 虎杖悠仁",
+   "cost": 4,
+   "tier": "S",
+   "ultCost": 87
+  }
+ ]
+}

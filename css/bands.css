@@ -1,0 +1,352 @@
+
+/* ============================================================
+   商店抽屉（只改 height，不复盖、不变暗；侧栏保持原样）
+   ============================================================ */
+
+/* 舞台占满剩余高度 */
+.screen-game .screen-shake { display: flex; flex-direction: column; }
+.screen-game .stage { flex: 1 1 auto; min-height: 0; }
+
+/* 商店：参与文档流的抽屉 */
+.shop-dock {
+  position: relative;
+  flex: 0 0 auto;
+  height: 30vh;
+  max-height: 30vh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 18px 8px;
+  overflow: hidden;
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: height .3s cubic-bezier(.22,.9,.26,1),
+              max-height .3s cubic-bezier(.22,.9,.26,1),
+              padding .3s cubic-bezier(.22,.9,.26,1);
+  background: linear-gradient(180deg, rgba(10, 8, 16, 0) 0%, rgba(8, 6, 13, .72) 42%);
+}
+body.drawer-closed .shop-dock,
+body.phase-battle .shop-dock {
+  height: 42px;
+  max-height: 42px;
+  padding-bottom: 4px;
+}
+
+/* 抽屉头 */
+.drawer-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 2px;
+}
+.dh-grip {
+  width: 34px; height: 4px; border-radius: 3px;
+  background: rgba(255, 255, 255, .22);
+}
+.dh-title {
+  font-family: var(--font-black);
+  font-size: 12px;
+  letter-spacing: .22em;
+  color: #e9dcbe;
+}
+.dh-gold { font-size: 11px; color: var(--text-faint); }
+.dh-gold b {
+  font-family: var(--font-mono, monospace);
+  color: #ffd166; font-size: 12.5px; margin-left: 3px;
+}
+.dh-hint { font-size: 10.5px; color: var(--text-faint); }
+.dh-toggle {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 11px; border-radius: 8px;
+  border: 1px solid rgba(255, 209, 102, .38);
+  background: rgba(255, 209, 102, .10);
+  color: #ffd166;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: background .16s, border-color .16s;
+}
+.dh-toggle:hover { background: rgba(255, 209, 102, .2); border-color: rgba(255,209,102,.7); }
+.dh-arrow { transition: transform .3s cubic-bezier(.22,.9,.26,1); }
+body.drawer-closed .dh-arrow,
+body.phase-battle .dh-arrow { transform: rotate(180deg); }
+
+/* 卡槽 */
+.shop-dock .shop-rail {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  padding-top: 4px;
+  overflow-x: auto;
+}
+body.drawer-closed .shop-dock .shop-rail,
+body.phase-battle .shop-dock .shop-rail {
+  opacity: 0; height: 0; padding: 0; pointer-events: none;
+}
+/* 抽屉展开时卡牌更大 */
+body:not(.drawer-closed):not(.phase-battle) .shop-dock .shop-card {
+  --card-w: 132px;
+  --card-h: 184px;
+}
+.shop-dock::before {
+  content: '';
+  position: absolute;
+  inset: 0 12px auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,209,102,.6), transparent);
+  pointer-events: none;
+}
+
+/* ---------- 关键：棋盘/备战席在任何阶段都不变暗、不缩放 ---------- */
+body.phase-buy .board-shell,
+body.phase-buy.board-expanded .board-shell,
+body.phase-battle .board-shell,
+body.phase-buy.board-expanded .shop-dock {
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+body.phase-buy .shop-dock::after { opacity: 0 !important; }
+
+/* 棋盘裁切，避免压到备战席边缘；抽屉的收起按钮取代原浮动按钮 */
+.screen-game .board-shell { overflow: hidden; }
+#btn-board-toggle { display: none !important; }
+
+/* 商店卡牌放大（抽屉够高，可以更醒目） */
+body:not(.drawer-closed):not(.phase-battle) .shop-dock .shop-card {
+  --card-w: 152px;
+  --card-h: 210px;
+}
+.shop-dock .shop-rail { gap: 20px; }
+
+/* ============================================================
+   商店分区：角色卡 2/3 + 咒具 1/3
+   ============================================================ */
+.shop-dock .shop-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  gap: 14px;
+}
+.shop-dock .shop-rail {
+  flex: 2 1 0;
+  min-width: 0;
+  justify-content: flex-start;
+}
+.shop-dock .item-rail {
+  flex: 1 1 0;
+  min-width: 190px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, .08);
+  overflow: hidden;
+}
+.ir-head {
+  display: flex; align-items: baseline; gap: 8px;
+  flex: 0 0 auto;
+}
+.ir-title {
+  font-family: var(--font-black);
+  font-size: 11.5px;
+  letter-spacing: .2em;
+  color: #e9dcbe;
+}
+.ir-price { font-size: 10px; color: var(--text-faint); }
+.ir-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.ir-item {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 4px 5px;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, .10);
+  background: rgba(255, 255, 255, .035);
+  cursor: pointer;
+  transition: transform .14s, border-color .14s, box-shadow .14s;
+}
+.ir-item:hover { transform: translateY(-2px); border-color: rgba(255, 209, 102, .45); }
+.ir-item img {
+  width: 40px; height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.7));
+}
+.ir-name {
+  font-size: 9.5px;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.ir-cost {
+  position: absolute;
+  top: 3px; right: 4px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  color: #ffd166;
+}
+.ir-item.is-poor { opacity: .48; }
+.ir-item.is-empty { border-style: dashed; opacity: .3; cursor: default; }
+/* 可融合高亮 */
+.ir-item.can-craft {
+  border-color: #7dffc8;
+  background: rgba(80, 255, 190, .10);
+  box-shadow: 0 0 16px -4px rgba(80, 255, 190, .8);
+  animation: craft-pulse 1.4s ease-in-out infinite;
+}
+@keyframes craft-pulse {
+  0%, 100% { box-shadow: 0 0 12px -5px rgba(80,255,190,.7); }
+  50%      { box-shadow: 0 0 22px 0 rgba(80,255,190,1); }
+}
+.ir-craft {
+  position: absolute;
+  left: 50%; bottom: 2px;
+  transform: translateX(-50%);
+  font-size: 8.5px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #04231a;
+  background: linear-gradient(180deg, #b6ffe2, #46e0a4);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* 咒具格固定高度、底部对齐；角色卡略缩，留出下边距 */
+.shop-dock .ir-grid { align-items: flex-end; }
+.shop-dock .ir-item { flex: 0 0 auto; width: 84px; height: 104px; }
+body:not(.drawer-closed):not(.phase-battle) .shop-dock .shop-card {
+  --card-w: 146px;
+  --card-h: 202px;
+}
+.shop-dock .shop-rail { align-items: flex-end; padding-bottom: 2px; }
+
+/* ============================================================
+   修抖动：备战席高度固定，切断 cell → slot → overhead 的反馈环
+   同时放大商店卡牌 / 咒具区
+   ============================================================ */
+.screen-game .bench-row {
+  height: 78px;
+  min-height: 78px;
+  max-height: 78px;
+  align-items: stretch;
+}
+.screen-game .bench-slot {
+  width: var(--slot, 56px);
+  height: 100%;
+  flex: 0 0 auto;
+}
+
+/* 抽屉更高：34vh，给卡和咒具都留空间 */
+.shop-dock { height: 34vh; max-height: 34vh; }
+
+/* 角色卡：更大、更疏 */
+body:not(.drawer-closed):not(.phase-battle) .shop-dock .shop-card {
+  --card-w: 176px;
+  --card-h: 244px;
+}
+.shop-dock .shop-rail { gap: 26px; }
+
+/* 咒具区：更宽、图标更大 */
+.shop-dock .item-rail {
+  flex: 0 0 34%;
+  min-width: 320px;
+  max-width: 460px;
+}
+.shop-dock .ir-item {
+  width: 108px;
+  height: 132px;
+}
+.shop-dock .ir-item img {
+  width: 58px;
+  height: 58px;
+}
+.ir-name { font-size: 10.5px; }
+.ir-title { font-size: 12.5px; }
+.ir-price { font-size: 10.5px; }
+
+/* 棋盘永远保持 2:1，禁止被容器拉伸 */
+.screen-game .board {
+  height: calc(var(--cell, 96px) * 4) !important;
+  width: calc(var(--cell, 96px) * 8) !important;
+  align-self: center;
+  flex: 0 0 auto;
+}
+
+/* ============================================================
+   修备战席「长条底」：.bench 的 padding + 边框在格子外多出一块
+   让 .bench 与格子完全贴合，同时把商店高度还一些给战场
+   ============================================================ */
+.screen-game .bench-row {
+  height: 80px;
+  min-height: 80px;
+  max-height: 80px;
+  padding: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  align-items: stretch;
+}
+.screen-game .bench {
+  height: 100% !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  grid-auto-rows: auto !important;
+  align-items: stretch;
+}
+.screen-game .bench-slot {
+  height: 100% !important;
+  width: var(--slot, 56px);
+}
+
+/* 商店还给战场一点高度：34vh → 29vh */
+.shop-dock { height: 29vh; max-height: 29vh; }
+body:not(.drawer-closed):not(.phase-battle) .shop-dock .shop-card {
+  --card-w: 168px;
+  --card-h: 210px;
+}
+
+/* 备战席格子改回正方形：高度决定宽度，1:1 */
+.screen-game .bench-row { height: 76px; min-height: 76px; max-height: 76px; }
+.screen-game .bench {
+  display: flex !important;
+  gap: 6px;
+  align-items: stretch;
+  grid-template-columns: none !important;
+  grid-auto-rows: none !important;
+}
+.screen-game .bench-slot {
+  flex: 0 0 auto;
+  height: 100% !important;
+  width: auto !important;
+  aspect-ratio: 1 / 1;
+}
+/* 出售区也跟着变成正方形 */
+.screen-game .sell-zone {
+  height: 100%;
+  width: auto !important;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
+}

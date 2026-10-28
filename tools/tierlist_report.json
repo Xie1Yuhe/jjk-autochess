@@ -1,0 +1,327 @@
+{
+ "source": "https://www.gamekee.com/jk/652351.html",
+ "coverage": "111/111",
+ "missing": [],
+ "rarityBefore": {
+  "R": 26,
+  "SR": 43,
+  "SSR": 42
+ },
+ "rarityAfter": {
+  "SR": 11,
+  "SSR": 91,
+  "R": 9
+ },
+ "rarityPlayable": {
+  "SSR": 57,
+  "R": 1
+ },
+ "tierDist": {
+  "A": 16,
+  "SSS": 20,
+  "C": 16,
+  "B": 9,
+  "S": 27,
+  "SS": 23
+ },
+ "tierDistPlayable": {
+  "SSS": 13,
+  "C": 4,
+  "A": 8,
+  "S": 13,
+  "SS": 18,
+  "B": 2
+ },
+ "changedRarity": [
+  {
+   "name": "[不上班族术师] 七海建人",
+   "from": "R",
+   "to": "SR"
+  },
+  {
+   "name": "[疾走] 三轮霞",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[生命的价值] 吉野顺平",
+   "from": "R",
+   "to": "SR"
+  },
+  {
+   "name": "[别小看人偶] 熊猫",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[凌厉的子弹] 禅院真依",
+   "from": "R",
+   "to": "SR"
+  },
+  {
+   "name": "[大刀乱舞] 禅院真希",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[天赐无才] 禅院真希",
+   "from": "SR",
+   "to": "R"
+  },
+  {
+   "name": "[心怀意志] 结木海斗",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[宿傩的容器] 虎杖悠仁",
+   "from": "SR",
+   "to": "R"
+  },
+  {
+   "name": "[付丧操术] 西宫桃",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[不服来战] 龙胆咲",
+   "from": "R",
+   "to": "SR"
+  },
+  {
+   "name": "[决意的迎击] 三轮霞",
+   "from": "R",
+   "to": "SR"
+  },
+  {
+   "name": "[咒力的旋律] 乐岩寺嘉伸",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[幼鱼和逆罚] 吉野顺平",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[教育者] 夜蛾正道",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[以最短直线] 熊猫",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[反击的接力棒] 狗卷棘",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[夜隐咒言师] 狗卷棘",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[觉悟的咒言] 狗卷棘",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[越是弱小越是聚集] 禅院真希",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[作为术师的觉悟] 结木海斗",
+   "from": "R",
+   "to": "SR"
+  },
+  {
+   "name": "[空中侦查] 西宫桃",
+   "from": "R",
+   "to": "SR"
+  },
+  {
+   "name": "[钉进去] 钉崎野蔷薇",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[残心] 三轮霞",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[目睹一切] 与幸吉",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[友情的记忆] 东堂葵",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[和高田酱一起] 东堂葵",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[老奸巨猾摇滚] 乐岩寺嘉伸",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[慰劳的接送] 伊地知洁高",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[美刃的轮舞] 冥冥",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[群鸦翩舞之夜] 冥冥",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[寄宿于血中的决心] 加茂宪纪",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[咒骸临战] 夜蛾正道",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[枢要守望者] 夜蛾正道",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[咻咻] 家入硝子",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[拯救生命] 家入硝子",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[薄暮的冷光] 日下部笃也",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[燃烧的意志] 灰原雄",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[需要帮助吗] 熊猫",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[「破碎吧」] 狗卷棘",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[心无骄慢] 猪野琢真",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[最后的子弹] 禅院真依",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[有效射程] 禅院真依",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[叛逆的吊车尾] 禅院真希",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[拦路的指标] 米格尔",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[别小看我] 西宫桃",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[退下废物] 里梅",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[相性极差] 钉崎野蔷薇",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[铁骨娘] 钉崎野蔷薇",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[你这样就满足了吗？] 东堂葵",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[咒术全盛时代] 加茂宪伦",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[化解锐刃] 日下部笃也",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[连锁纹「全开速」] 漆英司",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[不挠的瑞兽] 猪野琢真",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[刀源解放] 究极机械丸",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[出片常夏] 钉崎野蔷薇",
+   "from": "SR",
+   "to": "SSR"
+  },
+  {
+   "name": "[心怀觉悟] 龙胆咲",
+   "from": "R",
+   "to": "SSR"
+  },
+  {
+   "name": "[无尽的式神] 陀艮",
+   "from": "SR",
+   "to": "SSR"
+  }
+ ]
+}

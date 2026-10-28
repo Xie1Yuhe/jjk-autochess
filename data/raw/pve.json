@@ -1,0 +1,56 @@
+[
+ {
+  "round": 1,
+  "name": "咒灵杂兵",
+  "enemies": [
+   {
+    "id": "curse_a",
+    "name": "低级咒灵",
+    "hp": 470,
+    "ad": 20,
+    "element": "咒灵",
+    "count": 2,
+    "range": 1
+   }
+  ]
+ },
+ {
+  "round": 2,
+  "name": "中级咒灵群",
+  "enemies": [
+   {
+    "id": "curse_b",
+    "name": "中级咒灵",
+    "hp": 700,
+    "ad": 32,
+    "element": "咒灵",
+    "count": 3,
+    "range": 1
+   }
+  ]
+ },
+ {
+  "round": 3,
+  "name": "咒灵首领",
+  "enemies": [
+   {
+    "id": "curse_boss",
+    "name": "咒灵首领",
+    "hp": 2600,
+    "ad": 58,
+    "element": "咒灵",
+    "count": 1,
+    "range": 2
+   },
+   {
+    "id": "curse_b",
+    "name": "中级咒灵",
+    "hp": 700,
+    "ad": 30,
+    "element": "咒灵",
+    "count": 1,
+    "range": 1
+   }
+  ]
+ }
+]

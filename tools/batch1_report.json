@@ -1,0 +1,96 @@
+{
+ "applied": 15,
+ "missing": [],
+ "list": [
+  {
+   "name": "[宿傩的容器] 虎杖悠仁",
+   "cost": 1,
+   "tier": "C",
+   "ultCost": 76
+  },
+  {
+   "name": "[苍穹扣杀] 虎杖悠仁",
+   "cost": 5,
+   "tier": "SS",
+   "ultCost": 96
+  },
+  {
+   "name": "[觉醒] 五条悟",
+   "cost": 5,
+   "tier": "S",
+   "ultCost": 87
+  },
+  {
+   "name": "[最强] 五条悟",
+   "cost": 4,
+   "tier": "A",
+   "ultCost": 70
+  },
+  {
+   "name": "[无下限的内侧] 五条悟",
+   "cost": 5,
+   "tier": "SS",
+   "ultCost": 76
+  },
+  {
+   "name": "[真正的咒术] 两面宿傩",
+   "cost": 4,
+   "tier": "S",
+   "ultCost": 96
+  },
+  {
+   "name": "[火力胜负] 两面宿傩",
+   "cost": 5,
+   "tier": "SSS",
+   "ultCost": 96
+  },
+  {
+   "name": "[大义] 夏油杰",
+   "cost": 4,
+   "tier": "SS",
+   "ultCost": 87
+  },
+  {
+   "name": "[终焉之物] 夏油杰",
+   "cost": 5,
+   "tier": "SS",
+   "ultCost": 96
+  },
+  {
+   "name": "[死刑执行人] 乙骨忧太",
+   "cost": 4,
+   "tier": "SS",
+   "ultCost": 96
+  },
+  {
+   "name": "[不完全的领域] 伏黑惠",
+   "cost": 3,
+   "tier": "SS",
+   "ultCost": 104
+  },
+  {
+   "name": "[钉进去] 钉崎野蔷薇",
+   "cost": 2,
+   "tier": "S",
+   "ultCost": 79
+  },
+  {
+   "name": "[「破碎吧」] 狗卷棘",
+   "cost": 3,
+   "tier": "SS",
+   "ultCost": 79
+  },
+  {
+   "name": "[疾走] 三轮霞",
+   "cost": 1,
+   "tier": "SSS",
+   "ultCost": 87
+  },
+  {
+   "name": "[别小看人偶] 熊猫",
+   "cost": 2,
+   "tier": "C",
+   "ultCost": 79
+  }
+ ]
+}
