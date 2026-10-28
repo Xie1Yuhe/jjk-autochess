@@ -279,13 +279,13 @@
     var t = now();
     humNodes = [];
     // 四个低音叠加，其中一对轻微失谐制造缓慢拍频（结界在「呼吸」）
-    [41.2, 55.0, 82.4, 123.5, 124.9].forEach(function (f, i) {
+    [82.4, 123.5, 124.9].forEach(function (f, i) {
       var o = ctx.createOscillator();
       o.type = i % 2 ? 'sine' : 'triangle';
       o.frequency.value = f;
       var g = ctx.createGain();
       g.gain.setValueAtTime(0.0001, t);
-      g.gain.linearRampToValueAtTime(0.030 / (1 + i * 0.55), t + 1.1);
+      g.gain.linearRampToValueAtTime(0.018 / (1 + i * 0.55), t + 1.1);
       o.connect(g);
       g.connect(sfxBus);
       o.start(t);
@@ -378,6 +378,14 @@
 
   /* -------------------------------------------------------------- 氛围 */
   function startAmbient() {
+    /* 环境底噪已停用。
+       原因：持续的低频正弦波（55/82/110Hz）在网页里听感就是「嗡嗡」的电流声，
+       玩家反馈很吵。这里保留函数签名以免调用处报错，但不再发声。 */
+    if (ctx && ambientBus) {
+      try { ambientBus.gain.setTargetAtTime(0.0001, now(), 0.15); } catch (e) {}
+    }
+    return;
+    /* eslint-disable no-unreachable */
     if (ambientOn || !ensure()) return;
     ambientOn = true;
     var t = now();
