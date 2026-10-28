@@ -881,7 +881,7 @@
         for (i = 0; i < this.units.length; i++) {
           var b = this.units[i];
           if (b.alive && b.team === u.team) {
-            b.ad *= 1.25;
+            if (!b.buffUntil || this.time >= b.buffUntil) b.ad *= 1.25;
             b.buffUntil = this.time + 6.0;          // 修正：原版没有回退
             this._emit({ t: 'buff', pos: { x: b.pos.x, y: b.pos.y }, targetId: b.id });
           }

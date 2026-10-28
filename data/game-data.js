@@ -3,7 +3,7 @@ window.JJK_DATA = {
  "meta": {
   "title": "咒术回战：幻影夜行 · 自走棋",
   "version": "1.2.0-web-phase7",
-  "generated": "2026-10-28 21:41",
+  "generated": "2026-10-28 21:45",
   "counts": {
    "unitsPlayable": 112,
    "unitsTotal": 112,
@@ -203,7 +203,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "激震掌（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/606014.webp",
    "card": "assets/cards/606014.webp",
@@ -2215,7 +2215,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "吹飞吧（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/606010.webp",
    "card": "assets/cards/606010.webp",
@@ -3177,7 +3177,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "全都不是问题（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/623845.webp",
    "card": "assets/cards/623845.webp",
@@ -3285,7 +3285,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "觉悟之拳（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/628287.webp",
    "card": "assets/cards/628287.webp",
@@ -3571,7 +3571,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "结祈转掌（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/640904.webp",
    "card": "assets/cards/640904.webp",
@@ -3992,7 +3992,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "虚式「茈」（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/661932.webp",
    "card": "assets/cards/661932.webp",
@@ -4394,7 +4394,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "刍灵咒法「簪」（SP潜在解放）（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/605996.webp",
    "card": "assets/cards/605996.webp",
@@ -4983,7 +4983,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "穿血（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/614519.webp",
    "card": "assets/cards/614519.webp",
@@ -5086,7 +5086,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "锐利的一击（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/615301.webp",
    "card": "assets/cards/615301.webp",
@@ -6062,7 +6062,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "新·阴流「拔刀」（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/678629.webp",
    "card": "assets/cards/678629.webp",
@@ -6272,7 +6272,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "连锁纹「全开速」（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/701554.webp",
    "card": "assets/cards/701554.webp",
@@ -6475,7 +6475,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "蒸汽咒法「临界冲」（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/719571.webp",
    "card": "assets/cards/719571.webp",
@@ -6573,7 +6573,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "用益潜力就是生命♡（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/722687.webp",
    "card": "assets/cards/722687.webp",
@@ -6985,7 +6985,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "纯爱哒哟（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/607978.webp",
    "card": "assets/cards/607978.webp",
@@ -7195,7 +7195,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "咒力乱打（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/610359.webp",
    "card": "assets/cards/610359.webp",
@@ -7593,7 +7593,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "「虹龙」（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/622643.webp",
    "card": "assets/cards/622643.webp",
@@ -8531,7 +8531,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "式神连续召唤（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/676882.webp",
    "card": "assets/cards/676882.webp",
@@ -9377,7 +9377,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "「黑闪」（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/640934.webp",
    "card": "assets/cards/640934.webp",
@@ -9803,7 +9803,7 @@ window.JJK_DATA = {
    },
    "ultimate": {
     "name": "黑闪（连携解放）",
-    "effect": "自我强化 → 全队伤害提升 6 秒"
+    "effect": "自我强化 → 全队体术 +25%，持续 6 秒"
    },
    "icon": "assets/units/683413.webp",
    "card": "assets/cards/683413.webp",
