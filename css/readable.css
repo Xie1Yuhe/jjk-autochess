@@ -1,0 +1,194 @@
+/* 自动生成：把小字号整体放大 1~2px（只改 font-size，不动排版骨架） */
+
+.dh-title { font-size: 13px !important; }
+.dh-gold { font-size: 13px !important; }
+.dh-gold b { font-size: 13.5px !important; }
+.dh-hint { font-size: 12.5px !important; }
+.dh-toggle { font-size: 12.5px !important; }
+.ir-title { font-size: 12.5px !important; }
+.ir-price { font-size: 12px !important; }
+.ir-name { font-size: 11.5px !important; }
+.ir-craft { font-size: 10.5px !important; }
+.ir-name { font-size: 12.5px !important; }
+.ir-title { font-size: 13.5px !important; }
+.ir-price { font-size: 12.5px !important; }
+.panel-head { font-size: 13px !important; }
+.panel-head .ph-title { font-size: 13.5px !important; }
+.panel-head .ph-sub { font-size: 13px !important; }
+/* ============================================================== 按钮 */ .btn { font-size: 14px !important; }
+.btn .b-key { font-size: 12px !important; }
+.btn-sm { font-size: 13px !important; }
+.btn-xs { font-size: 13px !important; }
+/* ============================================================== 标签 */ .chip { font-size: 12.5px !important; }
+.tag-role { font-size: 12px !important; }
+/* 金线标题 */ .gold-line { font-size: 13px !important; }
+.toast { font-size: 13.5px !important; }
+/* 半场标签 */ .board-tag { font-size: 11px !important; }
+.preview-layer .pv-name { font-size: 11.5px !important; }
+/* 元素角标 */ .token .tk-el { font-size: 10.5px !important; }
+.tk-item { font-size: 8px !important; }
+/* 费用角标 */ .shop-card .sc-cost { font-size: 12.5px !important; }
+/* 品质徽记 */ .shop-card .sc-rank { font-size: 11.5px !important; }
+.shop-card .sc-name { font-size: 13.5px !important; }
+.shop-card .sc-traits .chip { font-size: 10.5px !important; }
+/* 悬停时底部提示 */ .shop-card .sc-buy { font-size: 13px !important; }
+.trait-row .tr-glyph { font-size: 13px !important; }
+.trait-row .tr-name { font-size: 13px !important; }
+.trait-row .tr-count { font-size: 13px !important; }
+/* 空状态 */ .traits-empty { font-size: 13px !important; }
+.items-empty { font-size: 13px !important; }
+.equip-slots .item-chip { font-size: 14px !important; }
+.equip-slots .eq-empty { font-size: 13px !important; }
+.drag-ghost .dg-name { font-size: 13px !important; }
+.drag-ghost .dg-sub { font-size: 11.5px !important; }
+.tt-title { font-size: 12.5px !important; }
+.tt-cost { font-size: 12.5px !important; }
+.tt-rank { font-size: 11.5px !important; }
+.tt-stat .s-label { font-size: 11px !important; }
+.tt-stat .s-value { font-size: 13.5px !important; }
+.tt-block .b-head { font-size: 13px !important; }
+.tt-block .b-glyph { font-size: 11px !important; }
+.tt-block .b-type { font-size: 11.5px !important; }
+.tt-block .b-desc { font-size: 13px !important; }
+.tt-items .item-chip { font-size: 13px !important; }
+.tt-note { font-size: 12px !important; }
+.tt-bag-tip { font-size: 12px !important; }
+/* 表格式羁绊详情（悬停羁绊行时） */ .tt-tier { font-size: 13px !important; }
+.tt-tier .t-count { font-size: 12px !important; }
+/* 已拥有数量提示 */ .shop-card .sc-own { font-size: 11.5px !important; }
+/* 异格前缀：单独一行小字，避免中文长名被省略号截断 */ .shop-card .sc-variant { font-size: 11.5px !important; }
+.shop-card .sc-name { font-size: 13px !important; }
+.brand-sub { font-size: 11.5px !important; }
+.hud-chip .hc-label { font-size: 11px !important; }
+.hud-chip .hc-unit { font-size: 12px !important; }
+/* 金币舱里的小提示 */ .hc-extra { font-size: 12px !important; }
+/* 情报条（对手预告） */ .intel { font-size: 12.5px !important; }
+.intel .intel-tag { font-size: 12px !important; }
+.intel .intel-unit { font-size: 12.5px !important; }
+.intel .intel-scale { font-size: 12px !important; }
+.sell-zone { font-size: 13px !important; }
+.sell-zone small { font-size: 11px !important; }
+.btn-start .bs-sub { font-size: 12px !important; }
+.shop-controls > .btn { font-size: 13px !important; }
+.shop-hint { font-size: 12px !important; }
+.log-stream { font-size: 12.5px !important; }
+.log-line .ll-round { font-size: 12px !important; }
+.combat-dock .cd-row { font-size: 13px !important; }
+.hud-chip .hc-glyph { font-size: 14px !important; }
+.intel { font-size: 13px !important; }
+.log-stream { font-size: 13px !important; }
+.btn-start .bs-sub { font-size: 11px !important; }
+.shop-controls > .btn { font-size: 12.5px !important; }
+.combat-dock .cd-row { font-size: 12.5px !important; }
+.tb-card .tbc-name { font-size: 12.5px !important; }
+.tb-card .tbc-cost { font-size: 13px !important; }
+.tc-kicker { font-size: 11.5px !important; }
+.tc-desc { font-size: 13.5px !important; }
+.tc-diff-label { font-size: 12px !important; }
+.diff-opt { font-size: 13.5px !important; }
+.diff-desc { font-size: 12.5px !important; }
+.tc-foot { font-size: 12px !important; }
+.modal-sub { font-size: 13px !important; }
+.result-hero .rh-sub { font-size: 13px !important; }
+.result-cell .rc-label { font-size: 12px !important; }
+.result-detail { font-size: 12.5px !important; }
+.go-hero .go-sub { font-size: 12.5px !important; }
+.go-comp { font-size: 13px !important; }
+.codex-tab { font-size: 13.5px !important; }
+.codex-search input { font-size: 13px !important; }
+.codex-filter { font-size: 12.5px !important; }
+.codex-unit .cu-name { font-size: 13px !important; }
+.codex-unit .cu-traits .chip { font-size: 10.5px !important; }
+.codex-unit .cu-cost { font-size: 12.5px !important; }
+.codex-unit .cu-rank { font-size: 10.5px !important; }
+.codex-trait .ct-glyph { font-size: 14px !important; }
+.codex-trait .ct-kind { font-size: 12px !important; }
+.codex-trait .ct-count { font-size: 13px !important; }
+.codex-trait .ct-tier { font-size: 13px !important; }
+.codex-trait .ct-tier .n { font-size: 12.5px !important; }
+.codex-item .ci-name { font-size: 14px !important; }
+.codex-item .ci-kind { font-size: 11.5px !important; }
+.codex-item .ci-text { font-size: 13px !important; }
+.codex-item .ci-recipe { font-size: 12px !important; }
+.codex-rules p, .codex-rules li { font-size: 13.5px !important; }
+.codex-rules .kbd { font-size: 13px !important; }
+.codex-rules table { font-size: 13px !important; }
+.setting-row .sr-label { font-size: 14px !important; }
+.setting-row .sr-hint { font-size: 12.5px !important; }
+.seg button { font-size: 12.5px !important; }
+.battle-banner .bb-sub { font-size: 12.5px !important; }
+.tc-feat span { font-size: 11.5px !important; }
+/* 图鉴卡里的异格前缀 */ .codex-unit .cu-variant { font-size: 11px !important; }
+.codex-unit .cu-name { font-size: 12.5px !important; }
+.equip-block .eq-title { font-size: 13px !important; }
+.bag-block .bag-title { font-size: 12px !important; }
+.tips-head { font-size: 11px !important; }
+.tips-line { font-size: 13px !important; }
+/* 费用角标：圆章 + 高光 + 品质描边 */ .shop-card .sc-cost { font-size: 13px !important; }
+.trait-activate .ta-tier { font-size: 12px !important; }
+.levelup-banner .lb-sub { font-size: 13px !important; }
+.preview-layer .pv-name { font-size: 12px !important; }
+.toast { font-size: 13px !important; }
+.intel .intel-unit { font-size: 11.5px !important; }
+.link-chip .lk-name { font-size: 12.5px !important; }
+.link-chip .lk-tag { font-size: 11px !important; }
+/* 品质徽记：SSR 更宽，需要压缩字号 */ .sc-rank { font-size: 11px !important; }
+.tt-tier { font-size: 12px !important; }
+/* 图鉴卡的强度档位 */ .cu-tier { font-size: 10.5px !important; }
+.tt-elem-line span { font-size: 12px !important; }
+.lh-caret { font-size: 12px !important; }
+.lh-title { font-size: 13px !important; }
+.lh-close { font-size: 13px !important; }
+.log-dock .combat-dock .cd-row { font-size: 12.5px !important; }
+.log-dock .combat-dock .cd-sep { font-size: 12px !important; }
+.log-dock .combat-dock .cd-time { font-size: 12px !important; }
+/* =================================== 23. 四特性徽记（取代强度档位） */ /* 卡面右上角：行 / 幻 / 夜 / 影 */ .sc-elem, .cu-elem { font-size: 13px !important; }
+.cu-elem { font-size: 12px !important; }
+.uc-kicker { font-size: 13px !important; }
+.uc-name { font-size: 14px !important; }
+.tbm-cost { font-size: 11.5px !important; }
+.tbm-elem { font-size: 11px !important; }
+.sc-merge-tag { font-size: 11px !important; }
+.deck-btn { font-size: 13.5px !important; }
+.deck-summary { font-size: 12.5px !important; }
+.de-bar { font-size: 13px !important; }
+.de-hint { font-size: 13px !important; }
+.de-chip span { font-size: 11px !important; }
+.deck-tip { font-size: 13px !important; }
+.dc-badge { font-size: 12px !important; }
+.dc-sub { font-size: 12.5px !important; }
+.dc-dist { font-size: 12px !important; }
+.de-cost { font-size: 11px !important; }
+.diff-desc { font-size: 12.5px !important; }
+.bsum-title { font-size: 13px !important; }
+.bsum-head { font-size: 12.5px !important; }
+.bsum-total { font-size: 12px !important; }
+.bsum-total b { font-size: 12.5px !important; }
+.bs-dim { font-size: 11.5px !important; }
+.bsum-row { font-size: 12.5px !important; }
+.bsum-rank { font-size: 11px !important; }
+.bsum-v span { font-size: 11.5px !important; }
+.bsum-legend { font-size: 11.5px !important; }
+.ult-cut .uc-side i { font-size: 11px !important; }
+.ult-cut .uc-side i { font-size: 10px !important; }
+.board-toggle { font-size: 12.5px !important; }
+.board-toggle .bt-icon { font-size: 14px !important; }
+
+/* 关键可读性补充 */
+.shop-card .sc-name { font-size: 14px !important; letter-spacing: .02em !important; }
+.hud-chip .hc-value { font-size: 15px !important; }
+.hud-chip .hc-label { font-size: 10.5px !important; }
+.btn, .btn-start { font-size: 13.5px !important; }
+.traits-panel .tr-name, .traits-panel .tr-label { font-size: 12.5px !important; }
+.log-line { font-size: 12.5px !important; line-height: 1.5 !important; }
+
+/* 字号放大后：放宽被裁切的面板高度，避免最后一行被切掉 */
+.traits-panel .panel-body { max-height: none !important; }
+.traits-panel { min-height: 0 !important; flex: 1 1 auto !important; }
+.col-right { min-height: 0; }
+.log-stream { line-height: 1.45 !important; }
+
+/* 卡牌底部文字放大后需要多一点点空间，给抽屉加高一点 */
+body:not(.drawer-closed):not(.phase-battle) .shop-dock { height: 32vh !important; max-height: 32vh !important; }
+body:not(.drawer-closed):not(.phase-battle) .shop-dock .shop-card { --card-h: 218px !important; }
+.shop-card .sc-name { font-size: 13.5px !important; }
